@@ -1,0 +1,10 @@
+.ipynb_checkpoints/
+.venv
+__pycache__/
+venv/
+.env
+.DS_Store
+*.pyc
+.binder/
+# Inputs
+.github/

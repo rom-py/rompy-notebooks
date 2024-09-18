@@ -1,0 +1,20 @@
+name: rompy-notebooks
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - jupyterlab
+  - numpy
+  - pandas
+  - xarray
+  - matplotlib
+  - cartopy
+  - netcdf4
+  - scikit-learn
+  - dask
+  - geopandas
+  - seaborn
+  - pip
+  - pip:
+      - git+https://github.com/rom-py/rompy.git
+      - git+https://github.com/rom-py/rompy-xbeach.git

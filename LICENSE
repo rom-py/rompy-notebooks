@@ -1,0 +1,3 @@
+MIT License
+
+[Full license text here]

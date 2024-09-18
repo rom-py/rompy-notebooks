@@ -1,0 +1,16 @@
+# Requirements for rompy-notebooks
+rompy
+rompy-xbeach
+numpy
+pandas
+xarray
+matplotlib
+cartopy
+netCDF4
+scikit-learn
+dask
+jupyterlab
+geopandas
+seaborn
+git+https://github.com/rom-py/rompy.git
+git+https://github.com/rom-py/rompy-xbeach.git
