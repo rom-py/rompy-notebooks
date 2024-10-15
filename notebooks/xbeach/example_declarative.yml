@@ -1,0 +1,87 @@
+run_id: run1
+output_dir: example_declarative
+period:
+  start: 2024-10-15T00:00
+  duration: 1800s
+  interval: 1s
+config:
+  model_type: xbeach
+  grid:
+    model_type: regular
+    ori:
+      x: 115.594239
+      y: -32.641104
+      crs: EPSG:4326
+    alfa: 347
+    dx: 10
+    dy: 15
+    nx: 230
+    ny: 220
+    crs: EPSG:28350
+  bathy:
+    model_type: xbeach_bathy
+    source:
+      model_type: geotiff
+      filename: /source/csiro/rompy-xbeach/tests/data/bathy.tif
+    posdwn: False
+    interpolator:
+      model_type: scipy_regular_grid
+      kwargs:
+        method: linear
+        fill_value: null
+    left: 3
+    right: 3
+    extension:
+      model_type: linear
+      depth: 25
+      slope: 0.3
+  front: abs_2d #1
+  back: abs_2d #2
+  left: neumann #0
+  right: neumann #0
+  rugdepth: 0.011
+  tunits: seconds since 1970-01-01 00:00:00.00 +00"
+  instat: 41
+  breaker: 1
+  scheme: 1
+  order: 1
+  leftwave: wavecrest
+  rightwave: wavecrest
+  random: 1
+  windfile: wind.txt
+  zs0file: zs0input.txt
+  tidelen: 49
+  tideloc: 1
+  zs0: 0.0
+  hmin: 0.01
+  wci: 0
+  alpha: 1
+  delta: 0.0
+  n: 10
+  rho: 1025
+  g: 9.81
+  thetamin: -80
+  thetamax: 80
+  dtheta: 10.0
+  beta: 0.1
+  roller: 1
+  gamma: 0.55
+  gammax: 1.0
+  bcfile: jonswap.txt
+  sedtrans: 0
+  morfac: 0.0
+  morphology: 0
+  cf: 0.01
+  paulrevere: 0
+  eps: 0.01
+  epsi: 0.001
+  tstart: 0
+  tint: 3600.0
+  tstop: 86400
+  cfl: 0.8
+  umin: 0.1
+  oldhu: 1
+  outputformat: netcdf
+  ncfilename: xboutput_test.nc
+  tintm: 3600.0
+  nmeanvar: 14
