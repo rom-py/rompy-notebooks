@@ -80,7 +80,6 @@ config:
   back: abs_2d
   left: neumann
   right: neumann
-  tunits: seconds since 1970-01-01 00:00:00.00 +00
   break: roelvink_daly
   scheme: warmbeam
   order: 1

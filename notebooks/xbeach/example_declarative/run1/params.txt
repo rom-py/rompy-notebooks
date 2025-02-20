@@ -1,0 +1,80 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% XBeach parameter settings input file
+%%%
+%%% Date: 2025-02-20 08:54:24.281393
+%%% User: rafael-XPS
+%%% Template: /source/csiro/rompy-xbeach/src/rompy_xbeach/templates/base
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+zs0 = 0.0
+front = abs_2d
+back = abs_2d
+left = neumann
+right = neumann
+lateralwave = wavecrest
+break = roelvink_daly
+scheme = warmbeam
+order = 1
+random = 1
+hmin = 0.01
+wci = 0
+alpha = 1.0
+delta = 0.0
+n = 10.0
+rho = 1025.0
+g = 9.81
+thetamin = -80.0
+thetamax = 80.0
+dtheta = 10.0
+beta = 0.1
+roller = 1
+gamma = 0.55
+gammax = 1.0
+sedtrans = 0
+morfac = 1.0
+morphology = 0
+cf = 0.01
+eps = 0.01
+epsi = 0.001
+cfl = 0.8
+umin = 0.1
+oldhu = 1
+outputformat = netcdf
+ncfilename = xboutput_test.nc
+tstart = 0.0
+tintm = 3600.0
+paulrevere = land
+tstop = 86400.0
+tunits = seconds since 2023-01-01 00:00:00
+wbctype = jonstable
+bcfile = jonstable-20230101T000000-20230102T000000.txt
+windfile = data-20230101T000000-20230102T000000.txt
+zs0file = tide-20230101T000000-20230102T000000.txt
+tideloc = 1
+tidelen = 25
+posdwn = -1
+nx = 233
+ny = 225
+dx = 10.0
+dy = 15.0
+xori = 368095.9047500096
+yori = 6387591.740656142
+alfa = 347.0
+projection = +proj=utm +zone=50 +south +ellps=GRS80 +units=m +no_defs +type=crs
+depfile = bathy.txt
+
+nmeanvar = 14
+H
+thetamean
+hh
+u
+v
+D
+R
+k
+ue
+ve
+urms
+Qb
+zb
+zs
