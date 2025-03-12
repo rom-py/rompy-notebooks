@@ -1,5 +1,5 @@
 run_id: run1
-output_dir: example_declarative
+output_dir: example-declarative
 period:
   start: 2023-01-01T00:00
   duration: 24h
@@ -63,7 +63,7 @@ config:
         u: uwnd
         v: vwnd
     tide:
-      model_type: tide_grid
+      model_type: tide_cons_grid
       source:
         model_type: oceantide
         reader: read_otis_binary
