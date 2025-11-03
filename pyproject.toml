@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rompy-notebooks"
+version = "0.1.0"
+description = "Example and tutorial notebooks for ROMPY"
+readme = "README.md"
+requires-python = ">=3.10"
+
+authors = [{ name = "Rompy Contributors", email = "developers@rompy.com" }]
+maintainers = [{ name = "Rompy Contributors", email = "developers@rompy.com" }]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: Apache Software License",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Scientific/Engineering :: Physics",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+license = { text = "Apache Software License 2.0" }
+
+dependencies = [
+  "rompy",
+  "rompy-swan",
+  "rompy-schism",
+  "rompy-xbeach",
+  "matplotlib",
+  "jupyter",
+]
+
+[tool.setuptools]
+packages = ["rompy_notebooks"]
+
+[tool.setuptools.package-data]
+"rompy_notebooks" = ["notebooks_data/**/*.ipynb", "notebooks_data/**/*.md", "notebooks_data/**/*.py"]
+
+[project.urls]
+Homepage = "https://github.com/rom-py/rompy-notebooks"
