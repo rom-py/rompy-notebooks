@@ -1,0 +1,58 @@
+site_name: rompy-notebooks
+site_description: Examples and tutorials for the rompy ocean modelling ecosystem
+repo_url: https://github.com/rom-py/rompy-notebooks
+repo_name: rom-py/rompy-notebooks
+
+docs_dir: docs
+site_dir: site
+
+nav:
+  - Home: index.md
+  - Notebook gallery: gallery.md
+  - Audit status: audit.md
+  - Installation: installation_guide.md
+  - Usage: usage_guide.md
+  - Build and execution: workflow.md
+  - Notebooks:
+      - Common: notebooks/common/rompy_core_features.ipynb
+      - Backends: notebooks/backends/backend_examples.ipynb
+      - SWAN:
+          - Procedural example: notebooks/swan/example_procedural.ipynb
+          - Declarative example: notebooks/swan/example_declarative.ipynb
+          - Sensitivity example: notebooks/swan/example_sensitivity.ipynb
+          - Boundary — nested: notebooks/swan/boundary/boundnest1.ipynb
+          - Boundary — segment: notebooks/swan/boundary/boundspec_segment.ipynb
+          - Boundary — side: notebooks/swan/boundary/boundspec_side.ipynb
+          - Output components: notebooks/swan/components/output.ipynb
+      - SCHISM:
+          - Demonstration: notebooks/schism/schism_demo.ipynb
+      - XBeach:
+          - Procedural example: notebooks/xbeach/example-procedural.ipynb
+          - Declarative example: notebooks/xbeach/example-declarative.ipynb
+          - Physics: notebooks/xbeach/components/tutorial_01_physics.ipynb
+          - Sediment: notebooks/xbeach/components/tutorial_02_sediment.ipynb
+          - Output: notebooks/xbeach/components/tutorial_03_output.ipynb
+          - Boundary conditions: notebooks/xbeach/components/tutorial_04_boundary-conditions.ipynb
+          - Hotstart: notebooks/xbeach/components/tutorial_05_hotstart.ipynb
+          - MPI: notebooks/xbeach/components/tutorial_06_mpi.ipynb
+          - Bathymetry data: notebooks/xbeach/data-interface/tutorial-bathy.ipynb
+          - Forcing data: notebooks/xbeach/data-interface/tutorial-forcing.ipynb
+          - Grid data: notebooks/xbeach/data-interface/tutorial-grid.ipynb
+          - Source data: notebooks/xbeach/data-interface/tutorial-source.ipynb
+          - Time-series forcing: notebooks/xbeach/data-interface/tutorial-timeseries-forcing.ipynb
+          - Wave boundary: notebooks/xbeach/data-interface/tutorial-wave-boundary.ipynb
+
+plugins:
+  - search
+  - mkdocs-jupyter:
+      execute: false
+      include_source: true
+      include_requirejs: true
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - pymdownx.details
+  - pymdownx.superfences
+
+strict: true

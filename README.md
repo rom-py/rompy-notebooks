@@ -11,11 +11,16 @@ Welcome to the **rompy-notebooks** repository! This collection of Jupyter notebo
 
 ## Getting Started
 
-See the [installation guide](docs/installation_guide.md) for instructions on how to set up your environment.
+See the [installation guide](docs/installation_guide.md) for instructions on how to set up the notebook environment. To browse the local documentation site and validate notebook structure, see the [build and execution guide](docs/workflow.md):
+
+```bash
+python -m pip install -r requirements-docs.txt
+make docs-build
+```
 
 ## Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines. Documentation changes should pass `make docs-build`.
 
 ## License
 
