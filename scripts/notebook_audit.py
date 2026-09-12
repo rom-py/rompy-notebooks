@@ -28,6 +28,15 @@ SWAN_JOURNEY = [
     Path("notebooks/swan/journey_06_swan_workspace.ipynb"),
     Path("notebooks/swan/journey_07_swan_sensitivity.ipynb"),
 ]
+XBEACH_JOURNEY = [
+    Path("notebooks/xbeach/journey_01_rompy_orientation.ipynb"),
+    Path("notebooks/xbeach/journey_02_xbeach_procedural.ipynb"),
+    Path("notebooks/xbeach/journey_03_xbeach_declarative.ipynb"),
+    Path("notebooks/xbeach/journey_04_xbeach_grid_data.ipynb"),
+    Path("notebooks/xbeach/journey_05_xbeach_forcing.ipynb"),
+    Path("notebooks/xbeach/journey_06_xbeach_components.ipynb"),
+    Path("notebooks/xbeach/journey_07_xbeach_execution.ipynb"),
+]
 
 
 def tracked_files(root: Path) -> list[Path]:
@@ -98,12 +107,14 @@ def audit_model_metadata(relative: Path, notebook: dict) -> list[str]:
     return failures
 
 
-def audit_journey(root: Path) -> list[str]:
+def _audit_ordered_journey(
+    root: Path, journey: list[Path], label: str, *, execution_marker: bool = False
+) -> list[str]:
     failures: list[str] = []
-    for index, relative in enumerate(SWAN_JOURNEY):
+    for index, relative in enumerate(journey):
         path = root / relative
         if not path.is_file():
-            failures.append(f"missing SWAN journey notebook: {relative}")
+            failures.append(f"missing {label} journey notebook: {relative}")
             continue
         try:
             notebook = json.loads(path.read_text(encoding="utf-8"))
@@ -114,18 +125,29 @@ def audit_journey(root: Path) -> list[str]:
             for cell in notebook.get("cells", [])
             if isinstance(cell, dict) and cell.get("cell_type") == "markdown"
         )
-        for marker in ("Learning goals", "Prerequisites", "## Checkpoint"):
+        markers = ["Learning goals", "Prerequisites", "## Checkpoint"]
+        if execution_marker:
+            markers.append("Execution contract")
+        for marker in markers:
             if marker.lower() not in markdown.lower():
-                failures.append(f"SWAN journey missing {marker}: {relative}")
-        if index < len(SWAN_JOURNEY) - 1:
-            next_name = SWAN_JOURNEY[index + 1].stem
+                failures.append(f"{label} journey missing {marker}: {relative}")
+        if index < len(journey) - 1:
+            next_name = journey[index + 1].stem
             if next_name not in markdown:
-                failures.append(f"SWAN journey missing next link: {relative} -> {next_name}")
+                failures.append(f"{label} journey missing next link: {relative} -> {next_name}")
         if index > 0:
-            previous_name = SWAN_JOURNEY[index - 1].stem
+            previous_name = journey[index - 1].stem
             if previous_name not in markdown:
-                failures.append(f"SWAN journey missing previous link: {relative} -> {previous_name}")
+                failures.append(f"{label} journey missing previous link: {relative} -> {previous_name}")
     return failures
+
+
+def audit_journey(root: Path) -> list[str]:
+    return _audit_ordered_journey(root, SWAN_JOURNEY, "SWAN")
+
+
+def audit_xbeach_journey(root: Path) -> list[str]:
+    return _audit_ordered_journey(root, XBEACH_JOURNEY, "XBeach", execution_marker=True)
 
 
 def audit_hygiene(root: Path) -> list[str]:
@@ -189,6 +211,7 @@ def run(root: Path) -> int:
     failures = (
         audit_notebooks(root)
         + audit_journey(root)
+        + audit_xbeach_journey(root)
         + audit_model_docs(root)
         + audit_hygiene(root)
         + audit_links(root)

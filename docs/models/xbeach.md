@@ -1,11 +1,32 @@
 # XBeach notebooks
 
-The XBeach collection is a set of focused tutorials rather than a linear learning journey. Start with a workflow example, then choose data-interface and component tutorials for the capability you need. The complete [notebook gallery](../gallery.md) remains the reference catalogue for lookup.
+The XBeach collection now includes a compact guided journey plus focused capability tutorials. Start with the journey if you are new to Rompy and XBeach; use the grouped tutorials when you need deeper coverage of one input or component. The complete [notebook gallery](../gallery.md) remains the reference catalogue for lookup.
 
 !!! note
-    Documentation builds render notebooks without executing XBeach. Runtime-dependent examples require an appropriate `rompy-xbeach` environment and XBeach installation.
+    Documentation builds render notebooks without executing XBeach. Runtime-dependent lessons require an appropriate `rompy-xbeach` environment and XBeach installation. Configuration-only lessons validate Rompy objects or generated inputs but do not run the model.
 
-## Getting started and workflows
+## Prerequisites
+
+- Basic Python and familiarity with nearshore modelling concepts.
+- `rompy` and `rompy-xbeach` installed for the executable code cells.
+- An XBeach binary is required only for the optional runtime step; MPI is additionally required only for parallel runs.
+- The journey uses deterministic examples and does not require hidden downloads for documentation rendering.
+
+## XBeach learning journey
+
+| Step | Lesson | Focus | Execution |
+| --- | --- | --- | --- |
+| 1 | [XBeach and Rompy: orientation](../notebooks/xbeach/journey_01_rompy_orientation.ipynb) | Model-run boundary and vocabulary | Render-only |
+| 2 | [Procedural workflow](../notebooks/xbeach/journey_02_xbeach_procedural.ipynb) | Time range and grid objects | Configuration-only |
+| 3 | [Declarative YAML](../notebooks/xbeach/journey_03_xbeach_declarative.ipynb) | Reproducible serialised configuration | Render-only |
+| 4 | [Grids and bathymetry](../notebooks/xbeach/journey_04_xbeach_grid_data.ipynb) | Grid and input-data concepts | Render-only |
+| 5 | [Forcing and boundary data](../notebooks/xbeach/journey_05_xbeach_forcing.ipynb) | Waves, wind, tide, and boundaries | Render-only |
+| 6 | [Physics and outputs](../notebooks/xbeach/journey_06_xbeach_components.ipynb) | Components, sediment, outputs, hotstarts | Configuration-only |
+| 7 | [Execution and reproducibility](../notebooks/xbeach/journey_07_xbeach_execution.ipynb) | Runtime boundary, MPI, and repeatability | Configuration-only |
+
+Each lesson has previous/next links. The journey introduces concepts; the focused tutorials below provide the detailed parameter coverage.
+
+## Workflows
 
 - [XBeach procedural workflow](../notebooks/xbeach/example-procedural.ipynb)
 - [XBeach declarative workflow](../notebooks/xbeach/example-declarative.ipynb)
@@ -34,4 +55,10 @@ The XBeach collection is a set of focused tutorials rather than a linear learnin
 
 - [MPI execution](../notebooks/xbeach/components/tutorial_06_mpi.ipynb)
 
-There is not yet a complete XBeach journey or dedicated advanced-workflow sequence. See the [model coverage matrix](coverage.md) and the future `expand-xbeach-learning-path` change for planned expansion.
+The journey does not yet cover every scientific XBeach workflow or provide a full runtime integration suite. See the [model coverage matrix](coverage.md) for current XBeach gaps.
+
+## Next model: SCHISM
+
+The next model-specific expansion should grow SCHISM from its broad demonstration into focused tutorials for grid/workspace setup, atmospheric, tidal, and wave forcing, boundary conditions, namelist configuration, execution backends, and output verification. Those lessons must keep binary, MPI, Docker, and external-data requirements separate from render-only documentation.
+
+The complete [notebook gallery](../gallery.md) remains available for lookup.

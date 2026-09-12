@@ -23,6 +23,8 @@ The gallery is grouped by the main areas covered by this repository. The complet
 
 ## XBeach
 
+Start with the [XBeach learning journey](models/xbeach.md) for a recommended sequence, then use these focused notebooks as a reference catalogue.
+
 - [Procedural example](notebooks/xbeach/example-procedural.ipynb)
 - [Declarative example](notebooks/xbeach/example-declarative.ipynb)
 - [Physics](notebooks/xbeach/components/tutorial_01_physics.ipynb)

@@ -33,6 +33,14 @@ nav:
               - Output components: notebooks/swan/components/output.ipynb
       - XBeach:
           - Overview: models/xbeach.md
+          - Learning journey:
+              - 1. Orientation: notebooks/xbeach/journey_01_rompy_orientation.ipynb
+              - 2. Procedural workflow: notebooks/xbeach/journey_02_xbeach_procedural.ipynb
+              - 3. Declarative YAML: notebooks/xbeach/journey_03_xbeach_declarative.ipynb
+              - 4. Grids and bathymetry: notebooks/xbeach/journey_04_xbeach_grid_data.ipynb
+              - 5. Forcing and boundaries: notebooks/xbeach/journey_05_xbeach_forcing.ipynb
+              - 6. Physics and outputs: notebooks/xbeach/journey_06_xbeach_components.ipynb
+              - 7. Execution and reproducibility: notebooks/xbeach/journey_07_xbeach_execution.ipynb
           - Workflows:
               - Procedural example: notebooks/xbeach/example-procedural.ipynb
               - Declarative example: notebooks/xbeach/example-declarative.ipynb

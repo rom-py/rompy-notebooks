@@ -74,6 +74,47 @@ def test_audit_journey_detects_missing_step(tmp_path, monkeypatch):
     ]
 
 
+def test_audit_current_xbeach_journey_passes():
+    assert notebook_audit.audit_xbeach_journey(Path.cwd()) == []
+
+
+def test_audit_xbeach_journey_detects_missing_step(tmp_path, monkeypatch):
+    paths = [
+        tmp_path / "notebooks" / "xbeach" / "journey_01_first.ipynb",
+        tmp_path / "notebooks" / "xbeach" / "journey_02_second.ipynb",
+    ]
+    paths[0].parent.mkdir(parents=True)
+    for path in paths:
+        write_notebook(path)
+        data = json.loads(path.read_text())
+        data["cells"][0]["cell_type"] = "markdown"
+        data["cells"][0]["source"] = [
+            "# Lesson\n",
+            "**Learning goals:** learn\n",
+            "**Prerequisites:** Python\n",
+            "**Execution contract:** render-only\n",
+            "## Checkpoint\n",
+        ]
+        path.write_text(json.dumps(data))
+    monkeypatch.setattr(notebook_audit, "XBEACH_JOURNEY", paths)
+    failures = notebook_audit.audit_xbeach_journey(tmp_path)
+    assert any("missing next link" in item for item in failures)
+
+
+def test_audit_xbeach_journey_detects_missing_execution_context(tmp_path, monkeypatch):
+    path = tmp_path / "notebooks" / "xbeach" / "journey_01_only.ipynb"
+    path.parent.mkdir(parents=True)
+    write_notebook(path)
+    data = json.loads(path.read_text())
+    data["cells"][0]["cell_type"] = "markdown"
+    data["cells"][0]["source"] = ["**Learning goals:** learn\n", "## Checkpoint\n"]
+    path.write_text(json.dumps(data))
+    monkeypatch.setattr(notebook_audit, "XBEACH_JOURNEY", [path])
+    failures = notebook_audit.audit_xbeach_journey(tmp_path)
+    assert any("missing Prerequisites" in item for item in failures)
+    assert any("missing Execution contract" in item for item in failures)
+
+
 def test_audit_detects_empty_notebook(tmp_path, monkeypatch):
     notebook = tmp_path / "notebooks" / "empty.ipynb"
     notebook.parent.mkdir()
