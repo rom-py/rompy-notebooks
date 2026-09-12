@@ -29,6 +29,17 @@ def test_audit_current_tracked_notebooks_passes():
     assert notebook_audit.audit_notebooks(Path.cwd()) == []
 
 
+def test_audit_current_swan_journey_passes():
+    assert notebook_audit.audit_journey(Path.cwd()) == []
+
+
+def test_audit_journey_detects_missing_step(tmp_path, monkeypatch):
+    monkeypatch.setattr(notebook_audit, "SWAN_JOURNEY", [Path("notebooks/missing.ipynb")])
+    assert notebook_audit.audit_journey(tmp_path) == [
+        "missing SWAN journey notebook: notebooks/missing.ipynb"
+    ]
+
+
 def test_audit_detects_empty_notebook(tmp_path, monkeypatch):
     notebook = tmp_path / "notebooks" / "empty.ipynb"
     notebook.parent.mkdir()

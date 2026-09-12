@@ -9,6 +9,15 @@ from pathlib import Path
 
 EXCLUDED_PARTS = {".ipynb_checkpoints", "__pycache__"}
 LINK_RE = re.compile(r"!?\[[^\]]*\]\(([^)#]+)")
+SWAN_JOURNEY = [
+    Path("notebooks/swan/journey_01_rompy_orientation.ipynb"),
+    Path("notebooks/swan/journey_02_swan_procedural.ipynb"),
+    Path("notebooks/swan/journey_03_swan_declarative.ipynb"),
+    Path("notebooks/swan/journey_04_swan_data.ipynb"),
+    Path("notebooks/swan/journey_05_swan_components.ipynb"),
+    Path("notebooks/swan/journey_06_swan_workspace.ipynb"),
+    Path("notebooks/swan/journey_07_swan_sensitivity.ipynb"),
+]
 
 
 def tracked_files(root: Path) -> list[Path]:
@@ -50,6 +59,36 @@ def audit_notebooks(root: Path) -> list[str]:
     return failures
 
 
+def audit_journey(root: Path) -> list[str]:
+    failures: list[str] = []
+    for index, relative in enumerate(SWAN_JOURNEY):
+        path = root / relative
+        if not path.is_file():
+            failures.append(f"missing SWAN journey notebook: {relative}")
+            continue
+        try:
+            notebook = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+            continue
+        markdown = "\n".join(
+            "".join(cell.get("source", []))
+            for cell in notebook.get("cells", [])
+            if isinstance(cell, dict) and cell.get("cell_type") == "markdown"
+        )
+        for marker in ("Learning goals", "Prerequisites", "## Checkpoint"):
+            if marker.lower() not in markdown.lower():
+                failures.append(f"SWAN journey missing {marker}: {relative}")
+        if index < len(SWAN_JOURNEY) - 1:
+            next_name = SWAN_JOURNEY[index + 1].name
+            if next_name not in markdown:
+                failures.append(f"SWAN journey missing next link: {relative} -> {next_name}")
+        if index > 0:
+            previous_name = SWAN_JOURNEY[index - 1].name
+            if previous_name not in markdown:
+                failures.append(f"SWAN journey missing previous link: {relative} -> {previous_name}")
+    return failures
+
+
 def audit_hygiene(root: Path) -> list[str]:
     failures: list[str] = []
     for path in tracked_files(root):
@@ -80,7 +119,7 @@ def audit_links(root: Path) -> list[str]:
 
 
 def run(root: Path) -> int:
-    failures = audit_notebooks(root) + audit_hygiene(root) + audit_links(root)
+    failures = audit_notebooks(root) + audit_journey(root) + audit_hygiene(root) + audit_links(root)
     if failures:
         print("Notebook quality gate failed:")
         print("\n".join(f"- {failure}" for failure in failures))

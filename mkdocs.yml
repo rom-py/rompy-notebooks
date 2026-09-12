@@ -9,6 +9,15 @@ site_dir: site
 nav:
   - Home: index.md
   - Notebook gallery: gallery.md
+  - Learn Rompy — SWAN journey:
+      - Journey overview: swan-journey.md
+      - 1. Rompy and SWAN: notebooks/swan/journey_01_rompy_orientation.ipynb
+      - 2. Procedural workspace: notebooks/swan/journey_02_swan_procedural.ipynb
+      - 3. Declarative YAML: notebooks/swan/journey_03_swan_declarative.ipynb
+      - 4. Grids and input data: notebooks/swan/journey_04_swan_data.ipynb
+      - 5. Components and outputs: notebooks/swan/journey_05_swan_components.ipynb
+      - 6. Workspace and execution: notebooks/swan/journey_06_swan_workspace.ipynb
+      - 7. Sensitivity analysis: notebooks/swan/journey_07_swan_sensitivity.ipynb
   - Audit status: audit.md
   - Installation: installation_guide.md
   - Usage: usage_guide.md

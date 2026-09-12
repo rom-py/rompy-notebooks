@@ -6,7 +6,7 @@ Welcome to the **rompy-notebooks** repository! This collection of Jupyter notebo
 
 - **notebooks/**: Model-specific and common notebooks demonstrating usage examples.
 - **data/**: Sample datasets used in the notebooks.
-- **docs/**: Additional documentation and guides.
+- **docs/**: Additional documentation and guides, including the [SWAN learning journey](docs/swan-journey.md).
 - **requirements.txt**: List of dependencies to run the notebooks.
 
 ## Getting Started
