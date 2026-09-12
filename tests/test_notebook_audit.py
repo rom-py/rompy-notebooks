@@ -33,6 +33,40 @@ def test_audit_current_swan_journey_passes():
     assert notebook_audit.audit_journey(Path.cwd()) == []
 
 
+def test_audit_current_model_metadata_passes():
+    assert notebook_audit.audit_notebooks(Path.cwd()) == []
+
+
+def test_audit_current_model_docs_passes():
+    assert notebook_audit.audit_model_docs(Path.cwd()) == []
+
+
+def test_audit_model_docs_detects_missing_overview(tmp_path):
+    assert any(
+        "missing swan model overview" in item
+        for item in notebook_audit.audit_model_docs(tmp_path)
+    )
+
+
+def test_audit_model_metadata_rejects_invalid_values(tmp_path, monkeypatch):
+    notebook = tmp_path / "notebooks" / "swan" / "example.ipynb"
+    notebook.parent.mkdir(parents=True)
+    write_notebook(notebook)
+    data = json.loads(notebook.read_text())
+    data["metadata"]["rompy_notebooks"] = {
+        "model": "xbeach",
+        "kind": "invalid",
+        "level": "beginner",
+        "topics": ["configuration"],
+        "execution": "render-only",
+    }
+    notebook.write_text(json.dumps(data))
+    monkeypatch.setattr(notebook_audit, "tracked_files", lambda root: [notebook])
+    failures = notebook_audit.audit_notebooks(tmp_path)
+    assert any("model must be 'swan'" in item for item in failures)
+    assert any("unsupported kind 'invalid'" in item for item in failures)
+
+
 def test_audit_journey_detects_missing_step(tmp_path, monkeypatch):
     monkeypatch.setattr(notebook_audit, "SWAN_JOURNEY", [Path("notebooks/missing.ipynb")])
     assert notebook_audit.audit_journey(tmp_path) == [

@@ -9,15 +9,51 @@ site_dir: site
 nav:
   - Home: index.md
   - Notebook gallery: gallery.md
-  - Learn Rompy — SWAN journey:
-      - Journey overview: swan-journey.md
-      - 1. Rompy and SWAN: notebooks/swan/journey_01_rompy_orientation.ipynb
-      - 2. Procedural workspace: notebooks/swan/journey_02_swan_procedural.ipynb
-      - 3. Declarative YAML: notebooks/swan/journey_03_swan_declarative.ipynb
-      - 4. Grids and input data: notebooks/swan/journey_04_swan_data.ipynb
-      - 5. Components and outputs: notebooks/swan/journey_05_swan_components.ipynb
-      - 6. Workspace and execution: notebooks/swan/journey_06_swan_workspace.ipynb
-      - 7. Sensitivity analysis: notebooks/swan/journey_07_swan_sensitivity.ipynb
+  - Models:
+      - Coverage matrix: models/coverage.md
+      - SWAN:
+          - Overview: models/swan.md
+          - Journey overview: swan-journey.md
+          - Journey lessons:
+              - 1. Rompy and SWAN: notebooks/swan/journey_01_rompy_orientation.ipynb
+              - 2. Procedural workspace: notebooks/swan/journey_02_swan_procedural.ipynb
+              - 3. Declarative YAML: notebooks/swan/journey_03_swan_declarative.ipynb
+              - 4. Grids and input data: notebooks/swan/journey_04_swan_data.ipynb
+              - 5. Components and outputs: notebooks/swan/journey_05_swan_components.ipynb
+              - 6. Workspace and execution: notebooks/swan/journey_06_swan_workspace.ipynb
+              - 7. Sensitivity analysis: notebooks/swan/journey_07_swan_sensitivity.ipynb
+          - Tutorials:
+              - Procedural example: notebooks/swan/example_procedural.ipynb
+              - Declarative example: notebooks/swan/example_declarative.ipynb
+              - Sensitivity example: notebooks/swan/example_sensitivity.ipynb
+          - References:
+              - Nested boundary: notebooks/swan/boundary/boundnest1.ipynb
+              - Segment boundary: notebooks/swan/boundary/boundspec_segment.ipynb
+              - Side boundary: notebooks/swan/boundary/boundspec_side.ipynb
+              - Output components: notebooks/swan/components/output.ipynb
+      - XBeach:
+          - Overview: models/xbeach.md
+          - Workflows:
+              - Procedural example: notebooks/xbeach/example-procedural.ipynb
+              - Declarative example: notebooks/xbeach/example-declarative.ipynb
+          - Input data:
+              - Bathymetry: notebooks/xbeach/data-interface/tutorial-bathy.ipynb
+              - Forcing: notebooks/xbeach/data-interface/tutorial-forcing.ipynb
+              - Grid: notebooks/xbeach/data-interface/tutorial-grid.ipynb
+              - Source: notebooks/xbeach/data-interface/tutorial-source.ipynb
+              - Time-series forcing: notebooks/xbeach/data-interface/tutorial-timeseries-forcing.ipynb
+              - Wave boundary: notebooks/xbeach/data-interface/tutorial-wave-boundary.ipynb
+          - Components:
+              - Physics: notebooks/xbeach/components/tutorial_01_physics.ipynb
+              - Sediment: notebooks/xbeach/components/tutorial_02_sediment.ipynb
+              - Output: notebooks/xbeach/components/tutorial_03_output.ipynb
+              - Boundary conditions: notebooks/xbeach/components/tutorial_04_boundary-conditions.ipynb
+              - Hotstart: notebooks/xbeach/components/tutorial_05_hotstart.ipynb
+              - MPI: notebooks/xbeach/components/tutorial_06_mpi.ipynb
+      - SCHISM:
+          - Overview: models/schism.md
+          - Procedural demonstration: notebooks/schism/schism_demo.ipynb
+  - Contributor conventions: tutorial-conventions.md
   - Audit status: audit.md
   - Installation: installation_guide.md
   - Usage: usage_guide.md

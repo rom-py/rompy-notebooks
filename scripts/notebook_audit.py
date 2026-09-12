@@ -9,6 +9,16 @@ from pathlib import Path
 
 EXCLUDED_PARTS = {".ipynb_checkpoints", "__pycache__"}
 LINK_RE = re.compile(r"!?\[[^\]]*\]\(([^)#]+)")
+MODEL_NAMES = {"swan", "xbeach", "schism"}
+NOTEBOOK_KINDS = {"journey", "tutorial", "reference"}
+NOTEBOOK_LEVELS = {"beginner", "intermediate", "advanced"}
+NOTEBOOK_EXECUTION = {"render-only", "configuration-only", "runtime-dependent"}
+MODEL_OVERVIEWS = {
+    "swan": Path("docs/models/swan.md"),
+    "xbeach": Path("docs/models/xbeach.md"),
+    "schism": Path("docs/models/schism.md"),
+}
+COVERAGE_MATRIX = Path("docs/models/coverage.md")
 SWAN_JOURNEY = [
     Path("notebooks/swan/journey_01_rompy_orientation.ipynb"),
     Path("notebooks/swan/journey_02_swan_procedural.ipynb"),
@@ -52,10 +62,39 @@ def audit_notebooks(root: Path) -> list[str]:
             failures.append(f"missing notebook metadata: {relative}")
         if not isinstance(notebook.get("cells"), list):
             failures.append(f"missing cells list: {relative}")
+        if relative.parts[1:2] and relative.parts[1] in MODEL_NAMES:
+            failures.extend(audit_model_metadata(relative, notebook))
         for number, cell in enumerate(notebook.get("cells", [])):
             for output in cell.get("outputs", []) if isinstance(cell, dict) else []:
                 if output.get("output_type") == "error":
                     failures.append(f"stored execution error: {relative} cell {number}")
+    return failures
+
+
+def audit_model_metadata(relative: Path, notebook: dict) -> list[str]:
+    failures: list[str] = []
+    metadata = notebook.get("metadata", {}).get("rompy_notebooks")
+    prefix = f"invalid model metadata: {relative}"
+    if not isinstance(metadata, dict):
+        return [f"missing rompy_notebooks metadata: {relative}"]
+    required = ("model", "kind", "level", "topics", "execution")
+    missing = [field for field in required if field not in metadata]
+    if missing:
+        failures.append(f"{prefix}: missing fields {', '.join(missing)}")
+        return failures
+    expected_model = relative.parts[1]
+    if metadata["model"] != expected_model:
+        failures.append(f"{prefix}: model must be {expected_model!r}")
+    if metadata["kind"] not in NOTEBOOK_KINDS:
+        failures.append(f"{prefix}: unsupported kind {metadata['kind']!r}")
+    if metadata["level"] not in NOTEBOOK_LEVELS:
+        failures.append(f"{prefix}: unsupported level {metadata['level']!r}")
+    if not isinstance(metadata["topics"], list) or not metadata["topics"] or not all(
+        isinstance(topic, str) and topic for topic in metadata["topics"]
+    ):
+        failures.append(f"{prefix}: topics must be a non-empty list of strings")
+    if metadata["execution"] not in NOTEBOOK_EXECUTION:
+        failures.append(f"{prefix}: unsupported execution {metadata['execution']!r}")
     return failures
 
 
@@ -103,6 +142,34 @@ def audit_hygiene(root: Path) -> list[str]:
     return failures
 
 
+def audit_model_docs(root: Path) -> list[str]:
+    failures: list[str] = []
+    role_terms = ("journey", "tutorial", "reference")
+    for model, relative in MODEL_OVERVIEWS.items():
+        path = root / relative
+        if not path.is_file():
+            failures.append(f"missing {model} model overview: {relative}")
+            continue
+        text = path.read_text(encoding="utf-8").lower()
+        if "coverage" not in text:
+            failures.append(f"model overview missing coverage status: {relative}")
+        missing_roles = [role for role in role_terms if role not in text]
+        if missing_roles:
+            failures.append(f"model overview missing roles {', '.join(missing_roles)}: {relative}")
+    matrix = root / COVERAGE_MATRIX
+    if not matrix.is_file():
+        failures.append(f"missing model coverage matrix: {COVERAGE_MATRIX}")
+    else:
+        text = matrix.read_text(encoding="utf-8").lower()
+        for model in MODEL_NAMES:
+            if model not in text:
+                failures.append(f"coverage matrix missing model: {model}")
+        for status in ("established", "partial", "not yet covered"):
+            if status not in text:
+                failures.append(f"coverage matrix missing status: {status}")
+    return failures
+
+
 def audit_links(root: Path) -> list[str]:
     failures: list[str] = []
     docs = root / "docs"
@@ -119,7 +186,13 @@ def audit_links(root: Path) -> list[str]:
 
 
 def run(root: Path) -> int:
-    failures = audit_notebooks(root) + audit_journey(root) + audit_hygiene(root) + audit_links(root)
+    failures = (
+        audit_notebooks(root)
+        + audit_journey(root)
+        + audit_model_docs(root)
+        + audit_hygiene(root)
+        + audit_links(root)
+    )
     if failures:
         print("Notebook quality gate failed:")
         print("\n".join(f"- {failure}" for failure in failures))
