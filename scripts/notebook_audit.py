@@ -79,11 +79,11 @@ def audit_journey(root: Path) -> list[str]:
             if marker.lower() not in markdown.lower():
                 failures.append(f"SWAN journey missing {marker}: {relative}")
         if index < len(SWAN_JOURNEY) - 1:
-            next_name = SWAN_JOURNEY[index + 1].name
+            next_name = SWAN_JOURNEY[index + 1].stem
             if next_name not in markdown:
                 failures.append(f"SWAN journey missing next link: {relative} -> {next_name}")
         if index > 0:
-            previous_name = SWAN_JOURNEY[index - 1].name
+            previous_name = SWAN_JOURNEY[index - 1].stem
             if previous_name not in markdown:
                 failures.append(f"SWAN journey missing previous link: {relative} -> {previous_name}")
     return failures
