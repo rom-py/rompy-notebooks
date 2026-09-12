@@ -1,6 +1,6 @@
 # SWAN notebooks
 
-SWAN has the repository's first complete Rompy learning journey. Start with the [journey overview](../swan-journey.md) if you are new to Rompy, then use the focused examples as tutorials and references.
+SWAN has the repository's first complete Rompy learning journey. Start with the [journey overview](../swan-journey.md) if you are new to Rompy, then use the focused examples as tutorials and references. The data and workspace lessons now show the practical source-to-SWAN transformations Rompy prepares.
 
 !!! note
     Documentation builds render notebooks without executing SWAN. See each notebook's execution metadata and the [build and execution guide](../workflow.md) before running a model.

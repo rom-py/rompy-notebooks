@@ -34,6 +34,12 @@ Allowed values are:
 
 The metadata describes instructional context; it does not replace explanations in the notebook or navigation in the model overview.
 
+## Showing Rompy's value
+
+Lessons involving grids, forcing, boundaries, or workspace generation should make the practical transformation visible. Explain the equivalent manual workflow, name the Rompy objects that represent it, show representative generated artefacts, and include a plot or metadata check when fixtures support one. Be precise about the boundary: Rompy orchestrates configured filtering, interpolation, extraction, and model-format conversion, while the modeller remains responsible for source selection, scientific assumptions, data quality, and runtime validation.
+
+Use short headings or callouts such as **Without Rompy**, **With Rompy**, **Generated artefacts**, and **Verification**. Documentation rendering remains render-only; these explanations must not imply that a model binary ran.
+
 ## Author checklist
 
 Before adding or changing a model notebook:

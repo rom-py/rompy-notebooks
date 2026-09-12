@@ -37,6 +37,14 @@ def test_audit_current_model_metadata_passes():
     assert notebook_audit.audit_notebooks(Path.cwd()) == []
 
 
+def test_audit_current_value_narrative_passes():
+    assert notebook_audit.audit_value_narrative(Path.cwd()) == []
+
+
+def test_audit_current_visual_verification_passes():
+    assert notebook_audit.audit_visual_verification(Path.cwd()) == []
+
+
 def test_audit_current_model_docs_passes():
     assert notebook_audit.audit_model_docs(Path.cwd()) == []
 

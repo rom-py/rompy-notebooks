@@ -1,6 +1,6 @@
 # XBeach notebooks
 
-The XBeach collection now includes a compact guided journey plus focused capability tutorials. Start with the journey if you are new to Rompy and XBeach; use the grouped tutorials when you need deeper coverage of one input or component. The complete [notebook gallery](../gallery.md) remains the reference catalogue for lookup.
+The XBeach collection now includes a compact guided journey plus focused capability tutorials. Start with the journey if you are new to Rompy and XBeach; use the grouped tutorials when you need deeper coverage of one input or component. The grid, forcing, and execution lessons also make the source-to-XBeach preparation work visible. The complete [notebook gallery](../gallery.md) remains the reference catalogue for lookup.
 
 !!! note
     Documentation builds render notebooks without executing XBeach. Runtime-dependent lessons require an appropriate `rompy-xbeach` environment and XBeach installation. Configuration-only lessons validate Rompy objects or generated inputs but do not run the model.

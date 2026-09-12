@@ -163,6 +163,77 @@ def audit_schism_journey(root: Path) -> list[str]:
     return _audit_ordered_journey(root, SCHISM_JOURNEY, "SCHISM", execution_marker=True)
 
 
+def audit_value_narrative(root: Path) -> list[str]:
+    failures: list[str] = []
+    journeys = [("SWAN", SWAN_JOURNEY), ("XBeach", XBEACH_JOURNEY), ("SCHISM", SCHISM_JOURNEY)]
+    for label, paths in journeys:
+        for relative in paths:
+            path = root / relative
+            if not path.is_file():
+                continue
+            notebook = json.loads(path.read_text(encoding="utf-8"))
+            markdown = "\\n".join(
+                "".join(cell.get("source", []))
+                for cell in notebook.get("cells", [])
+                if cell.get("cell_type") == "markdown"
+            ).lower()
+            for marker in ("without rompy", "with rompy"):
+                if marker not in markdown:
+                    failures.append(f"{label} journey missing value marker {marker}: {relative}")
+    enriched = {
+        relative
+        for relative in (
+            Path("notebooks/swan/journey_04_swan_data.ipynb"),
+            Path("notebooks/swan/journey_06_swan_workspace.ipynb"),
+            Path("notebooks/xbeach/journey_04_xbeach_grid_data.ipynb"),
+            Path("notebooks/xbeach/journey_05_xbeach_forcing.ipynb"),
+            Path("notebooks/xbeach/journey_07_xbeach_execution.ipynb"),
+            Path("notebooks/schism/journey_03_schism_grid_data.ipynb"),
+            Path("notebooks/schism/journey_04_schism_forcing.ipynb"),
+            Path("notebooks/schism/journey_05_schism_boundaries.ipynb"),
+            Path("notebooks/schism/journey_06_schism_real_case.ipynb"),
+        )
+    }
+    for relative in enriched:
+        path = root / relative
+        if not path.is_file():
+            continue
+        notebook = json.loads(path.read_text(encoding="utf-8"))
+        markdown = "\\n".join(
+            "".join(cell.get("source", []))
+            for cell in notebook.get("cells", [])
+            if cell.get("cell_type") == "markdown"
+        ).lower()
+        marker = "generated" if relative in {
+            Path("notebooks/swan/journey_06_swan_workspace.ipynb"),
+            Path("notebooks/xbeach/journey_07_xbeach_execution.ipynb"),
+            Path("notebooks/schism/journey_06_schism_real_case.ipynb"),
+        } else "verification"
+        if marker not in markdown:
+            failures.append(f"journey missing value marker {marker}: {relative}")
+    return failures
+
+
+def audit_visual_verification(root: Path) -> list[str]:
+    failures: list[str] = []
+    required = {
+        "SWAN": [Path("notebooks/swan/journey_04_swan_data.ipynb")],
+        "XBeach": [Path("notebooks/xbeach/journey_04_xbeach_grid_data.ipynb"), Path("notebooks/xbeach/journey_05_xbeach_forcing.ipynb")],
+        "SCHISM": [Path("notebooks/schism/journey_03_schism_grid_data.ipynb"), Path("notebooks/schism/journey_04_schism_forcing.ipynb"), Path("notebooks/schism/journey_05_schism_boundaries.ipynb")],
+    }
+    for label, paths in required.items():
+        for relative in paths:
+            path = root / relative
+            if not path.is_file():
+                failures.append(f"missing {label} visual-verification notebook: {relative}")
+                continue
+            notebook = json.loads(path.read_text(encoding="utf-8"))
+            source = "\\n".join("".join(cell.get("source", [])) for cell in notebook.get("cells", []))
+            if "matplotlib" not in source or ("plot(" not in source and "pcolormesh" not in source):
+                failures.append(f"{label} visual verification lacks a plot: {relative}")
+    return failures
+
+
 def audit_hygiene(root: Path) -> list[str]:
     failures: list[str] = []
     for path in tracked_files(root):
@@ -226,6 +297,8 @@ def run(root: Path) -> int:
         + audit_journey(root)
         + audit_xbeach_journey(root)
         + audit_schism_journey(root)
+        + audit_value_narrative(root)
+        + audit_visual_verification(root)
         + audit_model_docs(root)
         + audit_hygiene(root)
         + audit_links(root)
