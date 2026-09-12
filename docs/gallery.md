@@ -19,7 +19,10 @@ The gallery is grouped by the main areas covered by this repository. The complet
 
 ## SCHISM
 
+Start with the [SCHISM learning journey](models/schism.md) for the progressive path and real-data case study.
+
 - [SCHISM demonstration](notebooks/schism/schism_demo.ipynb)
+- [Complete regional case study](notebooks/schism/journey_06_schism_real_case.ipynb)
 
 ## XBeach
 

@@ -28,6 +28,15 @@ SWAN_JOURNEY = [
     Path("notebooks/swan/journey_06_swan_workspace.ipynb"),
     Path("notebooks/swan/journey_07_swan_sensitivity.ipynb"),
 ]
+SCHISM_JOURNEY = [
+    Path("notebooks/schism/journey_01_rompy_orientation.ipynb"),
+    Path("notebooks/schism/journey_02_schism_procedural.ipynb"),
+    Path("notebooks/schism/journey_03_schism_grid_data.ipynb"),
+    Path("notebooks/schism/journey_04_schism_forcing.ipynb"),
+    Path("notebooks/schism/journey_05_schism_boundaries.ipynb"),
+    Path("notebooks/schism/journey_06_schism_real_case.ipynb"),
+    Path("notebooks/schism/journey_07_schism_execution.ipynb"),
+]
 XBEACH_JOURNEY = [
     Path("notebooks/xbeach/journey_01_rompy_orientation.ipynb"),
     Path("notebooks/xbeach/journey_02_xbeach_procedural.ipynb"),
@@ -150,6 +159,10 @@ def audit_xbeach_journey(root: Path) -> list[str]:
     return _audit_ordered_journey(root, XBEACH_JOURNEY, "XBeach", execution_marker=True)
 
 
+def audit_schism_journey(root: Path) -> list[str]:
+    return _audit_ordered_journey(root, SCHISM_JOURNEY, "SCHISM", execution_marker=True)
+
+
 def audit_hygiene(root: Path) -> list[str]:
     failures: list[str] = []
     for path in tracked_files(root):
@@ -212,6 +225,7 @@ def run(root: Path) -> int:
         audit_notebooks(root)
         + audit_journey(root)
         + audit_xbeach_journey(root)
+        + audit_schism_journey(root)
         + audit_model_docs(root)
         + audit_hygiene(root)
         + audit_links(root)
