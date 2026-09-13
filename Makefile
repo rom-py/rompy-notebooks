@@ -1,4 +1,4 @@
-.PHONY: docs-stage docs-build docs-serve notebook-audit test
+.PHONY: docs-stage docs-build docs-serve docs-build-executed docs-serve-executed execute-docs notebook-audit test
 
 PYTHON ?= python
 
@@ -11,8 +11,19 @@ docs-stage:
 docs-build: docs-stage notebook-audit
 	mkdocs build --strict
 
+docs-build-executed: docs-stage notebook-audit
+	$(PYTHON) scripts/execute_docs_notebooks.py
+	mkdocs build --strict
+
 docs-serve: docs-stage
 	mkdocs serve
+
+docs-serve-executed: docs-stage
+	$(PYTHON) scripts/execute_docs_notebooks.py
+	mkdocs serve
+
+execute-docs: docs-stage
+	$(PYTHON) scripts/execute_docs_notebooks.py
 
 test: notebook-audit
 	pytest -q

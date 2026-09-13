@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 from scripts import notebook_audit
+from scripts import execute_docs_notebooks
 
 
 def write_notebook(path: Path, *, outputs=None):
@@ -170,3 +171,34 @@ def test_audit_links_detects_missing_target(tmp_path):
     docs.mkdir()
     (docs / "index.md").write_text("[missing](notebooks/nope.ipynb)")
     assert notebook_audit.audit_links(tmp_path)
+
+
+def write_staged_notebook(path: Path, execution: str, source=None):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({
+        "cells": [{"cell_type": "code", "execution_count": None, "metadata": {}, "outputs": [], "source": source or ["result = 1"]}],
+        "metadata": {"rompy_notebooks": {"execution": execution}},
+        "nbformat": 4,
+        "nbformat_minor": 5,
+    }))
+
+
+def test_executed_docs_only_changes_staged_copy(tmp_path):
+    source = tmp_path / "notebooks" / "swan" / "journey_01_example.ipynb"
+    staged = tmp_path / "docs" / "notebooks" / "swan" / source.name
+    write_staged_notebook(source, "configuration-only", ["result = 42"])
+    write_staged_notebook(staged, "configuration-only", ["result = 42"])
+    original = source.read_bytes()
+    execute_docs_notebooks.execute_notebooks(tmp_path)
+    assert source.read_bytes() == original
+    executed = json.loads(staged.read_text())
+    assert executed["cells"][0]["outputs"] == []
+    assert executed["cells"][0]["execution_count"] == 1
+
+
+def test_executed_docs_skips_runtime_notebooks(tmp_path):
+    staged = tmp_path / "docs" / "notebooks" / "schism" / "journey_01_runtime.ipynb"
+    write_staged_notebook(staged, "runtime-dependent", ["raise RuntimeError('must skip')"])
+    eligible, skipped = execute_docs_notebooks.eligible_notebooks(tmp_path)
+    assert eligible == []
+    assert skipped == [staged]
