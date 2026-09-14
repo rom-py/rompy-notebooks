@@ -106,6 +106,33 @@ nav:
           - Time-series forcing: notebooks/xbeach/data-interface/tutorial-timeseries-forcing.ipynb
           - Wave boundary: notebooks/xbeach/data-interface/tutorial-wave-boundary.ipynb
 
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/lightbulb
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+
 plugins:
   - search
   - mkdocs-jupyter:
