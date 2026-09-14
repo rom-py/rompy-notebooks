@@ -46,6 +46,10 @@ def test_audit_current_visual_verification_passes():
     assert notebook_audit.audit_visual_verification(Path.cwd()) == []
 
 
+def test_audit_current_forcing_depth_passes():
+    assert notebook_audit.audit_forcing_depth(Path.cwd()) == []
+
+
 def test_audit_current_model_docs_passes():
     assert notebook_audit.audit_model_docs(Path.cwd()) == []
 

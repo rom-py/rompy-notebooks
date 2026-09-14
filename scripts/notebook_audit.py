@@ -214,6 +214,30 @@ def audit_value_narrative(root: Path) -> list[str]:
     return failures
 
 
+def audit_forcing_depth(root: Path) -> list[str]:
+    """Check that enriched case-study notebooks explain source-to-output work."""
+    failures: list[str] = []
+    required = {
+        "SWAN": (Path("notebooks/swan/journey_04_swan_data.ipynb"), ("source", "verification")),
+        "XBeach": (Path("notebooks/xbeach/journey_05_xbeach_forcing.ipynb"), ("source", "verification")),
+        "SCHISM": (Path("notebooks/schism/journey_06_schism_real_case.ipynb"), ("source", "generated", "verification", "assumption")),
+    }
+    for label, (relative, markers) in required.items():
+        path = root / relative
+        if not path.is_file():
+            continue
+        notebook = json.loads(path.read_text(encoding="utf-8"))
+        text = "\n".join(
+            "".join(cell.get("source", []))
+            for cell in notebook.get("cells", [])
+            if isinstance(cell, dict)
+        ).lower()
+        missing = [marker for marker in markers if marker not in text]
+        if missing:
+            failures.append(f"{label} forcing case missing depth markers: {', '.join(missing)}")
+    return failures
+
+
 def audit_visual_verification(root: Path) -> list[str]:
     failures: list[str] = []
     required = {
@@ -298,6 +322,7 @@ def run(root: Path) -> int:
         + audit_xbeach_journey(root)
         + audit_schism_journey(root)
         + audit_value_narrative(root)
+        + audit_forcing_depth(root)
         + audit_visual_verification(root)
         + audit_model_docs(root)
         + audit_hygiene(root)

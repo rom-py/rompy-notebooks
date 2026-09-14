@@ -14,6 +14,37 @@ RELEASES_URL = f"https://api.github.com/repos/{DATA_REPO}/releases/latest"
 REQUIRED_FILES = ("hgrid.gr3", "vgrid.in", "era5.nc", "hycom.nc")
 
 
+def describe_fixture(path: str | Path) -> dict[str, object]:
+    """Return a compact, JSON-friendly inventory for a SCHISM fixture."""
+    import xarray as xr
+
+    fixture = Path(path)
+    if fixture.suffix != ".nc":
+        return {"path": str(fixture), "kind": "file"}
+    with xr.open_dataset(fixture) as dataset:
+        return {
+            "path": str(fixture),
+            "dimensions": {name: int(size) for name, size in dataset.sizes.items()},
+            "variables": {name: list(variable.dims) for name, variable in dataset.data_vars.items()},
+            "coordinates": list(dataset.coords),
+        }
+
+
+def assert_netcdf_contract(path: str | Path, *, variables: tuple[str, ...] = (), dimensions: tuple[str, ...] = ()) -> None:
+    """Assert the structural contract of a generated or source NetCDF file."""
+    import xarray as xr
+
+    with xr.open_dataset(path) as dataset:
+        missing_variables = sorted(set(variables) - set(dataset.data_vars))
+        missing_dimensions = sorted(set(dimensions) - set(dataset.sizes))
+    if missing_variables or missing_dimensions:
+        raise AssertionError(
+            f"{path} does not satisfy its contract: "
+            f"missing variables={missing_variables}, dimensions={missing_dimensions}"
+        )
+
+
+
 def _complete(path: Path) -> bool:
     return all((path / name).is_file() for name in REQUIRED_FILES)
 
