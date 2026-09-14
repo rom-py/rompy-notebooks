@@ -1,6 +1,6 @@
 # Notebook gallery
 
-The gallery is grouped by the main areas covered by this repository. The complete list is also available in the site's **Notebooks** sidebar.
+The gallery is grouped by the main areas covered by this repository. The complete metadata-driven catalogue is available in [notebooks by model](generated/notebooks-by-model.md) and [notebooks by topic](generated/notebooks-by-topic.md), as well as the site's **Notebooks** sidebar.
 
 ## Common and backends
 

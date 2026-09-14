@@ -9,6 +9,7 @@ venv/
 /site/
 /.cache/
 /docs/notebooks/
+/docs/generated/
 /docs/_build/
 
 # Inputs

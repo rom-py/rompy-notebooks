@@ -32,7 +32,7 @@ Allowed values are:
 - `topics`: a non-empty list of concise topic names;
 - `execution`: `render-only`, `configuration-only`, or `runtime-dependent`.
 
-The metadata describes instructional context; it does not replace explanations in the notebook or navigation in the model overview.
+The metadata describes instructional context; it does not replace explanations in the notebook or navigation in the model overview. The `id` is stable and unique, `published` controls inclusion in generated indexes, `prerequisites` and `execution_requirements` describe what a reader needs, and journey lessons use a positive `journey` number. Excluded notebooks must provide an `exclusion_reason`.
 
 ## Showing Rompy's value
 

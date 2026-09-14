@@ -7,6 +7,8 @@ notebook-audit: docs-stage
 
 docs-stage:
 	$(PYTHON) scripts/sync_docs.py
+	$(PYTHON) scripts/notebook_inventory.py --output docs/generated/notebook-inventory.json
+	$(PYTHON) scripts/discoverability.py
 
 docs-build: docs-stage notebook-audit
 	mkdocs build --strict

@@ -9,6 +9,9 @@ site_dir: site
 nav:
   - Home: index.md
   - Notebook gallery: gallery.md
+  - Discover notebooks:
+      - By model: generated/notebooks-by-model.md
+      - By topic: generated/notebooks-by-topic.md
   - Models:
       - Coverage matrix: models/coverage.md
       - SWAN:
@@ -133,6 +136,9 @@ theme:
     - content.tabs.link
     - content.code.annotation
     - content.code.copy
+
+hooks:
+  - scripts/discoverability_hooks.py
 
 plugins:
   - search

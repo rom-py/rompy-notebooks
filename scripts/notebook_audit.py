@@ -7,6 +7,11 @@ import re
 import subprocess
 from pathlib import Path
 
+try:
+    from .notebook_inventory import build_inventory
+except ImportError:  # pragma: no cover - direct script execution
+    from notebook_inventory import build_inventory
+
 EXCLUDED_PARTS = {".ipynb_checkpoints", "__pycache__"}
 LINK_RE = re.compile(r"!?\[[^\]]*\]\(([^)#]+)")
 MODEL_NAMES = {"swan", "xbeach", "schism"}
@@ -56,6 +61,12 @@ def tracked_files(root: Path) -> list[Path]:
         text=True,
     )
     return [root / line for line in result.stdout.splitlines()]
+
+
+def audit_inventory(root: Path) -> list[str]:
+    """Validate the metadata-backed inventory and published source paths."""
+    _, errors = build_inventory(root)
+    return errors
 
 
 def audit_notebooks(root: Path) -> list[str]:
@@ -272,6 +283,23 @@ def audit_hygiene(root: Path) -> list[str]:
     return failures
 
 
+def audit_navigation_coverage(root: Path) -> list[str]:
+    """Ensure published inventory is represented by generated and curated views."""
+    records, errors = build_inventory(root)
+    if errors:
+        return errors
+    mkdocs = (root / "mkdocs.yml").read_text(encoding="utf-8")
+    gallery = (root / "docs/gallery.md").read_text(encoding="utf-8")
+    failures = []
+    for record in records:
+        if record["published"] and record["path"] not in mkdocs and record["path"] not in gallery:
+            failures.append(f"published notebook absent from curated navigation: {record['path']}")
+    for generated in ("generated/notebooks-by-model.md", "generated/notebooks-by-topic.md"):
+        if generated not in mkdocs:
+            failures.append(f"generated discoverability page absent from navigation: {generated}")
+    return failures
+
+
 def audit_model_docs(root: Path) -> list[str]:
     failures: list[str] = []
     role_terms = ("journey", "tutorial", "reference")
@@ -310,14 +338,18 @@ def audit_links(root: Path) -> list[str]:
             if "://" in target or target.startswith("#"):
                 continue
             resolved = (page.parent / target).resolve()
-            if not resolved.exists():
+            # MkDocs turns notebook sources into directory pages, while the
+            # staged source remains a sibling .ipynb file on disk.
+            notebook_source = Path(str(resolved).rstrip("/" ) + ".ipynb")
+            if not resolved.exists() and not notebook_source.exists():
                 failures.append(f"missing documentation target: {page.relative_to(root)} -> {target}")
     return failures
 
 
 def run(root: Path) -> int:
     failures = (
-        audit_notebooks(root)
+        audit_inventory(root)
+        + audit_notebooks(root)
         + audit_journey(root)
         + audit_xbeach_journey(root)
         + audit_schism_journey(root)
@@ -325,6 +357,7 @@ def run(root: Path) -> int:
         + audit_forcing_depth(root)
         + audit_visual_verification(root)
         + audit_model_docs(root)
+        + audit_navigation_coverage(root)
         + audit_hygiene(root)
         + audit_links(root)
     )

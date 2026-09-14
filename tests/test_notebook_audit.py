@@ -206,3 +206,22 @@ def test_executed_docs_skips_runtime_notebooks(tmp_path):
     eligible, skipped = execute_docs_notebooks.eligible_notebooks(tmp_path)
     assert eligible == []
     assert skipped == [staged]
+
+
+def test_inventory_current_model_notebooks_are_valid():
+    from scripts.notebook_inventory import build_inventory
+    records, errors = build_inventory(Path.cwd())
+    assert errors == []
+    assert len(records) == 43
+    assert [record["id"] for record in records] == sorted(record["id"] for record in records)
+
+
+def test_inventory_rejects_missing_required_fields():
+    from scripts.notebook_inventory import validate_metadata
+    assert "missing fields id" in validate_metadata(Path("notebooks/demo.ipynb"), {"model": "swan"})[0]
+
+
+def test_inventory_requires_exclusion_reason():
+    from scripts.notebook_inventory import validate_metadata
+    metadata = {"id": "demo", "model": "swan", "kind": "tutorial", "level": "beginner", "topics": ["demo"], "execution": "render-only", "prerequisites": [], "execution_requirements": [], "published": False}
+    assert "exclusion_reason" in " ".join(validate_metadata(Path("notebooks/demo.ipynb"), metadata))
