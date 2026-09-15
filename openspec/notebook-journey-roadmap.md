@@ -179,7 +179,7 @@ The completed case-study work demonstrates structural generation and processing 
 
 **Exit criteria:** users can discover a notebook by learning goal, model, or capability, and omissions are visible rather than silent.
 
-### 6. `separate-execution-validation`
+### 6. `separate-execution-validation` **(complete)**
 
 **Purpose:** Add confidence about actual notebook/model execution without making documentation builds dependent on model runtimes.
 
@@ -203,7 +203,7 @@ Tier 4: model integration execution     opt-in / scheduled / environment-specifi
 
 **Exit criteria:** documentation CI remains lightweight while executable examples have a separate, trustworthy validation path.
 
-### 7. `reproducible-example-data-and-outputs`
+### 7. `reproducible-example-data-and-outputs` **(next)**
 
 **Purpose:** Improve repeatability and provenance for examples that use data, generated files, or stored outputs.
 
@@ -225,13 +225,10 @@ This follow-on consolidation removed overlapping gallery, discovery, and noteboo
 
 ## Suggested order
 
-The journey, tutorial, discoverability, and navigation work is complete. The next planned change is execution validation:
+The journey, tutorial, discoverability, navigation, and execution-validation work is complete. The next planned change is reproducible example data and outputs:
 
 ```text
-1–5a. completed journey, catalogue, and navigation work
-          |
-          v
-6. separate-execution-validation
+1–6. completed journey, catalogue, navigation, and validation work
           |
           v
 7. reproducible-example-data-and-outputs
