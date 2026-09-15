@@ -162,7 +162,7 @@ The completed case-study work demonstrates structural generation and processing 
 
 **Exit criteria:** a user can learn the major SCHISM configuration concepts through focused notebooks, with honest coverage and runtime limitations.
 
-### 5. `improve-notebook-discoverability` **(next)**
+### 5. `improve-notebook-discoverability` **(complete)**
 
 **Purpose:** Make the site useful as both a guided course and a reference catalogue.
 
@@ -219,15 +219,16 @@ Tier 4: model integration execution     opt-in / scheduled / environment-specifi
 
 **Exit criteria:** users can understand where inputs came from, what was actually run, and how to reproduce or refresh stored outputs.
 
+### 5a. `consolidate-documentation-navigation` **(complete)**
+
+This follow-on consolidation removed overlapping gallery, discovery, and notebook catalogue entry points and established one logical documentation hierarchy.
+
 ## Suggested order
 
-The first four items are complete. The next planned change is notebook discoverability:
+The journey, tutorial, discoverability, and navigation work is complete. The next planned change is execution validation:
 
 ```text
-1–4. completed journey and model tutorial work
-          |
-          v
-5. improve-notebook-discoverability
+1–5a. completed journey, catalogue, and navigation work
           |
           v
 6. separate-execution-validation
