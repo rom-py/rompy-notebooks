@@ -225,3 +225,21 @@ def test_inventory_requires_exclusion_reason():
     from scripts.notebook_inventory import validate_metadata
     metadata = {"id": "demo", "model": "swan", "kind": "tutorial", "level": "beginner", "topics": ["demo"], "execution": "render-only", "prerequisites": [], "execution_requirements": [], "published": False}
     assert "exclusion_reason" in " ".join(validate_metadata(Path("notebooks/demo.ipynb"), metadata))
+
+
+def test_documentation_has_one_notebook_catalogue_surface():
+    text = (Path.cwd() / "mkdocs.yml").read_text()
+    assert "Notebook catalogue:" in text
+    assert "Notebook gallery:" not in text
+    assert "Discover notebooks:" not in text
+    assert "  - Notebooks:" not in text
+
+
+def test_complete_catalogue_contains_each_published_notebook():
+    from scripts.notebook_inventory import build_inventory
+    records, errors = build_inventory(Path.cwd())
+    assert errors == []
+    catalogue = (Path.cwd() / "docs/generated/all-notebooks.md").read_text()
+    for record in records:
+        if record["published"]:
+            assert Path(record["path"]).with_suffix("").as_posix() in catalogue

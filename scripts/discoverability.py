@@ -30,6 +30,10 @@ def generate(root: Path, destination: Path) -> None:
         raise ValueError("\n".join(errors))
     published = [record for record in records if record["published"]]
     destination.mkdir(parents=True, exist_ok=True)
+    all_text = ["# All notebooks", "", "Generated from notebook metadata. Each published notebook appears once.", ""]
+    all_text += [render_record(record) for record in published]
+    (destination / "all-notebooks.md").write_text("\n".join(all_text) + "\n", encoding="utf-8")
+
     by_model = destination / "notebooks-by-model.md"
     model_text = ["# Notebooks by model", "", "Generated from notebook metadata.", ""]
     for model in sorted({record["model"] for record in published}):

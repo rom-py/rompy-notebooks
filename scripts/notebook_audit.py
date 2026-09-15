@@ -291,10 +291,14 @@ def audit_navigation_coverage(root: Path) -> list[str]:
     mkdocs = (root / "mkdocs.yml").read_text(encoding="utf-8")
     gallery = (root / "docs/gallery.md").read_text(encoding="utf-8")
     failures = []
+    all_catalogue = root / "docs/generated/all-notebooks.md"
+    all_text = all_catalogue.read_text(encoding="utf-8") if all_catalogue.is_file() else ""
     for record in records:
-        if record["published"] and record["path"] not in mkdocs and record["path"] not in gallery:
-            failures.append(f"published notebook absent from curated navigation: {record['path']}")
-    for generated in ("generated/notebooks-by-model.md", "generated/notebooks-by-topic.md"):
+        if record["published"]:
+            route = Path(record["path"]).with_suffix("").as_posix()
+            if route not in all_text:
+                failures.append(f"published notebook absent from complete catalogue: {record['path']}")
+    for generated in ("generated/all-notebooks.md", "generated/notebooks-by-model.md", "generated/notebooks-by-topic.md"):
         if generated not in mkdocs:
             failures.append(f"generated discoverability page absent from navigation: {generated}")
     return failures
