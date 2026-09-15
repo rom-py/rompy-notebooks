@@ -28,11 +28,16 @@ make docs-serve-executed
 
 These commands execute staged copies under `docs/notebooks/` before rendering. They require `nbclient`, the notebook Python dependencies, and any fixture data used by configuration-only lessons. Runtime-dependent lessons are skipped by default; no source notebooks or generated outputs are committed.
 
-## Validation contract
+## Validation tiers
 
-The site uses `mkdocs-jupyter` with notebook execution disabled. The standard build renders stored outputs and therefore does not require model binaries, Docker, MPI, or remote data services. The separate quality gate checks notebook structure and stored error outputs, but it also does not execute model code.
+The project separates documentation rendering from execution:
 
-The executed build is an opt-in integration workflow. It runs only `journey_*.ipynb` files with `render-only` or `configuration-only` metadata, using the repository root as the working directory. It may require local fixture data and package dependencies, and it can take substantially longer than the standard build.
+1. **Structural audit** (`make notebook-audit`) checks notebook JSON, metadata, links, and hygiene.
+2. **Render-only build** (`make docs-build`) is the default CI gate and does not execute notebooks or model binaries.
+3. **Selected execution** (`make execute-docs-selected`) runs notebooks explicitly marked eligible in staged copies and writes `.cache/selected-execution.json`.
+4. **Runtime validation** is opt-in and environment-specific; it is never implied by stored outputs or a successful documentation build.
+
+Selected execution is a configuration/data check, not scientific validation. Its report records this limitation explicitly.
 
 Full notebook execution is a separate integration concern. Individual examples may require:
 

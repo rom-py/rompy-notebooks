@@ -243,3 +243,14 @@ def test_complete_catalogue_contains_each_published_notebook():
     for record in records:
         if record["published"]:
             assert Path(record["path"]).with_suffix("").as_posix() in catalogue
+
+
+def test_selected_execution_uses_metadata_group_and_eligibility(tmp_path):
+    from scripts.execute_docs_notebooks import eligible_notebooks
+    staged = tmp_path / "docs/notebooks"
+    staged.mkdir(parents=True)
+    for name, group, eligible in (("journey_a.ipynb", "journeys", True), ("reference.ipynb", "reference", True), ("journey_b.ipynb", "journeys", False)):
+        (staged / name).write_text(json.dumps({"metadata": {"rompy_notebooks": {"execution_group": group, "execution_eligible": eligible, "execution": "render-only"}}}))
+    selected, skipped = eligible_notebooks(tmp_path)
+    assert [path.name for path in selected] == ["journey_a.ipynb"]
+    assert {path.name for path in skipped} == {"reference.ipynb", "journey_b.ipynb"}

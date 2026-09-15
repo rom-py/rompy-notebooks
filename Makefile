@@ -25,7 +25,22 @@ docs-serve-executed: docs-stage
 	mkdocs serve
 
 execute-docs: docs-stage
-	$(PYTHON) scripts/execute_docs_notebooks.py
+	$(PYTHON) scripts/execute_docs_notebooks.py --report .cache/selected-execution.json
+
+execute-docs-selected: execute-docs
+
+# Model-runtime checks are intentionally opt-in and environment-specific.
+validate-runtime: docs-stage
+	$(PYTHON) scripts/execute_docs_notebooks.py --include-runtime --report .cache/runtime-execution.json
+
+runtime-swan:
+	$(PYTHON) scripts/runtime_preflight.py swan
+
+runtime-xbeach:
+	$(PYTHON) scripts/runtime_preflight.py xbeach
+
+runtime-schism:
+	$(PYTHON) scripts/runtime_preflight.py schism
 
 test: notebook-audit
 	pytest -q
