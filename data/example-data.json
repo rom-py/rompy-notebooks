@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "datasets": [
+    {
+      "id": "schism-regional",
+      "source": "https://github.com/rom-py/rompy-test-data/releases/latest",
+      "release": "latest GitHub release",
+      "scope": "SCHISM mesh, vertical grid, ERA5, HYCOM, tidal, and wave fixtures",
+      "local_path": "tests/data/schism",
+      "acquisition": "python scripts/example_data.py --acquire-schism",
+      "optional": true
+    },
+    {
+      "id": "model-example-fixtures",
+      "source": "repository test-data directory",
+      "release": "working-tree fixture bundle",
+      "scope": "Small GEBCO, ERA5, wave, and wind inputs used by model notebooks",
+      "local_path": "tests/data",
+      "acquisition": "provided by the test-data environment",
+      "optional": true
+    }
+  ]
+}

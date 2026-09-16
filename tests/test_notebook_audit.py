@@ -254,3 +254,18 @@ def test_selected_execution_uses_metadata_group_and_eligibility(tmp_path):
     selected, skipped = eligible_notebooks(tmp_path)
     assert [path.name for path in selected] == ["journey_a.ipynb"]
     assert {path.name for path in skipped} == {"reference.ipynb", "journey_b.ipynb"}
+
+
+def test_example_data_manifest_is_versioned_and_explicit():
+    from scripts.example_data import manifest
+    data = manifest(Path.cwd())
+    assert data["version"] == 1
+    assert all(item["id"] and item["source"] and item["local_path"] for item in data["datasets"])
+
+
+def test_example_output_report_marks_generated_files_ignored(tmp_path):
+    from scripts.example_outputs import report
+    (tmp_path / "params.txt").write_text("x")
+    result = report(tmp_path, tier="configuration-only")
+    assert result["artefacts"] == [{"path": "params.txt", "policy": "ignored"}]
+    assert result["scientific_validation"] is False

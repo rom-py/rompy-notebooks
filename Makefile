@@ -1,9 +1,12 @@
-.PHONY: docs-stage docs-build docs-serve docs-build-executed docs-serve-executed execute-docs notebook-audit test
+.PHONY: docs-stage docs-build docs-serve docs-build-executed docs-serve-executed execute-docs execute-docs-selected validate-runtime runtime-swan runtime-xbeach runtime-schism example-data notebook-audit test
 
 PYTHON ?= python
 
 notebook-audit: docs-stage
 	$(PYTHON) scripts/notebook_audit.py
+
+example-data:
+	$(PYTHON) scripts/example_data.py
 
 docs-stage:
 	$(PYTHON) scripts/sync_docs.py

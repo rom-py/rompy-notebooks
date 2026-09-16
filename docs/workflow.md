@@ -8,6 +8,16 @@ From the repository root, install the documentation dependencies:
 python -m pip install -r requirements-docs.txt
 ```
 
+## Example data and provenance
+
+Example datasets are described in [`data/example-data.json`](https://github.com/rom-py/rompy-notebooks/blob/main/data/example-data.json). Check optional fixture availability with:
+
+```bash
+make example-data
+```
+
+Acquisition is explicit and is never part of a render-only documentation build. For the optional SCHISM bundle, use `python scripts/example_data.py --acquire-schism`. Generated model inputs belong in temporary or ignored workspaces and are not scientific validation evidence.
+
 ## Build or preview locally
 
 The wrapper commands stage tracked notebooks, excluding checkpoints and generated run output:
