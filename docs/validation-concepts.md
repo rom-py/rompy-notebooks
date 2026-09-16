@@ -1,46 +1,59 @@
-# Validation concepts
+# Validation concepts: a typed input contract
 
-Rompy workflows produce several kinds of evidence. They should not be confused with one another.
+Rompy does not treat model configuration as an arbitrary block of text. Its configuration objects are defined as typed Pydantic models, so an input description is validated as it is constructed—before Rompy writes model-native files or attempts to run a model.
+
+## From text files to an explicit contract
+
+Traditional model inputs are often unstructured text:
 
 ```text
-Valid notebook structure
-        ↓
-Successful configuration/data processing
-        ↓
-Generated model inputs
-        ↓
-Successful model execution
-        ↓
-Scientifically suitable experiment
+keyword value value value
+another-keyword value
+...                  # errors may appear only when the model starts
 ```
 
-Each step is stronger evidence for a different question, but none silently proves the next step.
+The model may accept the file as text while rejecting a value later, silently applying a default, or failing with an opaque parser message. The file format describes syntax, but often provides little help while the configuration is being assembled.
 
-## Evidence levels
+Rompy makes the contract explicit in Python objects:
 
-### Structural validity
+```text
+Typed field + type constraints + domain rules
+                    |
+                    v
+          validated Rompy configuration
+                    |
+                    v
+             model-native input files
+```
 
-The notebook is valid JSON, has the expected metadata, contains no stored execution errors, and links to existing documentation. This is the minimum documentation quality gate.
+The declarative description can therefore be checked, reviewed, shared, and regenerated before it reaches the model parser.
 
-### Processing validity
+## Two layers of validation
 
-The configured Rompy objects open their sources, select the requested domain and period, and write expected model-native artefacts. Dimension checks, variable checks, plots, and file previews are useful evidence here.
+### Basic typed validation
 
-### Runtime validity
+Pydantic checks that fields have the expected types and shapes. For example, a time range must contain valid times, a grid must contain numeric dimensions, and a list of variables must contain strings rather than an accidentally supplied scalar or unrelated object.
 
-The target model binary starts and consumes the generated workspace with the required MPI, container, or scheduler environment. This is optional and environment-specific.
+Invalid values produce a structured validation error that identifies the field and the received value close to the point where the configuration was created.
 
-### Scientific validity
+### Domain-specific validation
 
-The data, assumptions, boundary conditions, resolution, calibration, and resulting model skill are appropriate for the intended scientific question. This requires domain expertise and cannot be established by a documentation build or a structural test.
+Rompy and its model plugins can add rules that express the model domain, not just Python syntax. Examples include bounded physical parameters, required combinations of fields, supported enumerations, compatible component types, valid coordinate or dimension contracts, and model-specific configuration relationships.
 
-## Why the distinction matters
+These rules turn configuration into an executable contract between the modeller, Rompy, and the target model plugin.
 
-It prevents two common mistakes:
+## Why this matters
 
-- treating stored notebook output as proof that the current environment still works;
-- treating successful file generation as proof that the model setup is scientifically correct.
+- Errors are found while assembling the run, rather than after a model starts.
+- Editor/type-checking tools can expose the available configuration vocabulary.
+- Shared YAML or Python descriptions retain structure instead of relying on positional text conventions.
+- Model plugins can encode their own rules while keeping Rompy core model-neutral.
+- Generated text files become a deliberate output of a validated description, not the primary place where correctness is discovered.
 
-Rompy makes the preparation contract explicit and inspectable. The modeller remains responsible for deciding whether the source data and generated experiment are fit for purpose.
+This is complementary to the [data concepts](data-concepts.md): source plugins define how data is located and selected, while typed model/data objects define what the run expects.
 
-See the [build and execution guide](workflow.md) for the repository's validation tiers and commands.
+## What the contract does not promise
+
+Pydantic validation can establish that a configuration is structurally and domain-valid according to the declared rules. It cannot determine whether a dataset is scientifically suitable, whether boundary conditions represent reality, or whether a model has adequate skill for the intended question. Those remain modelling and scientific-validation responsibilities.
+
+See the [run lifecycle](run-lifecycle.md) and [build and execution guide](workflow.md) to place validation in the broader Rompy workflow.
