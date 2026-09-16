@@ -12,6 +12,7 @@ nav:
       - Getting started: index.md
       - Installation: installation_guide.md
       - Usage: usage_guide.md
+      - Data concepts: data-concepts.md
   - Learning journeys:
       - SWAN: swan-journey.md
       - XBeach: models/xbeach.md
