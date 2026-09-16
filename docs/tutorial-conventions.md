@@ -31,6 +31,9 @@ Allowed values are:
 - `level`: `beginner`, `intermediate`, or `advanced`;
 - `topics`: a non-empty list of concise topic names;
 - `execution`: `render-only`, `configuration-only`, or `runtime-dependent`.
+- `execution_group`: usually `journeys` or `reference`; selected execution runs one group at a time;
+- `execution_eligible`: explicit boolean controlling lightweight selected execution;
+- `runtime_requirements`: list of required model binaries or services for the declared execution tier.
 
 The metadata describes instructional context; it does not replace explanations in the notebook or navigation in the model overview. The `id` is stable and unique, `published` controls inclusion in generated indexes, `prerequisites` and `execution_requirements` describe what a reader needs, and journey lessons use a positive `journey` number. Excluded notebooks must provide an `exclusion_reason`.
 
