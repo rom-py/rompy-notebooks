@@ -13,6 +13,9 @@ nav:
       - Installation: installation_guide.md
       - Usage: usage_guide.md
       - Data concepts: data-concepts.md
+      - Run lifecycle: run-lifecycle.md
+      - Plugin architecture: plugin-architecture.md
+      - Validation concepts: validation-concepts.md
   - Learning journeys:
       - SWAN: swan-journey.md
       - XBeach: models/xbeach.md
