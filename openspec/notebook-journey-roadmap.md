@@ -203,7 +203,7 @@ Tier 4: model integration execution     opt-in / scheduled / environment-specifi
 
 **Exit criteria:** documentation CI remains lightweight while executable examples have a separate, trustworthy validation path.
 
-### 7. `reproducible-example-data-and-outputs` **(next)**
+### 7. `reproducible-example-data-and-outputs` **(complete)**
 
 **Purpose:** Improve repeatability and provenance for examples that use data, generated files, or stored outputs.
 
@@ -225,13 +225,10 @@ This follow-on consolidation removed overlapping gallery, discovery, and noteboo
 
 ## Suggested order
 
-The journey, tutorial, discoverability, navigation, and execution-validation work is complete. The next planned change is reproducible example data and outputs:
+The journey, tutorial, discoverability, navigation, execution-validation, and reproducibility work is complete.
 
 ```text
-1–6. completed journey, catalogue, navigation, and validation work
-          |
-          v
-7. reproducible-example-data-and-outputs
+1–7. completed journey, catalogue, navigation, validation, and reproducibility work
 ```
 
 The dependency arrows are deliberately soft. For example, SCHISM work may begin earlier if there is an immediate documentation need, but the shared layout and execution conventions should be established before attempting broad restructuring.
