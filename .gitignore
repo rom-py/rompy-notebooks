@@ -18,6 +18,7 @@ venv/
 /.envrc
 /dist/
 /rompy_notebooks/
+*.egg-info/
 /skills-lock.json
 /tests/data/
 /notebooks/common/basedemo/
