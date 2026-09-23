@@ -12,6 +12,26 @@ venv/
 /docs/generated/
 /docs/_build/
 
+# Local agent, build, and generated fixture artefacts
+/.agents/
+/.pi/
+/.envrc
+/dist/
+/rompy_notebooks/
+/skills-lock.json
+/tests/data/
+/notebooks/common/basedemo/
+/notebooks/common/data.nc
+/notebooks/common/rompy_core_features.md
+/notebooks/common/rompy_core_features_files/
+/notebooks/schism/schism_demo.py
+/notebooks/schism/schism_demo/
+/notebooks/swan/example_declarative.md
+/notebooks/swan/example_declarative_files/
+/notebooks/swan/example_perth.ipynb
+/notebooks/swan/example_perth.py
+/notebooks/swan/example_procedural/
+
 # Inputs
 .github/
 !.github/

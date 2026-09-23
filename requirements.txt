@@ -1,6 +1,10 @@
 # Requirements for rompy-notebooks
 rompy
 rompy-xbeach
+rompy-swan
+rompy-schism
+# rompy-schism currently uses the removed pyTMD.arguments API.
+pytmd<3
 numpy
 pandas
 xarray
@@ -12,5 +16,4 @@ dask
 jupyterlab
 geopandas
 seaborn
-git+https://github.com/rom-py/rompy.git
-git+https://github.com/rom-py/rompy-xbeach.git
+git+https://github.com/rom-py/rompy-xbeach.git@output
