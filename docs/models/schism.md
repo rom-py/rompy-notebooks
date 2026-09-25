@@ -6,7 +6,7 @@ SCHISM has a focused seven-lesson learning journey and a retained broad procedur
 
 The journey is complemented by focused tutorials and a reference example in the catalogue.
 
-Start with the [SCHISM learning journey](../notebooks/schism/journey_01_rompy_orientation.ipynb), then follow the lessons in order. Use the [SCHISM catalogue](../generated/notebooks-by-model.md#schism) for the complete reference view.
+Start with the [SCHISM learning journey](../schism-journey.md), then follow the lessons in order. Use the [SCHISM catalogue](../generated/notebooks-by-model.md#schism) for the complete reference view.
 
 ## Coverage
 

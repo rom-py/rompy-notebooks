@@ -18,8 +18,8 @@ nav:
       - Validation concepts: validation-concepts.md
   - Learning journeys:
       - SWAN: swan-journey.md
-      - XBeach: models/xbeach.md
-      - SCHISM: models/schism.md
+      - XBeach: xbeach-journey.md
+      - SCHISM: schism-journey.md
   - Notebook catalogue:
       - Overview: catalogue.md
       - By model: generated/notebooks-by-model.md
