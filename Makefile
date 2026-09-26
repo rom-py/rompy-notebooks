@@ -1,4 +1,4 @@
-.PHONY: docs-stage docs-build docs-serve docs-build-executed docs-serve-executed execute-docs execute-docs-selected validate-runtime runtime-swan runtime-xbeach runtime-schism example-data notebook-audit test
+.PHONY: docs-stage docs-build docs-serve docs-build-executed docs-serve-executed docs-build-figures docs-serve-figures execute-docs execute-docs-selected execute-docs-figures validate-runtime runtime-swan runtime-xbeach runtime-schism example-data notebook-audit test
 
 PYTHON ?= python
 
@@ -27,10 +27,21 @@ docs-serve-executed: docs-stage
 	$(PYTHON) scripts/execute_docs_notebooks.py
 	mkdocs serve
 
+docs-build-figures: docs-stage notebook-audit
+	$(PYTHON) scripts/execute_docs_notebooks.py --group figures
+	mkdocs build --strict
+
+docs-serve-figures: docs-stage
+	$(PYTHON) scripts/execute_docs_notebooks.py --group figures
+	mkdocs serve
+
 execute-docs: docs-stage
 	$(PYTHON) scripts/execute_docs_notebooks.py --report .cache/selected-execution.json
 
 execute-docs-selected: execute-docs
+
+execute-docs-figures: docs-stage
+	$(PYTHON) scripts/execute_docs_notebooks.py --group figures --report .cache/figures-execution.json
 
 # Model-runtime checks are intentionally opt-in and environment-specific.
 validate-runtime: docs-stage

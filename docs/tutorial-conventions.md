@@ -31,7 +31,7 @@ Allowed values are:
 - `level`: `beginner`, `intermediate`, or `advanced`;
 - `topics`: a non-empty list of concise topic names;
 - `execution`: `render-only`, `configuration-only`, or `runtime-dependent`.
-- `execution_group`: usually `journeys` or `reference`; selected execution runs one group at a time;
+- `execution_group`: usually `journeys`, `figures`, or `reference`; selected execution runs one group at a time;
 - `execution_eligible`: explicit boolean controlling lightweight selected execution;
 - `runtime_requirements`: list of required model binaries or services for the declared execution tier.
 

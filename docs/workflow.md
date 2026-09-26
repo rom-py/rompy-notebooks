@@ -29,14 +29,16 @@ make docs-serve
 
 These standard commands are render-only: they stage notebooks and do not execute them. `docs-build` runs the notebook quality gate and then `mkdocs build --strict`. `docs-serve` stages the notebooks and starts a local preview server.
 
-To preview the plots and outputs produced by eligible journey notebooks, use the explicit executed targets:
+To preview the plots and outputs produced by the figure-selected Journey notebooks, use the explicit figure targets:
 
 ```bash
-make docs-build-executed
-make docs-serve-executed
+make docs-build-figures
+make docs-serve-figures
 ```
 
-These commands execute staged copies under `docs/notebooks/` before rendering. They require `nbclient`, the notebook Python dependencies, and any fixture data used by configuration-only lessons. Runtime-dependent lessons are skipped by default; no source notebooks or generated outputs are committed.
+These commands execute only notebooks marked with `execution_group: figures` in staged copies under `docs/notebooks/` before rendering. They require `nbclient`, the model plugin and notebook dependencies, and any fixture data used by those lessons. Runtime-dependent lessons are skipped; no source notebooks or generated outputs are committed.
+
+The broader `make docs-build-executed` target remains available for executing all eligible Journey notebooks locally.
 
 ## Validation tiers
 
