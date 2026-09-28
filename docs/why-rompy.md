@@ -79,6 +79,7 @@ Rompy checks that a configuration is complete and consistent, and does the repet
 
 ## Where next
 
+- Try it: the [rompy hands-on notebook](notebooks/common/rompy_hands_on.ipynb) goes through every step above with a toy model you can run anywhere.
 - [Install](installation_guide.md) the notebook environment and [get the notebooks running](usage_guide.md).
 - Read the concept pages in order, starting with [Configuration and validation](validation-concepts.md), or go straight to a model.
 - Follow a learning tutorial: [SWAN](swan-tutorial.md), [XBeach](xbeach-tutorial.md) or [SCHISM](schism-tutorial.md).

@@ -10,6 +10,7 @@ nav:
   - Home: index.md
   - Start here:
       - What rompy does: why-rompy.md
+      - Rompy hands-on: notebooks/common/rompy_hands_on.ipynb
       - Installation: installation_guide.md
       - Using the notebooks: usage_guide.md
   - Concepts:

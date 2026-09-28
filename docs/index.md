@@ -6,7 +6,7 @@ Rompy describes a model run as validated Python objects (or a YAML file), turns 
 
 ## How to use this site
 
-1. **[What rompy does](why-rompy.md):** the problem rompy solves and the big picture, in a few minutes.
+1. **[What rompy does](why-rompy.md):** the problem rompy solves and the big picture, in a few minutes. The [hands-on notebook](notebooks/common/rompy_hands_on.ipynb) then goes through a complete run with a toy model.
 2. **[Installation](installation_guide.md)** and **[using the notebooks](usage_guide.md):** get the notebooks running on your machine.
 3. **Concepts:** the ideas behind every model, in more depth: [configuration and validation](validation-concepts.md), [data](data-concepts.md), the [run lifecycle](run-lifecycle.md) and [plugins](plugin-architecture.md).
 4. **Learning tutorials:** an ordered path through one model, from a first run to a complete setup: [SWAN](swan-tutorial.md), [XBeach](xbeach-tutorial.md) or [SCHISM](schism-tutorial.md).

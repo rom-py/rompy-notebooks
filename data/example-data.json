@@ -11,6 +11,15 @@
       "optional": false
     },
     {
+      "id": "common-examples",
+      "source": "committed in this repository (copied from the rompy-xbeach test data)",
+      "release": "repository version",
+      "scope": "ERA5 10 m winds off south-west Australia used by the model-agnostic notebooks; see notebooks/common/data/README.md",
+      "local_path": "notebooks/common/data",
+      "acquisition": "none: included in a clone of the repository",
+      "optional": false
+    },
+    {
       "id": "schism-regional",
       "source": "https://github.com/rom-py/rompy-test-data/releases/latest",
       "release": "latest GitHub release",
