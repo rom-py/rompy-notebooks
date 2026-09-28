@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import os
 import shutil
+import tarfile
 import tempfile
 import zipfile
 from pathlib import Path
@@ -11,7 +12,13 @@ import requests
 
 DATA_REPO = "rom-py/rompy-test-data"
 RELEASES_URL = f"https://api.github.com/repos/{DATA_REPO}/releases/latest"
-REQUIRED_FILES = ("hgrid.gr3", "vgrid.in", "era5.nc", "hycom.nc")
+REQUIRED_FILES = (
+    "hgrid.gr3",
+    "vgrid.in",
+    "era5.nc",
+    "hycom.nc",
+    "tides/oceanum-atlas/h_m2_tpxo9_atlas_30_v2.nc",
+)
 
 
 def describe_fixture(path: str | Path) -> dict[str, object]:
@@ -47,6 +54,20 @@ def assert_netcdf_contract(path: str | Path, *, variables: tuple[str, ...] = (),
 
 def _complete(path: Path) -> bool:
     return all((path / name).is_file() for name in REQUIRED_FILES)
+
+
+def _unpack_tidal_atlas(root: Path) -> None:
+    archive = root / "tides" / "oceanum-atlas.tar.gz"
+    if not archive.is_file():
+        return
+    destination = archive.parent
+    with tarfile.open(archive) as bundle:
+        for member in bundle.getmembers():
+            output = (destination / member.name).resolve()
+            if not output.is_relative_to(destination.resolve()):
+                raise RuntimeError(f"Unsafe tidal atlas member: {member.name}")
+        bundle.extractall(destination)
+    archive.unlink()
 
 
 def ensure_schism_data(destination: str | Path | None = None) -> Path:
@@ -86,8 +107,9 @@ def ensure_schism_data(destination: str | Path | None = None) -> Path:
                     output = extracted / relative
                     output.parent.mkdir(parents=True, exist_ok=True)
                     output.write_bytes(bundle.read(member))
+        _unpack_tidal_atlas(extracted)
         if not _complete(extracted):
-            raise RuntimeError("rompy-test-data release lacks the SCHISM fixture bundle")
+            raise RuntimeError("rompy-test-data release lacks the complete SCHISM fixture bundle")
         if target.exists():
             shutil.rmtree(target)
         shutil.copytree(extracted, target)
