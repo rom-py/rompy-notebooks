@@ -1,62 +1,84 @@
+"""Regression tests for navigation added after notebook HTML rendering."""
+from html.parser import HTMLParser
 from pathlib import Path
+from types import SimpleNamespace
+from urllib.parse import urljoin
 
-from scripts.discoverability_hooks import rewrite_links, site_link
+import pytest
+from mkdocs.structure.files import File, Files
+from mkdocs_jupyter.plugin import NotebookFile
 
-REPO = "https://github.com/rom-py/rompy-notebooks"
-SOURCE = "notebooks/xbeach/tutorial/02_model_grid.ipynb"
-
-
-def make_tree(tmp_path: Path) -> Path:
-    docs = tmp_path / "docs"
-    for path in (
-        "docs/notebooks/xbeach/tutorial/01_first_model.ipynb",
-        "docs/notebooks/xbeach/tutorial/02_model_grid.ipynb",
-        "docs/notebooks/xbeach/tutorial/scheme.png",
-        "docs/notebooks/xbeach/examples/output.ipynb",
-        "docs/xbeach-tutorial.md",
-        "docs/why-rompy.md",
-        "notebooks/xbeach/data/bathy.tif",
-        "notebooks/xbeach/tutorial/config.yml",
-    ):
-        (tmp_path / path).parent.mkdir(parents=True, exist_ok=True)
-        (tmp_path / path).write_text("")
-    return docs
+from scripts import discoverability_hooks
+from scripts.notebook_inventory import build_inventory
 
 
-def test_notebook_links_point_to_pages(tmp_path):
-    docs = make_tree(tmp_path)
-    assert site_link("01_first_model.ipynb", SOURCE, docs, REPO) == "../01_first_model/"
-    assert site_link("../examples/output.ipynb", SOURCE, docs, REPO) == "../../examples/output/"
-    assert site_link("scheme.png", SOURCE, docs, REPO) == "../scheme.png"
+class HookConfig(dict):
+    def __init__(self, root):
+        super().__init__(docs_dir=str(root / "docs"), repo_url="")
+        self.config_file_path = str(root / "mkdocs.yml")
 
 
-def test_readme_links_point_to_tutorial_page(tmp_path):
-    docs = make_tree(tmp_path)
-    assert site_link("../README.md", SOURCE, docs, REPO) == "../../../../xbeach-tutorial/"
+class NavigationLinks(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.hrefs = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "a":
+            self.hrefs.append(dict(attrs)["href"])
 
 
-def test_docs_links_point_to_site_pages(tmp_path):
-    docs = make_tree(tmp_path)
-    assert site_link("../../../docs/why-rompy.md", SOURCE, docs, REPO) == "../../../../why-rompy/"
+@pytest.mark.parametrize("use_directory_urls", [True, False])
+def test_all_published_tutorial_links_resolve(use_directory_urls):
+    root = Path.cwd()
+    records, errors = build_inventory(root)
+    assert errors == []
+    files = Files([
+        NotebookFile(
+            File(record["path"], str(root / "docs"), str(root / "site"), use_directory_urls),
+            use_directory_urls,
+            str(root / "site"),
+        )
+        for record in records if record["published"]
+    ])
+    config = HookConfig(root)
+    tutorials = [r for r in records if r["published"] and r["kind"] == "tutorial"]
+    for current in tutorials:
+        series = sorted(
+            (r for r in tutorials if r["model"] == current["model"]),
+            key=lambda r: r.get("tutorial", 0),
+        )
+        index = series.index(current)
+        neighbours = [series[i] for i in (index - 1, index + 1) if 0 <= i < len(series)]
+        file = files.get_file_from_path(current["path"])
+        page = SimpleNamespace(file=file, url=file.url)
+        html = discoverability_hooks.on_page_content("<p>Lesson</p>", page, config, files)
+        links = NavigationLinks()
+        links.feed(html)
+        # A deployment subpath must be preserved, not replaced by a root-relative link.
+        base = "https://example.org/rompy-notebooks/"
+        assert [urljoin(base + page.url, href) for href in links.hrefs] == [
+            base + files.get_file_from_path(record["path"]).url for record in neighbours
+        ]
+        assert "[Previous lesson:" not in html
+        assert "[Next lesson:" not in html
+        assert html.startswith("<p>Lesson</p>")
 
 
-def test_repository_files_link_to_github(tmp_path):
-    docs = make_tree(tmp_path)
-    assert site_link("../data", SOURCE, docs, REPO) == f"{REPO}/tree/main/notebooks/xbeach/data"
-    assert site_link("config.yml", SOURCE, docs, REPO) == f"{REPO}/blob/main/notebooks/xbeach/tutorial/config.yml"
-    assert site_link("missing.ipynb", SOURCE, docs, REPO) is None
+def test_navigation_escapes_link_text_and_url(monkeypatch):
+    records = [
+        {"path": f"notebooks/{i}.ipynb", "id": identifier, "published": True,
+         "kind": "tutorial", "model": "swan", "tutorial": i}
+        for i, identifier in enumerate(["first", '<next & "lesson">'])
+    ]
+    monkeypatch.setattr(discoverability_hooks, "build_inventory", lambda root: (records, []))
+    page = SimpleNamespace(file=SimpleNamespace(src_path="notebooks/0.ipynb"), url="notebooks/0/")
+    files = SimpleNamespace(get_file_from_path=lambda path: SimpleNamespace(url='notebooks/1/?a=1&b="2"'))
+    result = discoverability_hooks.on_page_content("", page, HookConfig(Path.cwd()), files)
+    assert 'Next lesson: &lt;next &amp; &quot;lesson&quot;&gt;' in result
+    assert 'href="../1/?a=1&amp;b=&quot;2&quot;"' in result
 
 
-def test_rewrite_keeps_external_links_and_translates_anchors(tmp_path):
-    docs = make_tree(tmp_path)
-    html = (
-        '<a href="01_first_model.ipynb#8.-Run-XBeach">run</a>'
-        '<a href="https://xbeach.readthedocs.io">xbeach</a>'
-        '<a href="#setup">setup</a>'
-        '<a href="../tutorial_03/">site link</a>'
-    )
-    result = rewrite_links(html, SOURCE, docs, REPO)
-    assert 'href="../01_first_model/#8-run-xbeach"' in result
-    assert 'href="https://xbeach.readthedocs.io"' in result
-    assert 'href="#setup"' in result
-    assert 'href="../tutorial_03/"' in result
+def test_non_notebook_page_is_unchanged():
+    page = SimpleNamespace(file=SimpleNamespace(src_path="index.md"))
+    assert discoverability_hooks.on_page_content("<p>Home</p>", page, None, None) == "<p>Home</p>"
