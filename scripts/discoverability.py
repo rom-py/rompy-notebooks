@@ -8,8 +8,9 @@ from notebook_inventory import build_inventory
 
 
 def link(record: dict, prefix: str = "../") -> str:
-    path = Path(record["path"]).with_suffix("")
-    return f"{prefix}{path.as_posix()}/"
+    # Link to the notebook source; MkDocs resolves it to the notebook page
+    # and checks it in strict mode.
+    return f"{prefix}{Path(record['path']).as_posix()}"
 
 
 def render_record(record: dict, prefix: str = "../") -> str:
