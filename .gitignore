@@ -8,3 +8,5 @@ venv/
 .binder/
 # Inputs
 .github/
+# Notebook outputs
+_output/
