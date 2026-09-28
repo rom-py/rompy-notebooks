@@ -150,6 +150,10 @@ def test_audit_current_xbeach_examples_pass():
     assert notebook_audit.audit_xbeach_examples(Path.cwd()) == []
 
 
+def test_audit_current_swan_examples_pass():
+    assert notebook_audit.audit_swan_examples(Path.cwd()) == []
+
+
 def test_audit_xbeach_examples_detect_missing_template_section(tmp_path):
     path = tmp_path / notebook_audit.XBEACH_EXAMPLES / "demo.ipynb"
     path.parent.mkdir(parents=True)
