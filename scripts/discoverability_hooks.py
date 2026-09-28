@@ -1,12 +1,10 @@
 """MkDocs hooks for notebook pages: relative links and tutorial navigation."""
 from __future__ import annotations
 
-import html as html_lib
-import posixpath
-import re
+from html import escape
 from pathlib import Path
 
-from markdown.extensions.toc import slugify
+from mkdocs.utils import get_relative_url
 
 try:
     from .notebook_inventory import build_inventory
@@ -89,15 +87,16 @@ def on_page_content(html, page, config, files):
     if index is None:
         return html
     links = []
-    # Each notebook is served as a directory page, e.g. .../tutorial/02_model_grid/.
-    page_dir = posixpath.splitext(source)[0]
     for label, offset in (("Previous lesson", -1), ("Next lesson", 1)):
         target_index = index + offset
         if 0 <= target_index < len(tutorial):
             target = tutorial[target_index]
-            url = posixpath.relpath(posixpath.splitext(target["path"])[0], page_dir) + "/"
-            title = html_lib.escape(target.get("title") or target["id"])
-            links.append(f'<a href="{url}">{label}: {title}</a>')
+            target_file = files.get_file_from_path(target["path"])
+            if target_file is None:
+                raise RuntimeError(f"Tutorial navigation target not found: {target['path']}")
+            relative = get_relative_url(target_file.url, page.url)
+            text = escape(f"{label}: {target['id']}")
+            links.append(f'<a href="{escape(relative, quote=True)}">{text}</a>')
     if not links:
         return html
     return html + '<hr><p class="tutorial-navigation">' + " · ".join(links) + "</p>"
