@@ -6,4 +6,4 @@ The catalogue is the complete reference index for published notebooks. Use the v
 - [By model](generated/notebooks-by-model.md) — browse SWAN, XBeach, and SCHISM collections.
 - [By topic](generated/notebooks-by-topic.md) — find notebooks by capability or concept.
 
-For a guided introduction, start with [Learning tutorials](swan-tutorial.md) and choose a model.
+For a guided introduction, start with a learning tutorial: [SWAN](swan-tutorial.md), [XBeach](xbeach-tutorial.md) or [SCHISM](schism-tutorial.md).

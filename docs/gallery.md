@@ -26,21 +26,24 @@ Start with the [SCHISM learning tutorial](models/schism.md) for the progressive 
 
 ## XBeach
 
-Start with the [XBeach learning tutorial](models/xbeach.md) for a recommended sequence, then use these focused notebooks as a reference catalogue.
+Start with the [XBeach learning tutorial](xbeach-tutorial.md), an ordered path from a first model to a complete storm-impact setup, then use the examples for specific features.
 
-- [Procedural example](notebooks/xbeach/example-procedural.ipynb)
-- [Declarative example](notebooks/xbeach/example-declarative.ipynb)
-- [Physics](notebooks/xbeach/components/tutorial_01_physics.ipynb)
-- [Sediment](notebooks/xbeach/components/tutorial_02_sediment.ipynb)
-- [Output](notebooks/xbeach/components/tutorial_03_output.ipynb)
-- [Boundary conditions](notebooks/xbeach/components/tutorial_04_boundary-conditions.ipynb)
-- [Hotstart](notebooks/xbeach/components/tutorial_05_hotstart.ipynb)
-- [MPI](notebooks/xbeach/components/tutorial_06_mpi.ipynb)
-- [Bathymetry data](notebooks/xbeach/data-interface/tutorial-bathy.ipynb)
-- [Forcing data](notebooks/xbeach/data-interface/tutorial-forcing.ipynb)
-- [Grid data](notebooks/xbeach/data-interface/tutorial-grid.ipynb)
-- [Source data](notebooks/xbeach/data-interface/tutorial-source.ipynb)
-- [Time-series forcing](notebooks/xbeach/data-interface/tutorial-timeseries-forcing.ipynb)
-- [Wave boundary](notebooks/xbeach/data-interface/tutorial-wave-boundary.ipynb)
+- [Grid plotting and export](notebooks/xbeach/examples/grid_plotting_and_export.ipynb)
+- [Data sources](notebooks/xbeach/examples/data_sources.ipynb)
+- [Bathymetry options](notebooks/xbeach/examples/bathymetry_options.ipynb)
+- [Constant and bichromatic waves](notebooks/xbeach/examples/waves_params.ipynb)
+- [Wave boundaries from spectra](notebooks/xbeach/examples/waves_from_spectra.ipynb)
+- [Wave boundaries from parameters](notebooks/xbeach/examples/waves_from_parameters.ipynb)
+- [Wave boundary files and reuse](notebooks/xbeach/examples/waves_from_files_and_reuse.ipynb)
+- [Wind forcing](notebooks/xbeach/examples/wind.ipynb)
+- [Water level forcing](notebooks/xbeach/examples/water_levels.ipynb)
+- [Physics](notebooks/xbeach/examples/physics.ipynb)
+- [Sediment and morphology](notebooks/xbeach/examples/sediment_and_morphology.ipynb)
+- [Flow and tide boundaries](notebooks/xbeach/examples/flow_and_tide_boundaries.ipynb)
+- [Output](notebooks/xbeach/examples/output.ipynb)
+- [Data selection options](notebooks/xbeach/examples/data_selection.ipynb)
+- [Hotstart and chained runs](notebooks/xbeach/examples/hotstart_and_chained_runs.ipynb)
+- [Running XBeach](notebooks/xbeach/examples/running_xbeach.ipynb)
+- [Parameter sweep](notebooks/xbeach/examples/parameter_sweep.ipynb)
 
 Notebook source files remain under [`notebooks/`](https://github.com/rom-py/rompy-notebooks/tree/main/notebooks) and are staged into the documentation tree during the build. See the [build and execution guide](workflow.md) for the distinction between rendering and actually executing a model.

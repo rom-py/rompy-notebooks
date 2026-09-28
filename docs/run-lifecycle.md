@@ -44,4 +44,4 @@ Read generated inputs and model outputs, check dimensions and ranges, plot field
 - Failures can be located: source access, input generation, runtime, or output interpretation.
 - A declarative experiment can be reviewed before expensive execution.
 
-Follow this lifecycle in the [SWAN tutorial](swan-tutorial.md), [XBeach tutorial](notebooks/xbeach/tutorial_01_rompy_orientation.ipynb), or [SCHISM tutorial](notebooks/schism/tutorial_01_rompy_orientation.ipynb).
+Follow this lifecycle in the [SWAN tutorial](swan-tutorial.md), [XBeach tutorial](xbeach-tutorial.md), or [SCHISM tutorial](notebooks/schism/tutorial_01_rompy_orientation.ipynb).

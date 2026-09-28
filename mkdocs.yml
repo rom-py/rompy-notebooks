@@ -9,7 +9,6 @@ site_dir: site
 nav:
   - Home: index.md
   - Start here:
-      - Getting started: index.md
       - Installation: installation_guide.md
       - Usage: usage_guide.md
       - Data concepts: data-concepts.md
@@ -30,7 +29,6 @@ nav:
       - Tutorial conventions: tutorial-conventions.md
       - Model coverage: models/coverage.md
       - Audit status: audit.md
-      - Contributor conventions: tutorial-conventions.md
 
 theme:
   name: material

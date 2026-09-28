@@ -1,16 +1,14 @@
 # XBeach
 
-XBeach has a seven-lesson learning tutorial plus focused data-interface and component material. The tutorial is the recommended entry point for users learning Rompy and XBeach together.
+XBeach has a seven-lesson tutorial and seventeen focused examples. The tutorial goes from a first model to a complete storm-impact setup and its YAML configuration; the examples cover one feature each.
 
 ## Recommended path
 
-The tutorial is complemented by focused tutorials in the catalogue.
-
-Start with the [XBeach learning tutorial](../xbeach-tutorial.md), then follow the lessons in order. The [XBeach catalogue](../generated/notebooks-by-model.md#xbeach) provides the complete reference view.
+Start with the [XBeach learning tutorial](../xbeach-tutorial.md) and follow the lessons in order. The examples are listed on the same page, and the [XBeach catalogue](../generated/notebooks-by-model.md#xbeach) provides the complete reference view.
 
 ## Coverage
 
-The collection covers procedural and declarative workflows, grids, bathymetry, wind and wave forcing, physics, sediment, boundaries, outputs, hotstarts, MPI, and execution guidance. Full scientific runtime validation remains environment-dependent. See the [coverage matrix](coverage.md).
+The collection covers grids, data sources, bathymetry, wave, wind and water level forcing, physics, sediment and morphology, flow and tide boundaries, outputs, hotstarts, YAML and the rompy CLI, running XBeach locally, with Docker and with MPI, and parameter sweeps. See the [coverage matrix](coverage.md).
 
 !!! note
-    Documentation builds render notebooks without executing XBeach. Runtime-dependent lessons require an appropriate `rompy-xbeach` environment and XBeach installation.
+    The notebooks store their outputs, including the results of the XBeach runs made with the public Docker image `ghcr.io/rom-py/xbeach`. Documentation builds render these outputs without executing the notebooks or XBeach.
