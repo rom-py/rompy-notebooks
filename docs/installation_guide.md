@@ -1,18 +1,41 @@
-# Installation guide
+# Installation
 
-The notebook environment and the documentation environment are separate concerns.
+The notebooks need Python 3.10 or later, rompy, the model plugins and a few scientific Python packages. Model binaries are only needed to run the models, and the notebooks say when they are.
 
-## Documentation site
+## 1. Get the notebooks
 
-Install the lightweight documentation toolchain from the repository root:
+Clone the repository. The notebooks read example data from folders next to them, so a clone is the simplest way to run them:
 
 ```bash
-python -m pip install -r requirements-docs.txt
-make docs-build
+git clone https://github.com/rom-py/rompy-notebooks.git
+cd rompy-notebooks
 ```
 
-This does not install or execute SWAN, XBeach, or SCHISM model binaries. See the [build and execution guide](workflow.md) for the full validation boundary.
+## 2. Create a Python environment
 
-## Notebook execution
+Use a virtual environment (or a conda environment) and install the requirements. This installs rompy, rompy-swan, rompy-xbeach, rompy-schism, JupyterLab and the plotting and data libraries the notebooks use:
 
-To execute a particular notebook, install the compatible `rompy` model plugin and its data/runtime requirements first. These requirements vary by model and are intentionally not hidden behind the documentation build.
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+```
+
+## 3. Start Jupyter
+
+```bash
+jupyter lab
+```
+
+Then open a notebook, for example the first lesson of a [learning tutorial](index.md#how-to-use-this-site). [Using the notebooks](usage_guide.md) explains how they read data and write files.
+
+## Running the models
+
+Generating a model workspace needs only the Python packages above. Running the model needs the model itself:
+
+- **XBeach:** the notebooks use the public Docker image `ghcr.io/rom-py/xbeach`, so [Docker](https://docs.docker.com/get-docker/) is enough. Cells that run XBeach are skipped when Docker is not available.
+- **SWAN and SCHISM:** a local installation of the model, or a container of your own. The notebooks that run them list what they need.
+
+## Building this site
+
+Building the documentation needs different tools and does not run any model. See the [build and execution guide](workflow.md).

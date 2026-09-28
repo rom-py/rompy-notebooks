@@ -1,8 +1,18 @@
 # rompy-notebooks
 
-Examples and tutorials for configuring ocean models with the [rompy](https://github.com/rom-py/rompy) ecosystem.
+Tutorials and examples for setting up and running ocean and coastal models with [rompy](https://rom-py.github.io/rompy/) and its model plugins for SWAN, XBeach and SCHISM.
 
-Start with [Start here](installation_guide.md) for setup, then learn the shared [data concepts](data-concepts.md), [run lifecycle](run-lifecycle.md), [plugin architecture](plugin-architecture.md), and [validation concepts](validation-concepts.md). Choose a learning tutorial for [SWAN](swan-tutorial.md), [XBeach](xbeach-tutorial.md) or [SCHISM](schism-tutorial.md) to learn a model progressively, or use the [notebook catalogue](catalogue.md) as the single reference index. The [build and execution guide](workflow.md) explains how to render the site and how that differs from executing a model.
+Rompy describes a model run as validated Python objects (or a YAML file), turns datasets into the model's input files, and runs the model locally, in Docker or on a cluster. The notebooks here show how, model by model.
+
+## How to use this site
+
+1. **[What rompy does](why-rompy.md):** the problem rompy solves and the big picture, in a few minutes.
+2. **[Installation](installation_guide.md)** and **[using the notebooks](usage_guide.md):** get the notebooks running on your machine.
+3. **Concepts:** the ideas behind every model, in more depth: [configuration and validation](validation-concepts.md), [data](data-concepts.md), the [run lifecycle](run-lifecycle.md) and [plugins](plugin-architecture.md).
+4. **Learning tutorials:** an ordered path through one model, from a first run to a complete setup: [SWAN](swan-tutorial.md), [XBeach](xbeach-tutorial.md) or [SCHISM](schism-tutorial.md).
+5. **[Notebook catalogue](catalogue.md):** every notebook by model and by topic, for when you need a specific feature.
+
+New to rompy? Start with step 1. If you already know rompy, go straight to a learning tutorial or the catalogue.
 
 !!! note
-    The documentation site renders the outputs stored in notebooks; it does not execute notebook cells or model binaries.
+    The pages show the outputs stored in the notebooks. Building this site does not run the notebooks or any model.

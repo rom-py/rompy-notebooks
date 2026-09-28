@@ -1,4 +1,4 @@
-# Validation concepts: a typed input contract
+# Configuration and validation: a typed input contract
 
 Rompy does not treat model configuration as an arbitrary block of text. Its configuration objects are defined as typed Pydantic models, so an input description is validated as it is constructed—before Rompy writes model-native files or attempts to run a model.
 
@@ -50,10 +50,30 @@ These rules turn configuration into an executable contract between the modeller,
 - Model plugins can encode their own rules while keeping Rompy core model-neutral.
 - Generated text files become a deliberate output of a validated description, not the primary place where correctness is discovered.
 
+## One description, in Python or YAML
+
+The objects that describe a run can be built in Python or loaded from a YAML file. Both are the same `ModelRun` and pass through the same checks:
+
+| | Python | YAML |
+| --- | --- | --- |
+| Period | `TimeRange(...)` | a `period:` mapping |
+| Model setup | plugin objects such as `Config(...)` | nested mappings; `model_type` picks between alternatives |
+| Reuse | functions and copies of objects | versioned files |
+| Checking | when each object is built | when the file is loaded |
+| Generate and run | `ModelRun` methods | the same methods, or `rompy generate` and `rompy run` from the command line |
+
+Python is convenient while you develop a setup; a YAML file is easy to review, version and hand to someone else or to a scheduled job.
+
 This is complementary to the [data concepts](data-concepts.md): source plugins define how data is located and selected, while typed model/data objects define what the run expects.
 
 ## What the contract does not promise
 
 Pydantic validation can establish that a configuration is structurally and domain-valid according to the declared rules. It cannot determine whether a dataset is scientifically suitable, whether boundary conditions represent reality, or whether a model has adequate skill for the intended question. Those remain modelling and scientific-validation responsibilities.
 
-See the [run lifecycle](run-lifecycle.md) and [build and execution guide](workflow.md) to place validation in the broader Rompy workflow.
+See the [run lifecycle](run-lifecycle.md) to place validation in the broader Rompy workflow.
+
+## See it in the notebooks
+
+- XBeach: [how components group the settings, and the checks they apply](notebooks/xbeach/tutorial/05_model_settings.ipynb), and [the same model as a YAML file and from the command line](notebooks/xbeach/tutorial/07_yaml_and_cli.ipynb).
+- SWAN: [configure SWAN declaratively with YAML](notebooks/swan/tutorial_03_swan_declarative.ipynb).
+- SCHISM: [build a SCHISM workspace procedurally](notebooks/schism/tutorial_02_schism_procedural.ipynb).

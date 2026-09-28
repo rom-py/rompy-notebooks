@@ -1,4 +1,4 @@
-# Rompy plugin architecture
+# Plugins
 
 Rompy keeps the core model-run concepts small and lets plugins provide model, data, and execution-specific behavior.
 
@@ -36,3 +36,9 @@ Backend plugins define where and how a prepared workspace runs. A local process,
 - A configuration can be reviewed and tested at the level appropriate to the available environment.
 
 The plugin boundary is an extension point, not a guarantee that every plugin supports every source or workflow. Always check the model/plugin documentation and generated-file contract.
+
+## See it in the notebooks
+
+- [How the pieces fit together](notebooks/xbeach/tutorial/01_first_model.ipynb#how-the-pieces-fit-together) in the first XBeach tutorial shows which objects come from rompy and which from rompy-xbeach.
+- [Data sources](notebooks/xbeach/examples/data_sources.ipynb) uses sources from both rompy and rompy-xbeach.
+- [Running XBeach](notebooks/xbeach/examples/running_xbeach.ipynb) runs the same workspace with a local installation or with Docker.

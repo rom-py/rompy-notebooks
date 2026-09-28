@@ -1,6 +1,6 @@
 # XBeach notebooks
 
-These notebooks show how to set up and run [XBeach](https://xbeach.readthedocs.io) with [rompy-xbeach](https://rom-py.github.io/rompy-xbeach/). rompy-xbeach extends [rompy](https://rom-py.github.io/rompy/) with everything specific to XBeach.
+These notebooks show how to set up and run [XBeach](https://xbeach.readthedocs.io) with [rompy-xbeach](https://rom-py.github.io/rompy-xbeach/). rompy-xbeach extends [rompy](https://rom-py.github.io/rompy/) with everything specific to XBeach. New to rompy? [What rompy does](../../docs/why-rompy.md) explains the ideas shared by all models.
 
 The collection has two parts:
 
