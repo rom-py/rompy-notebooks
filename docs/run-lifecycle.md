@@ -53,5 +53,5 @@ Chained runs work the same way: a second run starts from the saved state of the 
 ## See it in the notebooks
 
 - XBeach: [generate and run a first model](notebooks/xbeach/tutorial/01_first_model.ipynb), [check a generated workspace](notebooks/xbeach/tutorial/06_complete_setup.ipynb), [run with a local installation, Docker or MPI](notebooks/xbeach/examples/running_xbeach.ipynb), [variants in a parameter sweep](notebooks/xbeach/examples/parameter_sweep.ipynb) and [chained runs](notebooks/xbeach/examples/hotstart_and_chained_runs.ipynb).
-- SWAN: [inspect and optionally execute a workspace](notebooks/swan/tutorial_06_swan_workspace.ipynb) and [sensitivity analysis](notebooks/swan/tutorial_07_swan_sensitivity.ipynb).
+- SWAN: [a nonstationary hindcast, checked and analysed](notebooks/swan/tutorial/06_nonstationary_hindcast.ipynb), [running with Docker and MPI](notebooks/swan/examples/running_swan.ipynb), [chained runs](notebooks/swan/examples/hotstart_and_chained_runs.ipynb) and [variants in a sensitivity study](notebooks/swan/examples/physics_sensitivity.ipynb).
 - SCHISM: [execution and output verification](notebooks/schism/tutorial_07_schism_execution.ipynb).

@@ -1,0 +1,14 @@
+# Intake catalogue for the example data, used by the input grids example.
+sources:
+  etopo:
+    driver: netcdf
+    description: ETOPO 2022 15 arc-second elevation off Perth
+    args:
+      urlpath: '{{CATALOG_DIR}}/etopo15s_perth.nc'
+      engine: netcdf4
+  era5:
+    driver: netcdf
+    description: Hourly ERA5 10 m winds off south-west Australia on 1 January 2023
+    args:
+      urlpath: '{{CATALOG_DIR}}/era5-20230101.nc'
+      engine: netcdf4

@@ -1,0 +1,107 @@
+# The nonstationary hindcast of Tutorial 6 as a rompy ModelRun.
+# Paths are relative to this file's folder.
+run_id: hindcast_yaml
+output_dir: _output/07_yaml_and_cli
+period:
+  start: 2023-01-01T00:00
+  end: 2023-01-02T00:00
+  interval: 10m
+config:
+  model_type: swan
+  startup:
+    project:
+      name: Perth hindcast
+      nr: t07
+    set:
+      direction_convention: nautical
+    mode:
+      kind: nonstationary
+    coordinates:
+      kind:
+        model_type: spherical
+  cgrid:
+    model_type: regular
+    grid:
+      xp: 114.5
+      yp: -32.8
+      alp: 0.0
+      xlen: 1.4
+      ylen: 1.3
+      mx: 70
+      my: 65
+    spectrum:
+      mdc: 36
+      flow: 0.04
+      fhigh: 1.0
+  inpgrid:
+    model_type: data_interface
+    bottom:
+      var: bottom
+      source:
+        model_type: file
+        uri: ../data/etopo15s_perth.nc
+      z1: z
+      fac: -1.0
+      coords: {x: longitude, y: latitude}
+      buffer: 0.1
+    input:
+      - var: wind
+        source:
+          model_type: file
+          uri: ../data/era5-20230101.nc
+        z1: u10
+        z2: v10
+        coords: {x: longitude, y: latitude}
+        filter:
+          sort: {coords: [latitude]}
+        buffer: 0.25
+  boundary:
+    model_type: boundary_interface
+    kind:
+      model_type: boundnest1
+      id: ww3
+      source:
+        model_type: wavespectra
+        uri: ../data/ww3-spectra-20230101-short.nc
+        reader: read_ww3
+      sel_method: idw
+      sel_method_kwargs: {tolerance: 1.5}
+      spacing: 0.1
+  physics:
+    gen:
+      model_type: gen3
+    breaking:
+      model_type: constant
+      alpha: 1.0
+      gamma: 0.73
+    friction:
+      model_type: jonswap
+      cfjon: 0.038
+    triad:
+      model_type: triad
+  output:
+    points:
+      model_type: points
+      sname: sites
+      xp: [114.8, 115.4, 115.71, 115.66]
+      yp: [-32.1, -31.9, -31.98, -32.5]
+    block:
+      model_type: block
+      sname: COMPGRID
+      fname: swangrid.nc
+      output: [depth, hsign, tps, dir, wind]
+      times: {delt: PT1H}
+    table:
+      sname: sites
+      format: header
+      fname: sites.txt
+      output: [time, depth, hsign, tps, dir, wind]
+      times: {delt: PT1H}
+    specout:
+      sname: sites
+      fname: spectra.nc
+      times: {delt: PT1H}
+  lockup:
+    compute:
+      model_type: nonstat
+      initstat: true

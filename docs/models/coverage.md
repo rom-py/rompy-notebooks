@@ -9,10 +9,10 @@ The model collections intentionally have different levels of maturity. This matr
 | Declarative workflow | Established | Established | Not yet covered |
 | Grids and input data | Established | Established | Established (real fixture case) |
 | Boundary conditions | Established | Established | Established (2-D; 3-D contract inspected) |
-| Physics/components | Partial | Established | Not yet covered |
+| Physics/components | Established | Established | Not yet covered |
 | Outputs and diagnostics | Established | Established | Not yet covered |
-| Execution and backends | Partial | Established (local, Docker, MPI, CLI) | Partial |
-| Advanced workflows | Established | Established (hotstart, parameter sweep) | Partial (forcing-family case study; runtime remains external) |
+| Execution and backends | Established (local, Docker, MPI, CLI) | Established (local, Docker, MPI, CLI) | Partial |
+| Advanced workflows | Established (nesting, hotstart, physics sensitivity) | Established (hotstart, parameter sweep) | Partial (forcing-family case study; runtime remains external) |
 
 **Established** means the collection has focused content that can be used today. **Partial** means content exists but does not yet form a complete instructional treatment. **Not yet covered** is an explicit gap for a future change.
 

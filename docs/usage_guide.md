@@ -15,7 +15,7 @@ The first cell says what the notebook covers, what to read first and what you wi
 ## Data and generated files
 
 - Example data is committed next to the notebooks, for example in `notebooks/xbeach/data/`, and read with paths relative to the notebook. Run notebooks from their own folder, which is what Jupyter does by default.
-- Some SWAN and SCHISM notebooks use shared test data that is downloaded separately; see [example data](workflow.md#example-data-and-provenance).
+- Some SCHISM notebooks use shared test data that is downloaded separately; see [example data](workflow.md#example-data-and-provenance).
 - Notebooks write model workspaces to a local `_output/` folder, which git ignores and which is safe to delete.
 
 ## Stored outputs

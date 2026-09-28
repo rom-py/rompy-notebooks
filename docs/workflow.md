@@ -16,7 +16,7 @@ Example datasets are described in [`data/example-data.json`](https://github.com/
 make example-data
 ```
 
-Small model-specific datasets are committed next to the notebooks that use them (for example `notebooks/xbeach/data/`), so those notebooks run from a clone without an acquisition step. Larger shared fixtures are acquired explicitly and are never part of a render-only documentation build. For the optional SCHISM bundle, use `python scripts/example_data.py --acquire-schism`. Generated model inputs belong in temporary or ignored workspaces and are not scientific validation evidence.
+Small model-specific datasets are committed next to the notebooks that use them (for example `notebooks/xbeach/data/` and `notebooks/swan/data/`), so those notebooks run from a clone without an acquisition step. Larger shared fixtures are acquired explicitly and are never part of a render-only documentation build. For the optional SCHISM bundle, use `python scripts/example_data.py --acquire-schism`. Generated model inputs belong in temporary or ignored workspaces and are not scientific validation evidence.
 
 ## Build or preview locally
 
@@ -62,7 +62,7 @@ Full notebook execution is a separate integration concern. Individual examples m
 
 ### SWAN
 
-SWAN examples cover procedural and declarative configuration, sensitivity analysis, boundary conditions, and output components.
+The SWAN tutorial and examples cover grids, input grids, parametric and spectral boundaries, nesting, physics, numerics, output, stationary and nonstationary computations, hotstarts, YAML and the CLI, running SWAN with Docker and MPI, and physics sensitivity. Their outputs are committed, including the SWAN runs.
 
 ### SCHISM
 
