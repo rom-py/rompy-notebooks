@@ -5,8 +5,8 @@ Welcome to the **rompy-notebooks** repository! This collection of Jupyter notebo
 ## Contents
 
 - **notebooks/**: Model-specific and common notebooks demonstrating usage examples.
-- **data/**: Sample datasets used in the notebooks.
-- **docs/**: Additional documentation and guides, including the [SWAN learning tutorial](docs/swan-tutorial.md).
+- **data/**: The manifest of example datasets (`example-data.json`). Small model-specific datasets live next to their notebooks, e.g. `notebooks/xbeach/data/`.
+- **docs/**: Additional documentation and guides, including the learning tutorials for [SWAN](docs/swan-tutorial.md), [XBeach](docs/xbeach-tutorial.md) and [SCHISM](docs/schism-tutorial.md).
 - **requirements.txt**: List of dependencies to run the notebooks.
 
 ## Getting Started

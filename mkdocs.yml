@@ -9,13 +9,15 @@ site_dir: site
 nav:
   - Home: index.md
   - Start here:
-      - Getting started: index.md
+      - What rompy does: why-rompy.md
+      - Rompy hands-on: notebooks/common/rompy_hands_on.ipynb
       - Installation: installation_guide.md
-      - Usage: usage_guide.md
-      - Data concepts: data-concepts.md
+      - Using the notebooks: usage_guide.md
+  - Concepts:
+      - Configuration and validation: validation-concepts.md
+      - Data: data-concepts.md
       - Run lifecycle: run-lifecycle.md
-      - Plugin architecture: plugin-architecture.md
-      - Validation concepts: validation-concepts.md
+      - Plugins: plugin-architecture.md
   - Learning tutorials:
       - SWAN: swan-tutorial.md
       - XBeach: xbeach-tutorial.md
@@ -25,13 +27,11 @@ nav:
       - By model: generated/notebooks-by-model.md
       - By topic: generated/notebooks-by-topic.md
       - All notebooks: generated/all-notebooks.md
-  - Guides:
+  - Contributing:
       - Build and execution: workflow.md
-      - Tutorial conventions: tutorial-conventions.md
+      - Notebook conventions: tutorial-conventions.md
       - Model coverage: models/coverage.md
       - Audit status: audit.md
-      - Contributor conventions: tutorial-conventions.md
-
 theme:
   name: material
   custom_dir: docs/overrides

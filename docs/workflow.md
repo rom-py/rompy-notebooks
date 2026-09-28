@@ -16,7 +16,7 @@ Example datasets are described in [`data/example-data.json`](https://github.com/
 make example-data
 ```
 
-Acquisition is explicit and is never part of a render-only documentation build. For the optional SCHISM bundle, use `python scripts/example_data.py --acquire-schism`. Generated model inputs belong in temporary or ignored workspaces and are not scientific validation evidence.
+Small model-specific datasets are committed next to the notebooks that use them (for example `notebooks/xbeach/data/`), so those notebooks run from a clone without an acquisition step. Larger shared fixtures are acquired explicitly and are never part of a render-only documentation build. For the optional SCHISM bundle, use `python scripts/example_data.py --acquire-schism`. Generated model inputs belong in temporary or ignored workspaces and are not scientific validation evidence.
 
 ## Build or preview locally
 
@@ -70,4 +70,4 @@ The SCHISM demonstration covers configuration and backend-oriented setup.
 
 ### XBeach
 
-XBeach examples cover procedural and declarative configuration, physics, sediment, output, boundary conditions, hotstarts, MPI, and data interfaces.
+The XBeach tutorial and examples cover grids, data sources, bathymetry, forcing, physics, sediment, boundaries, output, hotstarts, YAML and the CLI, and running XBeach with Docker and MPI. Their outputs are committed, including the XBeach runs.

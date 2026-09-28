@@ -37,6 +37,12 @@ Generated files should be inspected. Their presence or structural correctness co
 
 Read generated inputs and model outputs, check dimensions and ranges, plot fields, and assess whether the experiment is scientifically suitable. Rompy can support these checks, but it cannot replace domain expertise or model-skill evaluation.
 
+## Repeating a run: variants and experiments
+
+Because a run is described by objects, a variant is a copy with one change: a different friction coefficient, wave boundary or period. Each variant generates its own workspace under its own run id, so the inputs can be compared before anything runs and the outputs afterwards. The same pattern covers sensitivity tests, calibration and ensembles.
+
+Chained runs work the same way: a second run starts from the saved state of the first instead of from rest.
+
 ## Why the separation matters
 
 - Documentation can demonstrate configuration and generation without requiring model binaries.
@@ -44,4 +50,8 @@ Read generated inputs and model outputs, check dimensions and ranges, plot field
 - Failures can be located: source access, input generation, runtime, or output interpretation.
 - A declarative experiment can be reviewed before expensive execution.
 
-Follow this lifecycle in the [SWAN tutorial](swan-tutorial.md), [XBeach tutorial](notebooks/xbeach/tutorial_01_rompy_orientation.ipynb), or [SCHISM tutorial](notebooks/schism/tutorial_01_rompy_orientation.ipynb).
+## See it in the notebooks
+
+- XBeach: [generate and run a first model](notebooks/xbeach/tutorial/01_first_model.ipynb), [check a generated workspace](notebooks/xbeach/tutorial/06_complete_setup.ipynb), [run with a local installation, Docker or MPI](notebooks/xbeach/examples/running_xbeach.ipynb), [variants in a parameter sweep](notebooks/xbeach/examples/parameter_sweep.ipynb) and [chained runs](notebooks/xbeach/examples/hotstart_and_chained_runs.ipynb).
+- SWAN: [inspect and optionally execute a workspace](notebooks/swan/tutorial_06_swan_workspace.ipynb) and [sensitivity analysis](notebooks/swan/tutorial_07_swan_sensitivity.ipynb).
+- SCHISM: [execution and output verification](notebooks/schism/tutorial_07_schism_execution.ipynb).

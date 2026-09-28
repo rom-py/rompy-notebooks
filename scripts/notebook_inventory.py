@@ -4,7 +4,7 @@ The normalized ``rompy_notebooks`` contract is:
 
 * ``id``: stable kebab-case identifier, unique within the repository;
 * ``model``: ``swan``, ``xbeach``, or ``schism``;
-* ``kind``: ``tutorial`` or ``reference``;
+* ``kind``: ``tutorial``, ``example`` or ``reference``;
 * ``level``: ``beginner``, ``intermediate``, or ``advanced``;
 * ``topics``: non-empty list of topic identifiers;
 * ``execution``: render-only, configuration-only, or runtime-dependent;
@@ -20,7 +20,7 @@ import subprocess
 from pathlib import Path
 
 MODELS = {"swan", "xbeach", "schism"}
-KINDS = {"tutorial", "reference"}
+KINDS = {"tutorial", "example", "reference"}
 LEVELS = {"beginner", "intermediate", "advanced"}
 EXECUTION = {"render-only", "configuration-only", "runtime-dependent"}
 REQUIRED = ("id", "model", "kind", "level", "topics", "execution", "prerequisites", "execution_requirements", "published")

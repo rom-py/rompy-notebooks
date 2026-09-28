@@ -52,11 +52,13 @@ provider data remains external and is acquired only when needed
 
 A colleague can inspect the experiment, substitute an approved provider or local cache, and regenerate the same class of model inputs without receiving a copy of every upstream dataset. Reproducibility comes from the run description, source identity/version, selection rules, and environment—not from silently bundling a large data archive.
 
-## Follow the idea through the tutorials
+## See it in the notebooks
 
 - [SWAN grids and input data](notebooks/swan/tutorial_04_swan_data.ipynb) — regular-grid bathymetry, wind, and nested boundary preparation.
-- [XBeach grids and bathymetry](notebooks/xbeach/tutorial_04_xbeach_grid_data.ipynb) and [forcing and boundaries](notebooks/xbeach/tutorial_05_xbeach_forcing.ipynb) — source mapping and generated forcing files.
+- [XBeach bathymetry](notebooks/xbeach/tutorial/03_bathymetry.ipynb), [forcing](notebooks/xbeach/tutorial/04_forcing.ipynb) and [data selection options](notebooks/xbeach/examples/data_selection.ipynb) — sources, interpolation onto the grid, and cropping to the model domain and run period.
 - [SCHISM forcing](notebooks/schism/tutorial_04_schism_forcing.ipynb) — mesh-aware atmospheric, ocean, tidal, and wave processing.
+
+The notebooks bundle small sample datasets so that they run without downloads. A real run points the same objects at your own files, catalogues or data services.
 
 These lessons show the concrete transformations. This page provides the shared mental model that connects them.
 

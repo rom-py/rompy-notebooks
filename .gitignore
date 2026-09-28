@@ -39,3 +39,6 @@ venv/
 !.github/workflows/
 !.github/workflows/docs.yml
 openspec
+
+# Notebook outputs
+_output/
