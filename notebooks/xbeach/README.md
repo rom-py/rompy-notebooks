@@ -43,7 +43,7 @@ Work through these in order:
 
 | Notebook | Shows |
 |---|---|
-| [Parametric wave boundaries](examples/waves_parametric.ipynb) | Constant waves, bichromatic wave groups, no waves |
+| [Constant and bichromatic waves](examples/waves_params.ipynb) | Constant waves, bichromatic wave groups, no waves |
 | [Wave boundaries from spectra](examples/waves_from_spectra.ipynb) | JONSWAP, JONSWAP table and SWAN boundaries from 2D spectra, and common settings |
 | [Wave boundaries from parameters](examples/waves_from_parameters.ipynb) | JONSWAP boundaries from Hs, Tp and direction at stations, on grids or from a CSV |
 | [Existing files and reuse](examples/waves_from_files_and_reuse.ipynb) | Boundary files made elsewhere, and reusing boundaries from a previous run |
