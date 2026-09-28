@@ -15,7 +15,7 @@ except ImportError:  # pragma: no cover - direct script execution
 EXCLUDED_PARTS = {".ipynb_checkpoints", "__pycache__"}
 LINK_RE = re.compile(r"!?\[[^\]]*\]\(([^)#]+)")
 MODEL_NAMES = {"swan", "xbeach", "schism"}
-NOTEBOOK_KINDS = {"tutorial", "reference"}
+NOTEBOOK_KINDS = {"tutorial", "example", "reference"}
 NOTEBOOK_LEVELS = {"beginner", "intermediate", "advanced"}
 NOTEBOOK_EXECUTION = {"render-only", "configuration-only", "runtime-dependent"}
 MODEL_OVERVIEWS = {
@@ -43,14 +43,18 @@ SCHISM_TUTORIAL = [
     Path("notebooks/schism/tutorial_07_schism_execution.ipynb"),
 ]
 XBEACH_TUTORIAL = [
-    Path("notebooks/xbeach/tutorial_01_rompy_orientation.ipynb"),
-    Path("notebooks/xbeach/tutorial_02_xbeach_procedural.ipynb"),
-    Path("notebooks/xbeach/tutorial_03_xbeach_declarative.ipynb"),
-    Path("notebooks/xbeach/tutorial_04_xbeach_grid_data.ipynb"),
-    Path("notebooks/xbeach/tutorial_05_xbeach_forcing.ipynb"),
-    Path("notebooks/xbeach/tutorial_06_xbeach_components.ipynb"),
-    Path("notebooks/xbeach/tutorial_07_xbeach_execution.ipynb"),
+    Path("notebooks/xbeach/tutorial/01_first_model.ipynb"),
+    Path("notebooks/xbeach/tutorial/02_model_grid.ipynb"),
+    Path("notebooks/xbeach/tutorial/03_bathymetry.ipynb"),
+    Path("notebooks/xbeach/tutorial/04_forcing.ipynb"),
+    Path("notebooks/xbeach/tutorial/05_model_settings.ipynb"),
+    Path("notebooks/xbeach/tutorial/06_complete_setup.ipynb"),
+    Path("notebooks/xbeach/tutorial/07_yaml_and_cli.ipynb"),
 ]
+XBEACH_EXAMPLES = Path("notebooks/xbeach/examples")
+# Opening sections of every notebook in the tutorial/examples layout (see
+# docs/tutorial-conventions.md).
+LESSON_TEMPLATE = ["What this shows", "Prerequisites", "You will learn", "Data used"]
 
 
 def tracked_files(root: Path) -> list[Path]:
@@ -127,8 +131,21 @@ def audit_model_metadata(relative: Path, notebook: dict) -> list[str]:
     return failures
 
 
+def _markdown(notebook: dict) -> str:
+    return "\n".join(
+        "".join(cell.get("source", []))
+        for cell in notebook.get("cells", [])
+        if isinstance(cell, dict) and cell.get("cell_type") == "markdown"
+    )
+
+
 def _audit_ordered_tutorial(
-    root: Path, tutorial: list[Path], label: str, *, execution_marker: bool = False
+    root: Path,
+    tutorial: list[Path],
+    label: str,
+    *,
+    execution_marker: bool = False,
+    markers: list[str] | None = None,
 ) -> list[str]:
     failures: list[str] = []
     for index, relative in enumerate(tutorial):
@@ -140,15 +157,11 @@ def _audit_ordered_tutorial(
             notebook = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, UnicodeDecodeError, json.JSONDecodeError):
             continue
-        markdown = "\n".join(
-            "".join(cell.get("source", []))
-            for cell in notebook.get("cells", [])
-            if isinstance(cell, dict) and cell.get("cell_type") == "markdown"
-        )
-        markers = ["Learning goals", "Prerequisites", "## Checkpoint"]
+        markdown = _markdown(notebook)
+        required = list(markers) if markers else ["Learning goals", "Prerequisites", "## Checkpoint"]
         if execution_marker:
-            markers.append("Execution contract")
-        for marker in markers:
+            required.append("Execution contract")
+        for marker in required:
             if marker.lower() not in markdown.lower():
                 failures.append(f"{label} tutorial missing {marker}: {relative}")
         if index < len(tutorial) - 1:
@@ -167,7 +180,22 @@ def audit_tutorial(root: Path) -> list[str]:
 
 
 def audit_xbeach_tutorial(root: Path) -> list[str]:
-    return _audit_ordered_tutorial(root, XBEACH_TUTORIAL, "XBeach", execution_marker=True)
+    return _audit_ordered_tutorial(root, XBEACH_TUTORIAL, "XBeach", markers=LESSON_TEMPLATE)
+
+
+def audit_xbeach_examples(root: Path) -> list[str]:
+    """Check that every XBeach example opens with the lesson template."""
+    failures: list[str] = []
+    for path in sorted((root / XBEACH_EXAMPLES).glob("*.ipynb")):
+        relative = path.relative_to(root)
+        try:
+            markdown = _markdown(json.loads(path.read_text(encoding="utf-8"))).lower()
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+            continue
+        for marker in LESSON_TEMPLATE:
+            if marker.lower() not in markdown:
+                failures.append(f"XBeach example missing {marker}: {relative}")
+    return failures
 
 
 def audit_schism_tutorial(root: Path) -> list[str]:
@@ -176,7 +204,8 @@ def audit_schism_tutorial(root: Path) -> list[str]:
 
 def audit_value_narrative(root: Path) -> list[str]:
     failures: list[str] = []
-    tutorials = [("SWAN", SWAN_TUTORIAL), ("XBeach", XBEACH_TUTORIAL), ("SCHISM", SCHISM_TUTORIAL)]
+    # XBeach uses the lesson template (LESSON_TEMPLATE) instead of these markers.
+    tutorials = [("SWAN", SWAN_TUTORIAL), ("SCHISM", SCHISM_TUTORIAL)]
     for label, paths in tutorials:
         for relative in paths:
             path = root / relative
@@ -196,9 +225,6 @@ def audit_value_narrative(root: Path) -> list[str]:
         for relative in (
             Path("notebooks/swan/tutorial_04_swan_data.ipynb"),
             Path("notebooks/swan/tutorial_06_swan_workspace.ipynb"),
-            Path("notebooks/xbeach/tutorial_04_xbeach_grid_data.ipynb"),
-            Path("notebooks/xbeach/tutorial_05_xbeach_forcing.ipynb"),
-            Path("notebooks/xbeach/tutorial_07_xbeach_execution.ipynb"),
             Path("notebooks/schism/tutorial_03_schism_grid_data.ipynb"),
             Path("notebooks/schism/tutorial_04_schism_forcing.ipynb"),
             Path("notebooks/schism/tutorial_05_schism_boundaries.ipynb"),
@@ -217,7 +243,6 @@ def audit_value_narrative(root: Path) -> list[str]:
         ).lower()
         marker = "generated" if relative in {
             Path("notebooks/swan/tutorial_06_swan_workspace.ipynb"),
-            Path("notebooks/xbeach/tutorial_07_xbeach_execution.ipynb"),
             Path("notebooks/schism/tutorial_06_schism_real_case.ipynb"),
         } else "verification"
         if marker not in markdown:
@@ -230,7 +255,6 @@ def audit_forcing_depth(root: Path) -> list[str]:
     failures: list[str] = []
     required = {
         "SWAN": (Path("notebooks/swan/tutorial_04_swan_data.ipynb"), ("source", "verification")),
-        "XBeach": (Path("notebooks/xbeach/tutorial_05_xbeach_forcing.ipynb"), ("source", "verification")),
         "SCHISM": (Path("notebooks/schism/tutorial_06_schism_real_case.ipynb"), ("source", "generated", "verification", "assumption")),
     }
     for label, (relative, markers) in required.items():
@@ -253,7 +277,7 @@ def audit_visual_verification(root: Path) -> list[str]:
     failures: list[str] = []
     required = {
         "SWAN": [Path("notebooks/swan/tutorial_04_swan_data.ipynb")],
-        "XBeach": [Path("notebooks/xbeach/tutorial_04_xbeach_grid_data.ipynb"), Path("notebooks/xbeach/tutorial_05_xbeach_forcing.ipynb")],
+        "XBeach": [Path("notebooks/xbeach/tutorial/02_model_grid.ipynb"), Path("notebooks/xbeach/tutorial/03_bathymetry.ipynb"), Path("notebooks/xbeach/tutorial/04_forcing.ipynb")],
         "SCHISM": [Path("notebooks/schism/tutorial_03_schism_grid_data.ipynb"), Path("notebooks/schism/tutorial_04_schism_forcing.ipynb"), Path("notebooks/schism/tutorial_05_schism_boundaries.ipynb")],
     }
     for label, paths in required.items():
@@ -356,6 +380,7 @@ def run(root: Path) -> int:
         + audit_notebooks(root)
         + audit_tutorial(root)
         + audit_xbeach_tutorial(root)
+        + audit_xbeach_examples(root)
         + audit_schism_tutorial(root)
         + audit_value_narrative(root)
         + audit_forcing_depth(root)

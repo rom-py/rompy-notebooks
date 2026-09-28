@@ -121,10 +121,10 @@ def test_audit_xbeach_tutorial_detects_missing_step(tmp_path, monkeypatch):
         data["cells"][0]["cell_type"] = "markdown"
         data["cells"][0]["source"] = [
             "# Lesson\n",
-            "**Learning goals:** learn\n",
+            "**What this shows:** a lesson\n",
             "**Prerequisites:** Python\n",
-            "**Execution contract:** render-only\n",
-            "## Checkpoint\n",
+            "**You will learn:** something\n",
+            "**Data used:** none\n",
         ]
         path.write_text(json.dumps(data))
     monkeypatch.setattr(notebook_audit, "XBEACH_TUTORIAL", paths)
@@ -132,18 +132,30 @@ def test_audit_xbeach_tutorial_detects_missing_step(tmp_path, monkeypatch):
     assert any("missing next link" in item for item in failures)
 
 
-def test_audit_xbeach_tutorial_detects_missing_execution_context(tmp_path, monkeypatch):
-    path = tmp_path / "notebooks" / "xbeach" / "tutorial_01_only.ipynb"
+def test_audit_xbeach_tutorial_detects_missing_template_section(tmp_path, monkeypatch):
+    path = tmp_path / "notebooks" / "xbeach" / "tutorial" / "01_only.ipynb"
     path.parent.mkdir(parents=True)
     write_notebook(path)
     data = json.loads(path.read_text())
     data["cells"][0]["cell_type"] = "markdown"
-    data["cells"][0]["source"] = ["**Learning goals:** learn\n", "## Checkpoint\n"]
+    data["cells"][0]["source"] = ["**What this shows:** a lesson\n", "**You will learn:** something\n"]
     path.write_text(json.dumps(data))
     monkeypatch.setattr(notebook_audit, "XBEACH_TUTORIAL", [path])
     failures = notebook_audit.audit_xbeach_tutorial(tmp_path)
     assert any("missing Prerequisites" in item for item in failures)
-    assert any("missing Execution contract" in item for item in failures)
+    assert any("missing Data used" in item for item in failures)
+
+
+def test_audit_current_xbeach_examples_pass():
+    assert notebook_audit.audit_xbeach_examples(Path.cwd()) == []
+
+
+def test_audit_xbeach_examples_detect_missing_template_section(tmp_path):
+    path = tmp_path / notebook_audit.XBEACH_EXAMPLES / "demo.ipynb"
+    path.parent.mkdir(parents=True)
+    write_notebook(path)
+    failures = notebook_audit.audit_xbeach_examples(tmp_path)
+    assert any("missing What this shows" in item for item in failures)
 
 
 def test_audit_detects_empty_notebook(tmp_path, monkeypatch):
@@ -212,7 +224,9 @@ def test_inventory_current_model_notebooks_are_valid():
     from scripts.notebook_inventory import build_inventory
     records, errors = build_inventory(Path.cwd())
     assert errors == []
-    assert len(records) == 43
+    from scripts.notebook_inventory import MODELS, tracked_notebooks
+    model_notebooks = [path for path in tracked_notebooks(Path.cwd()) if path.relative_to(Path.cwd()).parts[1] in MODELS]
+    assert len(records) == len(model_notebooks)
     assert [record["id"] for record in records] == sorted(record["id"] for record in records)
 
 
