@@ -14,6 +14,7 @@ def make_tree(tmp_path: Path) -> Path:
         "docs/notebooks/xbeach/tutorial/scheme.png",
         "docs/notebooks/xbeach/examples/output.ipynb",
         "docs/xbeach-tutorial.md",
+        "docs/why-rompy.md",
         "notebooks/xbeach/data/bathy.tif",
         "notebooks/xbeach/tutorial/config.yml",
     ):
@@ -32,6 +33,11 @@ def test_notebook_links_point_to_pages(tmp_path):
 def test_readme_links_point_to_tutorial_page(tmp_path):
     docs = make_tree(tmp_path)
     assert site_link("../README.md", SOURCE, docs, REPO) == "../../../../xbeach-tutorial/"
+
+
+def test_docs_links_point_to_site_pages(tmp_path):
+    docs = make_tree(tmp_path)
+    assert site_link("../../../docs/why-rompy.md", SOURCE, docs, REPO) == "../../../../why-rompy/"
 
 
 def test_repository_files_link_to_github(tmp_path):

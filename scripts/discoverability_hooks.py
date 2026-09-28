@@ -27,6 +27,7 @@ def site_link(target: str, source: str, docs_dir: Path, repo_url: str) -> str | 
 
     * staged notebooks become their pages, other staged files are prefixed;
     * a model's ``README.md`` becomes its tutorial page (``<model>-tutorial``);
+    * a page in the repository's ``docs/`` folder becomes that site page;
     * any other repository file or folder links to GitHub.
     """
     page_dir = posixpath.splitext(source)[0]
@@ -38,6 +39,8 @@ def site_link(target: str, source: str, docs_dir: Path, repo_url: str) -> str | 
         return posixpath.relpath(posixpath.splitext(resolved)[0], page_dir) + "/"
     if staged.is_file():
         return posixpath.relpath(resolved, page_dir)
+    if resolved.startswith("docs/") and resolved.endswith(".md") and (docs_dir / resolved[5:]).is_file():
+        return posixpath.relpath(posixpath.splitext(resolved[5:])[0], page_dir) + "/"
     readme = MODEL_README_RE.match(resolved)
     if readme and (docs_dir / f"{readme.group(1)}-tutorial.md").is_file():
         return posixpath.relpath(f"{readme.group(1)}-tutorial", page_dir) + "/"
