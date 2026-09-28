@@ -1,22 +1,14 @@
 # SWAN
 
-SWAN is the primary beginner tutorial in this repository. It takes you from Rompy orientation through procedural and declarative configuration, input-data preparation, components, workspace generation, and sensitivity analysis.
+SWAN has a seven-lesson tutorial and twelve focused examples, all on one model of the coast off Perth. The tutorial goes from a first stationary run to a nonstationary hindcast and its YAML configuration; the examples cover one feature each.
 
 ## Recommended path
 
-Start with the [SWAN tutorial overview](../swan-tutorial.md), then follow its seven lessons in order.
+Start with the [SWAN learning tutorial](../swan-tutorial.md) and follow the lessons in order. The examples are listed on the same page, and the [SWAN catalogue](../generated/notebooks-by-model.md#swan) provides the complete reference view.
 
 ## Coverage
 
-Configuration, grids and input data, boundaries, outputs, workspace generation, and sensitivity workflows are covered. Model execution remains optional and environment-dependent. See the [coverage matrix](coverage.md) for details.
-
-## Tutorials and reference
-
-Focused tutorials are listed in the catalogue alongside the tutorial lessons.
-
-## Reference
-
-Use the [SWAN catalogue](../generated/notebooks-by-model.md#swan) to browse all published SWAN notebooks by capability and level.
+The collection covers regular, curvilinear and unstructured grids, input grids from data (bathymetry, wind, currents, water level), parametric and spectral boundaries, nesting, physics and numerics options, output locations and formats, stationary and nonstationary computations, hotstarts, YAML and the rompy CLI, running SWAN locally, with Docker and with MPI, and physics sensitivity. See the [coverage matrix](coverage.md).
 
 !!! note
-    Documentation builds render notebooks without executing SWAN. See each notebook's execution metadata and the [build and execution guide](../workflow.md) before running a model.
+    The notebooks store their outputs, including the results of the SWAN runs made with the public Docker image `ghcr.io/rom-py/swan`. Documentation builds render these outputs without executing the notebooks or SWAN.

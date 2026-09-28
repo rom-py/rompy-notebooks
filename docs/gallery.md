@@ -9,13 +9,20 @@ The gallery is grouped by the main areas covered by this repository. The complet
 
 ## SWAN
 
-- [Procedural example](notebooks/swan/example_procedural.ipynb)
-- [Declarative example](notebooks/swan/example_declarative.ipynb)
-- [Sensitivity example](notebooks/swan/example_sensitivity.ipynb)
-- [Nested boundary](notebooks/swan/boundary/boundnest1.ipynb)
-- [Segment boundary](notebooks/swan/boundary/boundspec_segment.ipynb)
-- [Side boundary](notebooks/swan/boundary/boundspec_side.ipynb)
-- [Output components](notebooks/swan/components/output.ipynb)
+Start with the [SWAN learning tutorial](swan-tutorial.md), an ordered path from a first model to a nonstationary hindcast, then use the examples for specific features.
+
+- [Grid types](notebooks/swan/examples/grid_types.ipynb)
+- [Input grids](notebooks/swan/examples/input_grids.ipynb)
+- [Parametric boundaries](notebooks/swan/examples/boundaries_parametric.ipynb)
+- [Boundaries from spectra](notebooks/swan/examples/boundaries_from_spectra.ipynb)
+- [Nesting](notebooks/swan/examples/nesting.ipynb)
+- [Physics](notebooks/swan/examples/physics.ipynb)
+- [Numerics](notebooks/swan/examples/numerics.ipynb)
+- [Output](notebooks/swan/examples/output.ipynb)
+- [Stationary and nonstationary computations](notebooks/swan/examples/stationary_and_nonstationary.ipynb)
+- [Hotstart and chained runs](notebooks/swan/examples/hotstart_and_chained_runs.ipynb)
+- [Running SWAN](notebooks/swan/examples/running_swan.ipynb)
+- [Physics sensitivity](notebooks/swan/examples/physics_sensitivity.ipynb)
 
 ## SCHISM
 

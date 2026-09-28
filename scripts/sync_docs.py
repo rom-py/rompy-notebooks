@@ -6,9 +6,7 @@ import subprocess
 from pathlib import Path
 
 EXCLUDED_PARTS = {".ipynb_checkpoints", "__pycache__"}
-EXCLUDED_PATHS = {
-    Path("notebooks/swan/example_procedural/run1"),
-}
+EXCLUDED_PATHS: set[Path] = set()
 
 
 def repository_root() -> Path:

@@ -41,4 +41,4 @@ The plugin boundary is an extension point, not a guarantee that every plugin sup
 
 - [How the pieces fit together](notebooks/xbeach/tutorial/01_first_model.ipynb#how-the-pieces-fit-together) in the first XBeach tutorial shows which objects come from rompy and which from rompy-xbeach.
 - [Data sources](notebooks/xbeach/examples/data_sources.ipynb) uses sources from both rompy and rompy-xbeach.
-- [Running XBeach](notebooks/xbeach/examples/running_xbeach.ipynb) runs the same workspace with a local installation or with Docker.
+- [Running XBeach](notebooks/xbeach/examples/running_xbeach.ipynb) and [Running SWAN](notebooks/swan/examples/running_swan.ipynb) run the same workspace with a local installation, with Docker or with MPI.

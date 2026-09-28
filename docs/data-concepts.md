@@ -54,7 +54,7 @@ A colleague can inspect the experiment, substitute an approved provider or local
 
 ## See it in the notebooks
 
-- [SWAN grids and input data](notebooks/swan/tutorial_04_swan_data.ipynb) — regular-grid bathymetry, wind, and nested boundary preparation.
+- [SWAN input grids](notebooks/swan/tutorial/03_input_grids.ipynb) and [wave boundaries](notebooks/swan/tutorial/04_wave_boundaries.ipynb) — bathymetry and wind cropped to the grid, and boundary spectra selected from a regional wave model.
 - [XBeach bathymetry](notebooks/xbeach/tutorial/03_bathymetry.ipynb), [forcing](notebooks/xbeach/tutorial/04_forcing.ipynb) and [data selection options](notebooks/xbeach/examples/data_selection.ipynb) — sources, interpolation onto the grid, and cropping to the model domain and run period.
 - [SCHISM forcing](notebooks/schism/tutorial_04_schism_forcing.ipynb) — mesh-aware atmospheric, ocean, tidal, and wave processing.
 

@@ -12,7 +12,7 @@ Every model notebook has one primary role:
 
 ## Notebook layout and structure
 
-The XBeach collection uses the layout below. It is the target for the other models, which will move to it as their collections are revised:
+The XBeach and SWAN collections use the layout below. It is the target for the other models, which will move to it as their collections are revised:
 
 ```text
 notebooks/<model>/
@@ -30,7 +30,7 @@ Every notebook opens with one markdown cell containing:
 - **You will learn:** three to five bullet points;
 - **Data used:** the files from `data/`, or "none".
 
-Sections are numbered `## 1. ...`, `## 2. ...` after a `## Setup` cell. Notebooks end with `## Summary` (or `## Next steps`), a **Next:** link for tutorial lessons, and **See also:** links to related examples. The notebook audit checks the opening sections for XBeach.
+Sections are numbered `## 1. ...`, `## 2. ...` after a `## Setup` cell. Notebooks end with `## Summary` (or `## Next steps`), a **Next:** link for tutorial lessons, and **See also:** links to related examples. The notebook audit checks the opening sections for XBeach and SWAN.
 
 Links between notebooks are written as relative `.ipynb` links so they work in Jupyter and on GitHub; the MkDocs hook translates them for the site. Links to a model's `README.md` go to its learning tutorial page on the site, and links to data or other repository files go to GitHub.
 

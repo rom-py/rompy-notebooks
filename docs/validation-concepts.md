@@ -75,5 +75,5 @@ See the [run lifecycle](run-lifecycle.md) to place validation in the broader Rom
 ## See it in the notebooks
 
 - XBeach: [how components group the settings, and the checks they apply](notebooks/xbeach/tutorial/05_model_settings.ipynb), and [the same model as a YAML file and from the command line](notebooks/xbeach/tutorial/07_yaml_and_cli.ipynb).
-- SWAN: [configure SWAN declaratively with YAML](notebooks/swan/tutorial_03_swan_declarative.ipynb).
+- SWAN: [the checks rompy-swan applies](notebooks/swan/tutorial/05_model_settings.ipynb), [inputs that need the nonstationary mode](notebooks/swan/tutorial/03_input_grids.ipynb), and [the hindcast as a YAML file and from the command line](notebooks/swan/tutorial/07_yaml_and_cli.ipynb).
 - SCHISM: [build a SCHISM workspace procedurally](notebooks/schism/tutorial_02_schism_procedural.ipynb).

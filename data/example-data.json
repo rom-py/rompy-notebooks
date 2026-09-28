@@ -11,6 +11,15 @@
       "optional": false
     },
     {
+      "id": "swan-examples",
+      "source": "committed in this repository (ETOPO 2022 subset from NOAA ERDDAP, ERA5 and WAVEWATCH III data from the rompy-xbeach test data)",
+      "release": "repository version",
+      "scope": "Bathymetry, ERA5 winds and WAVEWATCH III spectra off Perth used by the SWAN tutorial and examples; see notebooks/swan/data/README.md",
+      "local_path": "notebooks/swan/data",
+      "acquisition": "none: included in a clone of the repository",
+      "optional": false
+    },
+    {
       "id": "common-examples",
       "source": "committed in this repository (copied from the rompy-xbeach test data)",
       "release": "repository version",
