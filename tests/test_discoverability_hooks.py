@@ -12,6 +12,12 @@ from scripts import discoverability_hooks
 from scripts.notebook_inventory import build_inventory
 
 
+class HookConfig(dict):
+    def __init__(self, root):
+        super().__init__(docs_dir=str(root / "docs"), repo_url="")
+        self.config_file_path = str(root / "mkdocs.yml")
+
+
 class NavigationLinks(HTMLParser):
     def __init__(self):
         super().__init__()
@@ -35,7 +41,7 @@ def test_all_published_tutorial_links_resolve(use_directory_urls):
         )
         for record in records if record["published"]
     ])
-    config = SimpleNamespace(config_file_path=str(root / "mkdocs.yml"))
+    config = HookConfig(root)
     tutorials = [r for r in records if r["published"] and r["kind"] == "tutorial"]
     for current in tutorials:
         series = sorted(
@@ -68,7 +74,7 @@ def test_navigation_escapes_link_text_and_url(monkeypatch):
     monkeypatch.setattr(discoverability_hooks, "build_inventory", lambda root: (records, []))
     page = SimpleNamespace(file=SimpleNamespace(src_path="notebooks/0.ipynb"), url="notebooks/0/")
     files = SimpleNamespace(get_file_from_path=lambda path: SimpleNamespace(url='notebooks/1/?a=1&b="2"'))
-    result = discoverability_hooks.on_page_content("", page, SimpleNamespace(config_file_path="mkdocs.yml"), files)
+    result = discoverability_hooks.on_page_content("", page, HookConfig(Path.cwd()), files)
     assert 'Next lesson: &lt;next &amp; &quot;lesson&quot;&gt;' in result
     assert 'href="../1/?a=1&amp;b=&quot;2&quot;"' in result
 

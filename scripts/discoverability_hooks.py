@@ -1,9 +1,12 @@
 """MkDocs hooks for notebook pages: relative links and tutorial navigation."""
 from __future__ import annotations
 
+import posixpath
+import re
 from html import escape
 from pathlib import Path
 
+from markdown.extensions.toc import slugify
 from mkdocs.utils import get_relative_url
 
 try:
