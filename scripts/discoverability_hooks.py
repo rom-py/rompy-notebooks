@@ -1,6 +1,7 @@
-"""MkDocs hook for metadata-driven journey navigation."""
+"""MkDocs hook for metadata-driven tutorial navigation."""
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 try:
@@ -18,24 +19,24 @@ def on_page_content(html, page, config, files):
     if errors:
         raise RuntimeError("Notebook inventory validation failed: " + "; ".join(errors))
     current = next((record for record in records if record["path"] == source), None)
-    if not current or not current.get("published") or current.get("kind") != "journey":
+    if not current or not current.get("published") or current.get("kind") != "tutorial":
         return html
-    journey = sorted(
-        (record for record in records if record.get("published") and record.get("model") == current["model"] and record.get("kind") == "journey"),
-        key=lambda record: record.get("journey", 0),
+    tutorial = sorted(
+        (record for record in records if record.get("published") and record.get("model") == current["model"] and record.get("kind") == "tutorial"),
+        key=lambda record: record.get("tutorial", 0),
     )
-    index = next((i for i, record in enumerate(journey) if record["id"] == current["id"]), None)
+    index = next((i for i, record in enumerate(tutorial) if record["id"] == current["id"]), None)
     if index is None:
         return html
     links = []
     page_dir = Path(source).parent
     for label, offset in (("Previous lesson", -1), ("Next lesson", 1)):
         target_index = index + offset
-        if 0 <= target_index < len(journey):
-            target = journey[target_index]
+        if 0 <= target_index < len(tutorial):
+            target = tutorial[target_index]
             target_dir = Path(target["path"]).with_suffix("")
-            relative = Path("../") / target_dir.relative_to(page_dir)
+            relative = Path(os.path.relpath(target_dir, page_dir))
             links.append(f"[{label}: {target['id']}]({relative.as_posix()}/)")
     if not links:
         return html
-    return html + '<hr><p class="journey-navigation">' + " · ".join(links) + "</p>"
+    return html + '<hr><p class="tutorial-navigation">' + " · ".join(links) + "</p>"

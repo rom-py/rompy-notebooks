@@ -5,10 +5,10 @@ The documentation site currently exposes the same notebooks through four overlap
 ## What Changes
 
 - Replace the overlapping top-level notebook entry points with a small, logical information architecture.
-- Make learning journeys the primary path for newcomers.
+- Make learning tutorials the primary path for newcomers.
 - Make one metadata-backed Notebook Catalogue the authoritative reference index.
 - Remove the duplicate curated gallery and duplicate Notebooks sidebar catalogue.
-- Keep model pages focused on scope, coverage, and recommended journeys rather than repeating every notebook.
+- Keep model pages focused on scope, coverage, and recommended tutorials rather than repeating every notebook.
 - Group installation, usage, execution, conventions, and coverage under Guides.
 - Use human-readable notebook titles in generated catalogue views while retaining stable metadata IDs internally.
 - Preserve direct notebook download links and model-specific lesson navigation.

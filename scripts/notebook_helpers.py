@@ -1,4 +1,4 @@
-"""Small, explicit helpers used by the model journey notebooks."""
+"""Small, explicit helpers used by the model tutorial notebooks."""
 from __future__ import annotations
 
 from pathlib import Path

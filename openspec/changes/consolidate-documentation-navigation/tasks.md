@@ -7,16 +7,16 @@
 
 ## 2. Model and catalogue presentation
 
-- [x] 2.1 Simplify model overview pages to scope, coverage, prerequisites, and recommended journeys
+- [x] 2.1 Simplify model overview pages to scope, coverage, prerequisites, and recommended tutorials
 - [x] 2.2 Update generated catalogue entries to use human-readable notebook titles
 - [x] 2.3 Ensure model/topic/all catalogue views use identical inventory records and links
-- [x] 2.4 Preserve notebook download controls and journey previous/next navigation
+- [x] 2.4 Preserve notebook download controls and tutorial previous/next navigation
 
 ## 3. Consistency checks
 
 - [x] 3.1 Add tests for unique catalogue surfaces and top-level navigation structure
 - [x] 3.2 Add checks that every published notebook appears exactly once in the complete catalogue
-- [x] 3.3 Check model pages link to journeys and catalogue views without duplicating full inventories
+- [x] 3.3 Check model pages link to tutorials and catalogue views without duplicating full inventories
 - [x] 3.4 Add replacement links for any retired catalogue pages
 
 ## 4. Verification and documentation

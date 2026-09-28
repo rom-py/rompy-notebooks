@@ -16,10 +16,10 @@ nav:
       - Run lifecycle: run-lifecycle.md
       - Plugin architecture: plugin-architecture.md
       - Validation concepts: validation-concepts.md
-  - Learning journeys:
-      - SWAN: swan-journey.md
-      - XBeach: xbeach-journey.md
-      - SCHISM: schism-journey.md
+  - Learning tutorials:
+      - SWAN: swan-tutorial.md
+      - XBeach: xbeach-tutorial.md
+      - SCHISM: schism-tutorial.md
   - Notebook catalogue:
       - Overview: catalogue.md
       - By model: generated/notebooks-by-model.md

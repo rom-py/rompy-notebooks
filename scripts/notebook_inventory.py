@@ -4,13 +4,13 @@ The normalized ``rompy_notebooks`` contract is:
 
 * ``id``: stable kebab-case identifier, unique within the repository;
 * ``model``: ``swan``, ``xbeach``, or ``schism``;
-* ``kind``: ``journey``, ``tutorial``, or ``reference``;
+* ``kind``: ``tutorial`` or ``reference``;
 * ``level``: ``beginner``, ``intermediate``, or ``advanced``;
 * ``topics``: non-empty list of topic identifiers;
 * ``execution``: render-only, configuration-only, or runtime-dependent;
 * ``prerequisites`` and ``execution_requirements``: lists of strings;
 * ``published``: explicit boolean, with ``exclusion_reason`` when false;
-* ``journey``: optional positive integer for ordered journey lessons.
+* ``tutorial``: optional positive integer for ordered tutorial lessons.
 """
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ import subprocess
 from pathlib import Path
 
 MODELS = {"swan", "xbeach", "schism"}
-KINDS = {"journey", "tutorial", "reference"}
+KINDS = {"tutorial", "reference"}
 LEVELS = {"beginner", "intermediate", "advanced"}
 EXECUTION = {"render-only", "configuration-only", "runtime-dependent"}
 REQUIRED = ("id", "model", "kind", "level", "topics", "execution", "prerequisites", "execution_requirements", "published")
@@ -67,8 +67,8 @@ def validate_metadata(relative: Path, metadata: dict) -> list[str]:
         errors.append(f"{prefix}: published must be boolean")
     if metadata["published"] is False and not isinstance(metadata.get("exclusion_reason"), str):
         errors.append(f"{prefix}: excluded notebooks require exclusion_reason")
-    if "journey" in metadata and (not isinstance(metadata["journey"], int) or metadata["journey"] < 1):
-        errors.append(f"{prefix}: journey must be a positive integer")
+    if "tutorial" in metadata and (not isinstance(metadata["tutorial"], int) or metadata["tutorial"] < 1):
+        errors.append(f"{prefix}: tutorial must be a positive integer")
     return errors
 
 

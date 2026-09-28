@@ -9,7 +9,7 @@
 
 - [x] 2.1 Generate model and topic index data from the validated inventory
 - [x] 2.2 Add generated model/topic reference pages to the documentation build
-- [x] 2.3 Add ordered journey metadata and previous/next links
+- [x] 2.3 Add ordered tutorial metadata and previous/next links
 - [x] 2.4 Validate that generated links target published, existing documentation pages
 
 ## 3. Integration and quality gates
@@ -23,4 +23,4 @@
 
 - [x] 4.1 Run notebook audit and the complete test suite
 - [x] 4.2 Run render-only and executed documentation builds
-- [x] 4.3 Review generated model/topic indexes and journey navigation visually
+- [x] 4.3 Review generated model/topic indexes and tutorial navigation visually

@@ -6,7 +6,7 @@ These conventions keep model notebook collections predictable while allowing eac
 
 Every model notebook has one primary role:
 
-- **Journey** — an ordered lesson for newcomers. It states learning goals and prerequisites, builds on earlier lessons, and links to the next and previous steps where applicable.
+- **Tutorial** — an ordered lesson for newcomers. It states learning goals and prerequisites, builds on earlier lessons, and links to the next and previous steps where applicable.
 - **Tutorial** — a focused lesson for one workflow or capability. It explains the concept, shows a minimal example, and links to related material without requiring linear progression.
 - **Reference** — a specialist or broad example intended for lookup. It identifies the feature demonstrated and avoids presenting itself as a complete learning path.
 
@@ -27,15 +27,15 @@ Model notebooks carry a `rompy_notebooks` metadata object:
 Allowed values are:
 
 - `model`: `swan`, `xbeach`, or `schism`;
-- `kind`: `journey`, `tutorial`, or `reference`;
+- `kind`: `tutorial`, `tutorial`, or `reference`;
 - `level`: `beginner`, `intermediate`, or `advanced`;
 - `topics`: a non-empty list of concise topic names;
 - `execution`: `render-only`, `configuration-only`, or `runtime-dependent`.
-- `execution_group`: usually `journeys`, `figures`, or `reference`; selected execution runs one group at a time;
+- `execution_group`: usually `tutorials`, `figures`, or `reference`; selected execution runs one group at a time;
 - `execution_eligible`: explicit boolean controlling lightweight selected execution;
 - `runtime_requirements`: list of required model binaries or services for the declared execution tier.
 
-The metadata describes instructional context; it does not replace explanations in the notebook or navigation in the model overview. The `id` is stable and unique, `published` controls inclusion in generated indexes, `prerequisites` and `execution_requirements` describe what a reader needs, and journey lessons use a positive `journey` number. Excluded notebooks must provide an `exclusion_reason`.
+The metadata describes instructional context; it does not replace explanations in the notebook or navigation in the model overview. The `id` is stable and unique, `published` controls inclusion in generated indexes, `prerequisites` and `execution_requirements` describe what a reader needs, and tutorial lessons use a positive `tutorial` number. Excluded notebooks must provide an `exclusion_reason`.
 
 ## Showing Rompy's value
 

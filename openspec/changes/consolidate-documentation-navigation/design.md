@@ -6,10 +6,10 @@ The current MkDocs site has manually curated model navigation, a curated gallery
 
 **Goals:**
 
-- Establish five clear top-level areas: Home, Start here, Learning journeys, Notebook catalogue, and Guides.
+- Establish five clear top-level areas: Home, Start here, Learning tutorials, Notebook catalogue, and Guides.
 - Keep model pages as orientation and coverage pages.
 - Generate one complete catalogue from the inventory, with model/topic views as subsections of that catalogue.
-- Preserve stable notebook routes, download buttons, and journey navigation.
+- Preserve stable notebook routes, download buttons, and tutorial navigation.
 - Add checks preventing duplicate catalogue navigation and incomplete catalogue generation.
 
 **Non-Goals:**
@@ -17,15 +17,15 @@ The current MkDocs site has manually curated model navigation, a curated gallery
 - Redesigning notebook content or model APIs.
 - Removing useful model landing pages.
 - Adding faceted client-side search beyond MkDocs search and generated views.
-- Requiring every notebook to be a journey lesson.
+- Requiring every notebook to be a tutorial lesson.
 
 ## Decisions
 
 1. **Use one catalogue, not multiple lists.** The generated inventory is authoritative for notebook completeness. The former gallery becomes a short orientation page or is removed from navigation; it must not maintain a competing list.
 
-2. **Use model pages for orientation.** Model pages will describe coverage, prerequisites, and recommended paths, linking to journeys and catalogue filters instead of reproducing all notebook links.
+2. **Use model pages for orientation.** Model pages will describe coverage, prerequisites, and recommended paths, linking to tutorials and catalogue filters instead of reproducing all notebook links.
 
-3. **Keep journeys explicit and ordered.** Journey landing pages and lesson order remain editorial because sequencing is pedagogical. Generated previous/next controls continue to derive from metadata.
+3. **Keep tutorials explicit and ordered.** Tutorial landing pages and lesson order remain editorial because sequencing is pedagogical. Generated previous/next controls continue to derive from metadata.
 
 4. **Group non-notebook material under Guides.** Installation, usage, execution, conventions, and audit/coverage material are operational guides rather than notebook discovery surfaces.
 
@@ -42,7 +42,7 @@ The current MkDocs site has manually curated model navigation, a curated gallery
 
 1. Define the final top-level navigation and classify current pages.
 2. Remove duplicate gallery and Notebooks sidebar lists, replacing them with links into the single catalogue.
-3. Simplify model overview pages and retain journey links.
+3. Simplify model overview pages and retain tutorial links.
 4. Update generated catalogue labels and add an all-notebooks view if needed.
 5. Add navigation and coverage tests, then run both documentation build modes.
 6. Roll back by restoring the previous `mkdocs.yml` navigation; notebook files and generated inventory remain unaffected.

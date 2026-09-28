@@ -35,14 +35,14 @@ def execution_mode(path: Path) -> str | None:
     return notebook_metadata(path).get("execution")
 
 
-def eligible_notebooks(root: Path, *, include_runtime: bool = False, group: str = "journeys") -> tuple[list[Path], list[Path]]:
+def eligible_notebooks(root: Path, *, include_runtime: bool = False, group: str = "tutorials") -> tuple[list[Path], list[Path]]:
     """Return (eligible, skipped) notebooks selected by execution metadata."""
     eligible: list[Path] = []
     skipped: list[Path] = []
     for path in staged_notebooks(root):
         metadata = notebook_metadata(path)
         mode = metadata.get("execution")
-        metadata_group = metadata.get("execution_group", "journeys" if path.name.startswith("journey_") else "reference")
+        metadata_group = metadata.get("execution_group", "tutorials" if path.name.startswith("tutorial_") else "reference")
         eligible_flag = metadata.get("execution_eligible", mode in {"render-only", "configuration-only"})
         if metadata_group != group:
             skipped.append(path)
@@ -53,7 +53,7 @@ def eligible_notebooks(root: Path, *, include_runtime: bool = False, group: str 
     return eligible, skipped
 
 
-def execute_notebooks(root: Path, *, include_runtime: bool = False, group: str = "journeys", report: Path | None = None) -> list[Path]:
+def execute_notebooks(root: Path, *, include_runtime: bool = False, group: str = "tutorials", report: Path | None = None) -> list[Path]:
     """Execute staged notebooks in place and return the executed paths."""
     eligible, skipped = eligible_notebooks(root, include_runtime=include_runtime, group=group)
     for path in skipped:
@@ -85,7 +85,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument("--include-runtime", action="store_true", help="also execute runtime-dependent notebooks")
-    parser.add_argument("--group", default="journeys", help="metadata execution group to select")
+    parser.add_argument("--group", default="tutorials", help="metadata execution group to select")
     parser.add_argument("--report", type=Path, help="write a current-run JSON report")
     args = parser.parse_args()
     execute_notebooks(args.root.resolve(), include_runtime=args.include_runtime, group=args.group, report=args.report)

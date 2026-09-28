@@ -30,8 +30,8 @@ def test_audit_current_tracked_notebooks_passes():
     assert notebook_audit.audit_notebooks(Path.cwd()) == []
 
 
-def test_audit_current_swan_journey_passes():
-    assert notebook_audit.audit_journey(Path.cwd()) == []
+def test_audit_current_swan_tutorial_passes():
+    assert notebook_audit.audit_tutorial(Path.cwd()) == []
 
 
 def test_audit_current_model_metadata_passes():
@@ -80,39 +80,39 @@ def test_audit_model_metadata_rejects_invalid_values(tmp_path, monkeypatch):
     assert any("unsupported kind 'invalid'" in item for item in failures)
 
 
-def test_audit_journey_detects_missing_step(tmp_path, monkeypatch):
-    monkeypatch.setattr(notebook_audit, "SWAN_JOURNEY", [Path("notebooks/missing.ipynb")])
-    assert notebook_audit.audit_journey(tmp_path) == [
-        "missing SWAN journey notebook: notebooks/missing.ipynb"
+def test_audit_tutorial_detects_missing_step(tmp_path, monkeypatch):
+    monkeypatch.setattr(notebook_audit, "SWAN_TUTORIAL", [Path("notebooks/missing.ipynb")])
+    assert notebook_audit.audit_tutorial(tmp_path) == [
+        "missing SWAN tutorial notebook: notebooks/missing.ipynb"
     ]
 
 
-def test_audit_current_xbeach_journey_passes():
-    assert notebook_audit.audit_xbeach_journey(Path.cwd()) == []
+def test_audit_current_xbeach_tutorial_passes():
+    assert notebook_audit.audit_xbeach_tutorial(Path.cwd()) == []
 
 
-def test_audit_current_schism_journey_passes():
-    assert notebook_audit.audit_schism_journey(Path.cwd()) == []
+def test_audit_current_schism_tutorial_passes():
+    assert notebook_audit.audit_schism_tutorial(Path.cwd()) == []
 
 
-def test_audit_schism_journey_detects_missing_execution_context(tmp_path, monkeypatch):
-    path = tmp_path / "notebooks" / "schism" / "journey_01_only.ipynb"
+def test_audit_schism_tutorial_detects_missing_execution_context(tmp_path, monkeypatch):
+    path = tmp_path / "notebooks" / "schism" / "tutorial_01_only.ipynb"
     path.parent.mkdir(parents=True)
     write_notebook(path)
     data = json.loads(path.read_text())
     data["cells"][0]["cell_type"] = "markdown"
     data["cells"][0]["source"] = ["**Learning goals:** learn\\n", "## Checkpoint\\n"]
     path.write_text(json.dumps(data))
-    monkeypatch.setattr(notebook_audit, "SCHISM_JOURNEY", [path])
-    failures = notebook_audit.audit_schism_journey(tmp_path)
+    monkeypatch.setattr(notebook_audit, "SCHISM_TUTORIAL", [path])
+    failures = notebook_audit.audit_schism_tutorial(tmp_path)
     assert any("missing Prerequisites" in item for item in failures)
     assert any("missing Execution contract" in item for item in failures)
 
 
-def test_audit_xbeach_journey_detects_missing_step(tmp_path, monkeypatch):
+def test_audit_xbeach_tutorial_detects_missing_step(tmp_path, monkeypatch):
     paths = [
-        tmp_path / "notebooks" / "xbeach" / "journey_01_first.ipynb",
-        tmp_path / "notebooks" / "xbeach" / "journey_02_second.ipynb",
+        tmp_path / "notebooks" / "xbeach" / "tutorial_01_first.ipynb",
+        tmp_path / "notebooks" / "xbeach" / "tutorial_02_second.ipynb",
     ]
     paths[0].parent.mkdir(parents=True)
     for path in paths:
@@ -127,21 +127,21 @@ def test_audit_xbeach_journey_detects_missing_step(tmp_path, monkeypatch):
             "## Checkpoint\n",
         ]
         path.write_text(json.dumps(data))
-    monkeypatch.setattr(notebook_audit, "XBEACH_JOURNEY", paths)
-    failures = notebook_audit.audit_xbeach_journey(tmp_path)
+    monkeypatch.setattr(notebook_audit, "XBEACH_TUTORIAL", paths)
+    failures = notebook_audit.audit_xbeach_tutorial(tmp_path)
     assert any("missing next link" in item for item in failures)
 
 
-def test_audit_xbeach_journey_detects_missing_execution_context(tmp_path, monkeypatch):
-    path = tmp_path / "notebooks" / "xbeach" / "journey_01_only.ipynb"
+def test_audit_xbeach_tutorial_detects_missing_execution_context(tmp_path, monkeypatch):
+    path = tmp_path / "notebooks" / "xbeach" / "tutorial_01_only.ipynb"
     path.parent.mkdir(parents=True)
     write_notebook(path)
     data = json.loads(path.read_text())
     data["cells"][0]["cell_type"] = "markdown"
     data["cells"][0]["source"] = ["**Learning goals:** learn\n", "## Checkpoint\n"]
     path.write_text(json.dumps(data))
-    monkeypatch.setattr(notebook_audit, "XBEACH_JOURNEY", [path])
-    failures = notebook_audit.audit_xbeach_journey(tmp_path)
+    monkeypatch.setattr(notebook_audit, "XBEACH_TUTORIAL", [path])
+    failures = notebook_audit.audit_xbeach_tutorial(tmp_path)
     assert any("missing Prerequisites" in item for item in failures)
     assert any("missing Execution contract" in item for item in failures)
 
@@ -188,7 +188,7 @@ def write_staged_notebook(path: Path, execution: str, source=None):
 
 
 def test_executed_docs_only_changes_staged_copy(tmp_path):
-    source = tmp_path / "notebooks" / "swan" / "journey_01_example.ipynb"
+    source = tmp_path / "notebooks" / "swan" / "tutorial_01_example.ipynb"
     staged = tmp_path / "docs" / "notebooks" / "swan" / source.name
     write_staged_notebook(source, "configuration-only", ["result = 42"])
     write_staged_notebook(staged, "configuration-only", ["result = 42"])
@@ -201,7 +201,7 @@ def test_executed_docs_only_changes_staged_copy(tmp_path):
 
 
 def test_executed_docs_skips_runtime_notebooks(tmp_path):
-    staged = tmp_path / "docs" / "notebooks" / "schism" / "journey_01_runtime.ipynb"
+    staged = tmp_path / "docs" / "notebooks" / "schism" / "tutorial_01_runtime.ipynb"
     write_staged_notebook(staged, "runtime-dependent", ["raise RuntimeError('must skip')"])
     eligible, skipped = execute_docs_notebooks.eligible_notebooks(tmp_path)
     assert eligible == []
@@ -249,11 +249,11 @@ def test_selected_execution_uses_metadata_group_and_eligibility(tmp_path):
     from scripts.execute_docs_notebooks import eligible_notebooks
     staged = tmp_path / "docs/notebooks"
     staged.mkdir(parents=True)
-    for name, group, eligible in (("journey_a.ipynb", "journeys", True), ("reference.ipynb", "reference", True), ("journey_b.ipynb", "journeys", False)):
+    for name, group, eligible in (("tutorial_a.ipynb", "tutorials", True), ("reference.ipynb", "reference", True), ("tutorial_b.ipynb", "tutorials", False)):
         (staged / name).write_text(json.dumps({"metadata": {"rompy_notebooks": {"execution_group": group, "execution_eligible": eligible, "execution": "render-only"}}}))
     selected, skipped = eligible_notebooks(tmp_path)
-    assert [path.name for path in selected] == ["journey_a.ipynb"]
-    assert {path.name for path in skipped} == {"reference.ipynb", "journey_b.ipynb"}
+    assert [path.name for path in selected] == ["tutorial_a.ipynb"]
+    assert {path.name for path in skipped} == {"reference.ipynb", "tutorial_b.ipynb"}
 
 
 def test_example_data_manifest_is_versioned_and_explicit():

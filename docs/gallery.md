@@ -19,14 +19,14 @@ The gallery is grouped by the main areas covered by this repository. The complet
 
 ## SCHISM
 
-Start with the [SCHISM learning journey](models/schism.md) for the progressive path and real-data case study.
+Start with the [SCHISM learning tutorial](models/schism.md) for the progressive path and real-data case study.
 
 - [SCHISM demonstration](notebooks/schism/schism_demo.ipynb)
-- [Complete regional case study](notebooks/schism/journey_06_schism_real_case.ipynb)
+- [Complete regional case study](notebooks/schism/tutorial_06_schism_real_case.ipynb)
 
 ## XBeach
 
-Start with the [XBeach learning journey](models/xbeach.md) for a recommended sequence, then use these focused notebooks as a reference catalogue.
+Start with the [XBeach learning tutorial](models/xbeach.md) for a recommended sequence, then use these focused notebooks as a reference catalogue.
 
 - [Procedural example](notebooks/xbeach/example-procedural.ipynb)
 - [Declarative example](notebooks/xbeach/example-declarative.ipynb)

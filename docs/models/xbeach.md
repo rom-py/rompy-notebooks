@@ -1,12 +1,12 @@
 # XBeach
 
-XBeach has a seven-lesson learning journey plus focused data-interface and component material. The journey is the recommended entry point for users learning Rompy and XBeach together.
+XBeach has a seven-lesson learning tutorial plus focused data-interface and component material. The tutorial is the recommended entry point for users learning Rompy and XBeach together.
 
 ## Recommended path
 
-The journey is complemented by focused tutorials in the catalogue.
+The tutorial is complemented by focused tutorials in the catalogue.
 
-Start with the [XBeach learning journey](../xbeach-journey.md), then follow the lessons in order. The [XBeach catalogue](../generated/notebooks-by-model.md#xbeach) provides the complete reference view.
+Start with the [XBeach learning tutorial](../xbeach-tutorial.md), then follow the lessons in order. The [XBeach catalogue](../generated/notebooks-by-model.md#xbeach) provides the complete reference view.
 
 ## Coverage
 

@@ -11,23 +11,23 @@ The documentation site SHALL provide generated views that list published noteboo
 - **WHEN** a user selects a topic represented by published notebooks
 - **THEN** the site shows the matching notebooks across supported models
 
-### Requirement: Ordered journeys provide previous and next links
-Each published notebook belonging to an ordered learning journey SHALL expose links to its previous and next lessons when those lessons exist.
+### Requirement: Ordered tutorials provide previous and next links
+Each published notebook belonging to an ordered learning tutorial SHALL expose links to its previous and next lessons when those lessons exist.
 
-#### Scenario: Middle journey lesson
+#### Scenario: Middle tutorial lesson
 - **WHEN** a user views a lesson with both earlier and later lessons
-- **THEN** the page provides working previous and next links in journey order
+- **THEN** the page provides working previous and next links in tutorial order
 
-#### Scenario: First or last journey lesson
+#### Scenario: First or last tutorial lesson
 - **WHEN** a user views the first or last lesson
 - **THEN** the page provides only the link that exists and does not render a broken counterpart
 
 ### Requirement: Generated links resolve to published pages
-Generated indexes and journey links SHALL resolve to documentation pages represented in the current inventory and SHALL not link to excluded or missing notebooks.
+Generated indexes and tutorial links SHALL resolve to documentation pages represented in the current inventory and SHALL not link to excluded or missing notebooks.
 
 #### Scenario: Excluded notebook
 - **WHEN** a notebook is excluded from publication
-- **THEN** it does not appear in generated indexes or journey navigation
+- **THEN** it does not appear in generated indexes or tutorial navigation
 
 #### Scenario: Stale link detection
 - **WHEN** generation encounters a link target absent from the published inventory

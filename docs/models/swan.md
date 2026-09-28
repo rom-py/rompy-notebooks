@@ -1,10 +1,10 @@
 # SWAN
 
-SWAN is the primary beginner journey in this repository. It takes you from Rompy orientation through procedural and declarative configuration, input-data preparation, components, workspace generation, and sensitivity analysis.
+SWAN is the primary beginner tutorial in this repository. It takes you from Rompy orientation through procedural and declarative configuration, input-data preparation, components, workspace generation, and sensitivity analysis.
 
 ## Recommended path
 
-Start with the [SWAN journey overview](../swan-journey.md), then follow its seven lessons in order.
+Start with the [SWAN tutorial overview](../swan-tutorial.md), then follow its seven lessons in order.
 
 ## Coverage
 
@@ -12,7 +12,7 @@ Configuration, grids and input data, boundaries, outputs, workspace generation, 
 
 ## Tutorials and reference
 
-Focused tutorials are listed in the catalogue alongside the journey lessons.
+Focused tutorials are listed in the catalogue alongside the tutorial lessons.
 
 ## Reference
 

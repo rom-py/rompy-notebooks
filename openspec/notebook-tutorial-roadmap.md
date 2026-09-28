@@ -1,16 +1,16 @@
-# Rompy Notebook Journey Roadmap
+# Rompy Notebook Tutorial Roadmap
 
 This document captures the likely follow-on changes after the documentation-site foundation. It is a planning aid, not a published documentation page. Each phase should become its own OpenSpec change once its scope is ready.
 
 ## Product direction
 
-The repository should take users from a model-neutral introduction to Rompy, through one complete model journey, and then into deeper model-specific tutorials and reference material.
+The repository should take users from a model-neutral introduction to Rompy, through one complete model tutorial, and then into deeper model-specific tutorials and reference material.
 
 ```text
 Learn Rompy
     |
     v
-First complete journey: SWAN
+First complete tutorial: SWAN
     |
     +--> Model tutorials: SWAN
     +--> Model tutorials: XBeach
@@ -20,7 +20,7 @@ First complete journey: SWAN
 Reference gallery and execution guidance
 ```
 
-The existing XBeach notebooks are the most comprehensive tutorial collection and should provide the strongest stylistic and structural reference. SWAN is the preferred first complete journey because its configuration flow is comparatively approachable and already has procedural, declarative, boundary, output, and sensitivity examples.
+The existing XBeach notebooks are the most comprehensive tutorial collection and should provide the strongest stylistic and structural reference. SWAN is the preferred first complete tutorial because its configuration flow is comparatively approachable and already has procedural, declarative, boundary, output, and sensitivity examples.
 
 ## Completed foundation
 
@@ -43,8 +43,8 @@ This foundation intentionally does not claim that a rendered notebook is an exec
 
 The following roadmap changes have since been implemented in the repository:
 
-- `create-swan-first-journey` — SWAN now has a coherent seven-lesson journey from Rompy orientation through workspace generation and execution guidance.
-- `standardize-model-tutorial-layout` — SWAN, XBeach, and SCHISM use consistent journey metadata, numbering, navigation, and lesson conventions.
+- `create-swan-first-tutorial` — SWAN now has a coherent seven-lesson tutorial from Rompy orientation through workspace generation and execution guidance.
+- `standardize-model-tutorial-layout` — SWAN, XBeach, and SCHISM use consistent tutorial metadata, numbering, navigation, and lesson conventions.
 - `expand-xbeach-learning-path` — XBeach has a connected seven-lesson path plus focused data-interface and component tutorials.
 - `expand-schism-tutorials` — SCHISM has focused grid, forcing, boundary/namelist, complete-case, and execution lessons with real generated artefacts where supported.
 
@@ -52,7 +52,7 @@ The completed case-study work demonstrates structural generation and processing 
 
 ## Follow-on changes
 
-### 1. `create-swan-first-journey`
+### 1. `create-swan-first-tutorial`
 
 **Purpose:** Create the first coherent, end-to-end learning path through Rompy using SWAN.
 
@@ -70,8 +70,8 @@ The completed case-study work demonstrates structural generation and processing 
 **Scope:**
 
 - actual new or substantially curated notebooks are part of this change;
-- add a dedicated learning-journey section to the site;
-- link from journey notebooks to deeper SWAN references;
+- add a dedicated learning-tutorial section to the site;
+- link from tutorial notebooks to deeper SWAN references;
 - make execution prerequisites and optional cells explicit;
 - avoid requiring a SWAN binary for documentation rendering.
 
@@ -100,13 +100,13 @@ The completed case-study work demonstrates structural generation and processing 
 
 **Scope:**
 
-- document the distinction between journey, tutorial, and reference notebooks;
+- document the distinction between tutorial, tutorial, and reference notebooks;
 - establish naming, numbering, prerequisites, learning objectives, summaries, and next-step conventions;
 - curate existing SWAN and XBeach notebooks into the structure where practical;
 - avoid duplicating detailed material merely to achieve visual symmetry;
 - identify missing tutorial areas as explicit future work.
 
-**Dependencies:** SWAN journey should provide a tested pattern before broad adoption.
+**Dependencies:** SWAN tutorial should provide a tested pattern before broad adoption.
 
 **Exit criteria:** users can predict where to find a capability in every model collection, even when the amount of content differs by model.
 
@@ -132,7 +132,7 @@ The completed case-study work demonstrates structural generation and processing 
 - connect the capability tutorials into a progression;
 - clearly label notebooks that demonstrate configuration only versus actual execution.
 
-**Dependencies:** shared tutorial layout; lessons learned from the SWAN journey.
+**Dependencies:** shared tutorial layout; lessons learned from the SWAN tutorial.
 
 **Exit criteria:** XBeach becomes the deepest and most complete model tutorial collection without requiring users to infer its sequence from filenames.
 
@@ -171,11 +171,11 @@ The completed case-study work demonstrates structural generation and processing 
 - distinguish “Learn Rompy”, “Model tutorials”, and “Reference gallery” in navigation;
 - add consistent notebook metadata such as model, level, prerequisites, execution requirements, and topic;
 - generate model indexes from notebook metadata where this reduces manual drift;
-- add previous/next journey links;
+- add previous/next tutorial links;
 - expose missing, untracked, or intentionally excluded notebooks in the audit report;
 - ensure the gallery and sidebar are generated from the same inventory.
 
-**Dependencies:** at least one complete journey and an agreed metadata convention.
+**Dependencies:** at least one complete tutorial and an agreed metadata convention.
 
 **Exit criteria:** users can discover a notebook by learning goal, model, or capability, and omissions are visible rather than silent.
 
@@ -199,7 +199,7 @@ Tier 4: model integration execution     opt-in / scheduled / environment-specifi
 - add explicit handling for external data and remote services;
 - prevent stored outputs from being mistaken for current execution evidence.
 
-**Dependencies:** stable journey notebooks and clear execution contracts.
+**Dependencies:** stable tutorial notebooks and clear execution contracts.
 
 **Exit criteria:** documentation CI remains lightweight while executable examples have a separate, trustworthy validation path.
 
@@ -225,18 +225,18 @@ This follow-on consolidation removed overlapping gallery, discovery, and noteboo
 
 ## Suggested order
 
-The journey, tutorial, discoverability, navigation, execution-validation, and reproducibility work is complete.
+The tutorial, tutorial, discoverability, navigation, execution-validation, and reproducibility work is complete.
 
 ```text
-1–7. completed journey, catalogue, navigation, validation, and reproducibility work
+1–7. completed tutorial, catalogue, navigation, validation, and reproducibility work
 ```
 
 The dependency arrows are deliberately soft. For example, SCHISM work may begin earlier if there is an immediate documentation need, but the shared layout and execution conventions should be established before attempting broad restructuring.
 
 ## Decisions to revisit when creating the first change
 
-- How many notebooks should constitute the minimum SWAN journey: a compact 4–5 notebook path or a fuller 7–8 notebook course?
-- Should journey notebooks be new files, curated copies of existing examples, or a mixture?
-- Should optional execution cells live in the journey notebooks or in separate execution notebooks?
+- How many notebooks should constitute the minimum SWAN tutorial: a compact 4–5 notebook path or a fuller 7–8 notebook course?
+- Should tutorial notebooks be new files, curated copies of existing examples, or a mixture?
+- Should optional execution cells live in the tutorial notebooks or in separate execution notebooks?
 - Which audience is primary: Rompy beginners, ocean-model users new to Rompy, or experienced Rompy developers?
-- What level of stored output is desirable for the first journey when current SWAN examples have runtime and data dependencies?
+- What level of stored output is desirable for the first tutorial when current SWAN examples have runtime and data dependencies?
