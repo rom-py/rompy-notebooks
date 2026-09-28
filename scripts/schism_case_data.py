@@ -12,6 +12,12 @@ import requests
 
 DATA_REPO = "rom-py/rompy-test-data"
 RELEASES_URL = f"https://api.github.com/repos/{DATA_REPO}/releases/latest"
+REQUIRED_SHARED_FILES = (
+    "aus-20230101.nc",
+    "catalog.yaml",
+    "era5-20230101.nc",
+    "gebco-1deg.nc",
+)
 REQUIRED_FILES = (
     "hgrid.gr3",
     "vgrid.in",
@@ -56,6 +62,10 @@ def _complete(path: Path) -> bool:
     return all((path / name).is_file() for name in REQUIRED_FILES)
 
 
+def _shared_data_complete(path: Path) -> bool:
+    return all((path / name).is_file() for name in REQUIRED_SHARED_FILES) and _complete(path / "schism")
+
+
 def _unpack_tidal_atlas(root: Path) -> None:
     archive = root / "tides" / "oceanum-atlas.tar.gz"
     if not archive.is_file():
@@ -79,7 +89,8 @@ def ensure_schism_data(destination: str | Path | None = None) -> Path:
     runs at import time.
     """
     target = Path(destination or os.environ.get("ROMPY_NOTEBOOK_DATA", "tests/data/schism"))
-    if _complete(target):
+    data_root = target.parent
+    if _shared_data_complete(data_root):
         return target.resolve()
 
     response = requests.get(RELEASES_URL, timeout=30)
@@ -99,18 +110,17 @@ def ensure_schism_data(destination: str | Path | None = None) -> Path:
             if len(roots) != 1:
                 raise RuntimeError("Unexpected rompy-test-data archive layout")
             root = next(iter(roots))
-            prefix = f"{root}/data/schism/"
-            extracted = Path(temporary) / "schism"
+            prefix = f"{root}/data/"
+            extracted = Path(temporary) / "data"
             for member in bundle.namelist():
                 if member.startswith(prefix) and not member.endswith("/"):
                     relative = Path(member[len(prefix) :])
                     output = extracted / relative
                     output.parent.mkdir(parents=True, exist_ok=True)
                     output.write_bytes(bundle.read(member))
-        _unpack_tidal_atlas(extracted)
-        if not _complete(extracted):
-            raise RuntimeError("rompy-test-data release lacks the complete SCHISM fixture bundle")
-        if target.exists():
-            shutil.rmtree(target)
-        shutil.copytree(extracted, target)
+        _unpack_tidal_atlas(extracted / "schism")
+        if not _shared_data_complete(extracted):
+            raise RuntimeError("rompy-test-data release lacks the complete notebook fixture bundle")
+        data_root.mkdir(parents=True, exist_ok=True)
+        shutil.copytree(extracted, data_root, dirs_exist_ok=True)
     return target.resolve()
