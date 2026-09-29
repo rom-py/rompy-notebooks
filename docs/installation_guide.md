@@ -33,8 +33,8 @@ Then open a notebook, for example the first lesson of a [learning tutorial](inde
 
 Generating a model workspace needs only the Python packages above. Running the model needs the model itself:
 
-- **XBeach:** the notebooks use the public Docker image `ghcr.io/rom-py/xbeach`, so [Docker](https://docs.docker.com/get-docker/) is enough. Cells that run XBeach are skipped when Docker is not available.
-- **SWAN and SCHISM:** a local installation of the model, or a container of your own. The notebooks that run them list what they need.
+- The notebooks use public Docker images of each model, `ghcr.io/rom-py/xbeach`, `ghcr.io/rom-py/swan` and `ghcr.io/rom-py/schism`, so [Docker](https://docs.docker.com/get-docker/) is enough. Cells that run a model are skipped when Docker is not available.
+- To use a local installation of a model instead, see the "Running" example of each model.
 
 ## Building this site
 

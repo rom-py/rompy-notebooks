@@ -4,15 +4,15 @@ The model collections intentionally have different levels of maturity. This matr
 
 | Section | SWAN | XBeach | SCHISM |
 | --- | --- | --- | --- |
-| Getting started | Established | Established | Partial |
-| Procedural workflow | Established | Established | Partial |
-| Declarative workflow | Established | Established | Not yet covered |
-| Grids and input data | Established | Established | Established (real fixture case) |
-| Boundary conditions | Established | Established | Established (2-D; 3-D contract inspected) |
-| Physics/components | Established | Established | Not yet covered |
-| Outputs and diagnostics | Established | Established | Not yet covered |
-| Execution and backends | Established (local, Docker, MPI, CLI) | Established (local, Docker, MPI, CLI) | Partial |
-| Advanced workflows | Established (nesting, hotstart, physics sensitivity) | Established (hotstart, parameter sweep) | Partial (forcing-family case study; runtime remains external) |
+| Getting started | Established | Established | Established |
+| Procedural workflow | Established | Established | Established |
+| Declarative workflow | Established | Established | Established |
+| Grids and input data | Established | Established | Established |
+| Boundary conditions | Established | Established | Established (tides, ocean model, 3D, waves) |
+| Physics/components | Established | Established | Established |
+| Outputs and diagnostics | Established | Established | Established |
+| Execution and backends | Established (local, Docker, MPI, CLI) | Established (local, Docker, MPI, CLI) | Established (local, Docker, MPI, CLI) |
+| Advanced workflows | Established (nesting, hotstart, physics sensitivity) | Established (hotstart, parameter sweep) | Established (baroclinic 3D, waves, hotstart, friction sensitivity) |
 
 **Established** means the collection has focused content that can be used today. **Partial** means content exists but does not yet form a complete instructional treatment. **Not yet covered** is an explicit gap for a future change.
 

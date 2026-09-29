@@ -16,7 +16,7 @@ Example datasets are described in [`data/example-data.json`](https://github.com/
 make example-data
 ```
 
-Small model-specific datasets are committed next to the notebooks that use them (for example `notebooks/xbeach/data/` and `notebooks/swan/data/`), so those notebooks run from a clone without an acquisition step. Larger shared fixtures are acquired explicitly and are never part of a render-only documentation build. For the optional SCHISM bundle, use `python scripts/example_data.py --acquire-schism`. Generated model inputs belong in temporary or ignored workspaces and are not scientific validation evidence.
+Small model-specific datasets are committed next to the notebooks that use them (for example `notebooks/xbeach/data/`, `notebooks/swan/data/` and `notebooks/schism/data/`), so those notebooks run from a clone without an acquisition step. Larger shared fixtures are acquired explicitly and are never part of a render-only documentation build. Generated model inputs belong in temporary or ignored workspaces and are not scientific validation evidence.
 
 ## Build or preview locally
 
@@ -29,16 +29,7 @@ make docs-serve
 
 These standard commands are render-only: they stage notebooks and do not execute them. `docs-build` runs the notebook quality gate and then `mkdocs build --strict`. `docs-serve` stages the notebooks and starts a local preview server.
 
-To preview the plots and outputs produced by the figure-selected Tutorial notebooks, use the explicit figure targets:
-
-```bash
-make docs-build-figures
-make docs-serve-figures
-```
-
-These commands execute only notebooks marked with `execution_group: figures` in staged copies under `docs/notebooks/` before rendering. They require `nbclient`, the model plugin and notebook dependencies, and any fixture data used by those lessons. Runtime-dependent lessons are skipped; no source notebooks or generated outputs are committed.
-
-The broader `make docs-build-executed` target remains available for executing all eligible Tutorial notebooks locally.
+The notebooks are committed with their outputs, including the model runs, so the rendered pages show them without executing anything. `make docs-build-executed` executes the eligible Tutorial notebooks in staged copies before rendering, for local checks.
 
 ## Validation tiers
 
@@ -66,7 +57,7 @@ The SWAN tutorial and examples cover grids, input grids, parametric and spectral
 
 ### SCHISM
 
-The SCHISM demonstration covers configuration and backend-oriented setup.
+The SCHISM tutorial and examples cover the mesh and vertical grid, making a mesh, tides and ocean-model boundaries, atmospheric forcing, model settings, a baroclinic 3D model, waves with WWM, output, hotstarts, YAML and the CLI, running SCHISM with Docker and MPI, and friction sensitivity. Their outputs are committed, including the SCHISM runs.
 
 ### XBeach
 

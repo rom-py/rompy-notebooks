@@ -1,8 +1,4 @@
-"""Execute eligible staged notebooks without modifying notebook sources.
-
-The ``figures`` execution group is intentionally limited to notebooks whose
-rendered plots add value to the published documentation.
-"""
+"""Execute eligible staged notebooks without modifying notebook sources."""
 from __future__ import annotations
 
 import argparse

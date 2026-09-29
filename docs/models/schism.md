@@ -1,16 +1,14 @@
 # SCHISM
 
-SCHISM has a focused seven-lesson learning tutorial and a retained broad procedural reference example. The tutorial separates fixture preparation, workspace generation, boundary and namelist configuration, and optional execution.
+SCHISM has a seven-lesson tutorial and nine focused examples, all on one model of the coast off Perth. The tutorial goes from a first tidal run to a tide and wind hindcast and its YAML configuration; the examples cover one feature each.
 
 ## Recommended path
 
-The tutorial is complemented by focused tutorials and a reference example in the catalogue.
-
-Start with the [SCHISM learning tutorial](../schism-tutorial.md), then follow the lessons in order. Use the [SCHISM catalogue](../generated/notebooks-by-model.md#schism) for the complete reference view.
+Start with the [SCHISM learning tutorial](../schism-tutorial.md) and follow the lessons in order. The examples are listed on the same page, and the [SCHISM catalogue](../generated/notebooks-by-model.md#schism) provides the complete reference view.
 
 ## Coverage
 
-The tutorial covers real mesh, ERA5, HYCOM, tidal, and wave-source processing, generated model inputs, and runtime prerequisites. Binary, MPI, Docker, external-data, and scientific-validation requirements remain explicit. See the [coverage matrix](coverage.md).
+The collection covers the unstructured mesh and making one, 2D and 3D vertical grids, bottom friction, tidal and ocean-model open boundaries, atmospheric forcing, `param.nml` settings, a baroclinic 3D model started from an ocean model, waves with WWM, output and stations, hotstarts, YAML and the rompy CLI, running SCHISM locally, with Docker and with MPI, and friction sensitivity. See the [coverage matrix](coverage.md).
 
-!!! warning
-    Documentation builds render SCHISM notebooks without executing them. Actual SCHISM execution additionally requires a SCHISM binary and MPI.
+!!! note
+    The notebooks store their outputs, including the results of the SCHISM runs made with the public Docker image `ghcr.io/rom-py/schism`. Documentation builds render these outputs without executing the notebooks or SCHISM.

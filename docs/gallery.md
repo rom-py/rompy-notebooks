@@ -26,10 +26,17 @@ Start with the [SWAN learning tutorial](swan-tutorial.md), an ordered path from 
 
 ## SCHISM
 
-Start with the [SCHISM learning tutorial](models/schism.md) for the progressive path and real-data case study.
+Start with the [SCHISM learning tutorial](schism-tutorial.md), an ordered path from a first model to a tide and wind hindcast, then use the examples for specific features.
 
-- [SCHISM demonstration](notebooks/schism/schism_demo.ipynb)
-- [Complete regional case study](notebooks/schism/tutorial_06_schism_real_case.ipynb)
+- [Making a mesh](notebooks/schism/examples/making_a_mesh.ipynb)
+- [Tidal boundaries](notebooks/schism/examples/tidal_boundaries.ipynb)
+- [Ocean boundaries](notebooks/schism/examples/ocean_boundaries.ipynb)
+- [Baroclinic 3D model](notebooks/schism/examples/baroclinic_3d.ipynb)
+- [Waves with WWM](notebooks/schism/examples/waves_wwm.ipynb)
+- [Output](notebooks/schism/examples/output.ipynb)
+- [Hotstart and chained runs](notebooks/schism/examples/hotstart_and_chained_runs.ipynb)
+- [Running SCHISM](notebooks/schism/examples/running_schism.ipynb)
+- [Friction sensitivity](notebooks/schism/examples/friction_sensitivity.ipynb)
 
 ## XBeach
 

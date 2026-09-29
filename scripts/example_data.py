@@ -1,4 +1,4 @@
-"""Report or explicitly acquire optional example data."""
+"""Report the example data listed in data/example-data.json."""
 from __future__ import annotations
 
 import argparse
@@ -13,7 +13,6 @@ def manifest(root: Path) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument("--acquire-schism", action="store_true", help="explicitly download the optional SCHISM fixture bundle")
     args = parser.parse_args()
     root = args.root.resolve()
     data = manifest(root)
@@ -21,9 +20,6 @@ def main() -> int:
         path = root / dataset["local_path"]
         status = "available" if path.exists() else "absent (optional)"
         print(f"{dataset['id']}: {status}; source={dataset['source']}; scope={dataset['scope']}")
-    if args.acquire_schism:
-        from schism_case_data import ensure_schism_data
-        print(f"Acquiring schism-regional into {ensure_schism_data(root / 'tests/data/schism')}")
     return 0
 
 
