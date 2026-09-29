@@ -1,0 +1,56 @@
+# The tide and wind hindcast of Tutorial 6 as a rompy ModelRun, with a constant
+# drag coefficient. Paths are relative to this file's folder.
+run_id: hindcast_yaml
+output_dir: _output/07_yaml_and_cli
+period:
+  start: 2023-01-01T00:00
+  end: 2023-01-05T00:00
+  interval: 1h
+config:
+  model_type: schism
+  grid:
+    grid_type: schism
+    hgrid:
+      model_type: data_blob
+      source: ../data/hgrid.gr3
+    drag: 0.0025
+  data:
+    data_type: schism
+    boundary_conditions:
+      data_type: boundary_conditions
+      tidal_data:
+        tidal_database: ../data/tides
+        tidal_model: TPXO9-perth
+        constituents: [M2, S2, N2, K2, K1, O1, P1, Q1]
+        nodal_corrections: true
+      default_boundary:
+        elev_type: 3  # tidal elevation
+        vel_type: 3  # tidal currents
+    atmos:
+      data_type: sflux
+      air_1:
+        data_type: sflux_air
+        source:
+          model_type: file
+          uri: ../data/era5-perth-20230101-05.nc
+        uwind_name: u10
+        vwind_name: v10
+        prmsl_name: msl
+        filter:
+          sort:
+            coords: [latitude]
+  nml:
+    param:
+      core:
+        ibc: 1  # barotropic
+        ibtp: 0
+        dt: 120.0
+        nspool: 10  # output every 20 minutes
+        ihfskip: 720  # one output file per day
+      opt:
+        wtiminc: 3600.0  # hourly ERA5
+      schout:
+        iof_hydro__1: 1  # water level
+        iof_hydro__14: 1  # wind
+        iof_hydro__16: 1  # depth-averaged velocity
+        iof_hydro__26: 0  # no 3D velocity in a 2D model
