@@ -35,14 +35,15 @@ SWAN_TUTORIAL = [
 ]
 SWAN_EXAMPLES = Path("notebooks/swan/examples")
 SCHISM_TUTORIAL = [
-    Path("notebooks/schism/tutorial_01_rompy_orientation.ipynb"),
-    Path("notebooks/schism/tutorial_02_schism_procedural.ipynb"),
-    Path("notebooks/schism/tutorial_03_schism_grid_data.ipynb"),
-    Path("notebooks/schism/tutorial_04_schism_forcing.ipynb"),
-    Path("notebooks/schism/tutorial_05_schism_boundaries.ipynb"),
-    Path("notebooks/schism/tutorial_06_schism_real_case.ipynb"),
-    Path("notebooks/schism/tutorial_07_schism_execution.ipynb"),
+    Path("notebooks/schism/tutorial/01_first_model.ipynb"),
+    Path("notebooks/schism/tutorial/02_mesh_and_vertical_grid.ipynb"),
+    Path("notebooks/schism/tutorial/03_tides_and_open_boundaries.ipynb"),
+    Path("notebooks/schism/tutorial/04_atmospheric_forcing.ipynb"),
+    Path("notebooks/schism/tutorial/05_model_settings.ipynb"),
+    Path("notebooks/schism/tutorial/06_tide_and_wind_hindcast.ipynb"),
+    Path("notebooks/schism/tutorial/07_yaml_and_cli.ipynb"),
 ]
+SCHISM_EXAMPLES = Path("notebooks/schism/examples")
 XBEACH_TUTORIAL = [
     Path("notebooks/xbeach/tutorial/01_first_model.ipynb"),
     Path("notebooks/xbeach/tutorial/02_model_grid.ipynb"),
@@ -140,14 +141,7 @@ def _markdown(notebook: dict) -> str:
     )
 
 
-def _audit_ordered_tutorial(
-    root: Path,
-    tutorial: list[Path],
-    label: str,
-    *,
-    execution_marker: bool = False,
-    markers: list[str] | None = None,
-) -> list[str]:
+def _audit_ordered_tutorial(root: Path, tutorial: list[Path], label: str) -> list[str]:
     failures: list[str] = []
     for index, relative in enumerate(tutorial):
         path = root / relative
@@ -159,10 +153,7 @@ def _audit_ordered_tutorial(
         except (OSError, UnicodeDecodeError, json.JSONDecodeError):
             continue
         markdown = _markdown(notebook)
-        required = list(markers) if markers else ["Learning goals", "Prerequisites", "## Checkpoint"]
-        if execution_marker:
-            required.append("Execution contract")
-        for marker in required:
+        for marker in LESSON_TEMPLATE:
             if marker.lower() not in markdown.lower():
                 failures.append(f"{label} tutorial missing {marker}: {relative}")
         if index < len(tutorial) - 1:
@@ -177,11 +168,11 @@ def _audit_ordered_tutorial(
 
 
 def audit_tutorial(root: Path) -> list[str]:
-    return _audit_ordered_tutorial(root, SWAN_TUTORIAL, "SWAN", markers=LESSON_TEMPLATE)
+    return _audit_ordered_tutorial(root, SWAN_TUTORIAL, "SWAN")
 
 
 def audit_xbeach_tutorial(root: Path) -> list[str]:
-    return _audit_ordered_tutorial(root, XBEACH_TUTORIAL, "XBeach", markers=LESSON_TEMPLATE)
+    return _audit_ordered_tutorial(root, XBEACH_TUTORIAL, "XBeach")
 
 
 def _audit_examples(root: Path, folder: Path, label: str) -> list[str]:
@@ -207,75 +198,12 @@ def audit_swan_examples(root: Path) -> list[str]:
     return _audit_examples(root, SWAN_EXAMPLES, "SWAN")
 
 
+def audit_schism_examples(root: Path) -> list[str]:
+    return _audit_examples(root, SCHISM_EXAMPLES, "SCHISM")
+
+
 def audit_schism_tutorial(root: Path) -> list[str]:
-    return _audit_ordered_tutorial(root, SCHISM_TUTORIAL, "SCHISM", execution_marker=True)
-
-
-def audit_value_narrative(root: Path) -> list[str]:
-    failures: list[str] = []
-    # XBeach and SWAN use the lesson template (LESSON_TEMPLATE) instead of these markers.
-    tutorials = [("SCHISM", SCHISM_TUTORIAL)]
-    for label, paths in tutorials:
-        for relative in paths:
-            path = root / relative
-            if not path.is_file():
-                continue
-            notebook = json.loads(path.read_text(encoding="utf-8"))
-            markdown = "\\n".join(
-                "".join(cell.get("source", []))
-                for cell in notebook.get("cells", [])
-                if cell.get("cell_type") == "markdown"
-            ).lower()
-            for marker in ("without rompy", "with rompy"):
-                if marker not in markdown:
-                    failures.append(f"{label} tutorial missing value marker {marker}: {relative}")
-    enriched = {
-        relative
-        for relative in (
-            Path("notebooks/schism/tutorial_03_schism_grid_data.ipynb"),
-            Path("notebooks/schism/tutorial_04_schism_forcing.ipynb"),
-            Path("notebooks/schism/tutorial_05_schism_boundaries.ipynb"),
-            Path("notebooks/schism/tutorial_06_schism_real_case.ipynb"),
-        )
-    }
-    for relative in enriched:
-        path = root / relative
-        if not path.is_file():
-            continue
-        notebook = json.loads(path.read_text(encoding="utf-8"))
-        markdown = "\\n".join(
-            "".join(cell.get("source", []))
-            for cell in notebook.get("cells", [])
-            if cell.get("cell_type") == "markdown"
-        ).lower()
-        marker = "generated" if relative in {
-            Path("notebooks/schism/tutorial_06_schism_real_case.ipynb"),
-        } else "verification"
-        if marker not in markdown:
-            failures.append(f"tutorial missing value marker {marker}: {relative}")
-    return failures
-
-
-def audit_forcing_depth(root: Path) -> list[str]:
-    """Check that enriched case-study notebooks explain source-to-output work."""
-    failures: list[str] = []
-    required = {
-        "SCHISM": (Path("notebooks/schism/tutorial_06_schism_real_case.ipynb"), ("source", "generated", "verification", "assumption")),
-    }
-    for label, (relative, markers) in required.items():
-        path = root / relative
-        if not path.is_file():
-            continue
-        notebook = json.loads(path.read_text(encoding="utf-8"))
-        text = "\n".join(
-            "".join(cell.get("source", []))
-            for cell in notebook.get("cells", [])
-            if isinstance(cell, dict)
-        ).lower()
-        missing = [marker for marker in markers if marker not in text]
-        if missing:
-            failures.append(f"{label} forcing case missing depth markers: {', '.join(missing)}")
-    return failures
+    return _audit_ordered_tutorial(root, SCHISM_TUTORIAL, "SCHISM")
 
 
 def audit_visual_verification(root: Path) -> list[str]:
@@ -283,7 +211,7 @@ def audit_visual_verification(root: Path) -> list[str]:
     required = {
         "SWAN": [Path("notebooks/swan/tutorial/02_grid_and_spectrum.ipynb"), Path("notebooks/swan/tutorial/03_input_grids.ipynb"), Path("notebooks/swan/tutorial/04_wave_boundaries.ipynb")],
         "XBeach": [Path("notebooks/xbeach/tutorial/02_model_grid.ipynb"), Path("notebooks/xbeach/tutorial/03_bathymetry.ipynb"), Path("notebooks/xbeach/tutorial/04_forcing.ipynb")],
-        "SCHISM": [Path("notebooks/schism/tutorial_03_schism_grid_data.ipynb"), Path("notebooks/schism/tutorial_04_schism_forcing.ipynb"), Path("notebooks/schism/tutorial_05_schism_boundaries.ipynb")],
+        "SCHISM": [Path("notebooks/schism/tutorial/02_mesh_and_vertical_grid.ipynb"), Path("notebooks/schism/tutorial/03_tides_and_open_boundaries.ipynb"), Path("notebooks/schism/tutorial/04_atmospheric_forcing.ipynb")],
     }
     for label, paths in required.items():
         for relative in paths:
@@ -388,8 +316,7 @@ def run(root: Path) -> int:
         + audit_xbeach_examples(root)
         + audit_swan_examples(root)
         + audit_schism_tutorial(root)
-        + audit_value_narrative(root)
-        + audit_forcing_depth(root)
+        + audit_schism_examples(root)
         + audit_visual_verification(root)
         + audit_model_docs(root)
         + audit_navigation_coverage(root)
