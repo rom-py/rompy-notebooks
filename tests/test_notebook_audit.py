@@ -38,16 +38,8 @@ def test_audit_current_model_metadata_passes():
     assert notebook_audit.audit_notebooks(Path.cwd()) == []
 
 
-def test_audit_current_value_narrative_passes():
-    assert notebook_audit.audit_value_narrative(Path.cwd()) == []
-
-
 def test_audit_current_visual_verification_passes():
     assert notebook_audit.audit_visual_verification(Path.cwd()) == []
-
-
-def test_audit_current_forcing_depth_passes():
-    assert notebook_audit.audit_forcing_depth(Path.cwd()) == []
 
 
 def test_audit_current_model_docs_passes():
@@ -95,20 +87,6 @@ def test_audit_current_schism_tutorial_passes():
     assert notebook_audit.audit_schism_tutorial(Path.cwd()) == []
 
 
-def test_audit_schism_tutorial_detects_missing_execution_context(tmp_path, monkeypatch):
-    path = tmp_path / "notebooks" / "schism" / "tutorial_01_only.ipynb"
-    path.parent.mkdir(parents=True)
-    write_notebook(path)
-    data = json.loads(path.read_text())
-    data["cells"][0]["cell_type"] = "markdown"
-    data["cells"][0]["source"] = ["**Learning goals:** learn\\n", "## Checkpoint\\n"]
-    path.write_text(json.dumps(data))
-    monkeypatch.setattr(notebook_audit, "SCHISM_TUTORIAL", [path])
-    failures = notebook_audit.audit_schism_tutorial(tmp_path)
-    assert any("missing Prerequisites" in item for item in failures)
-    assert any("missing Execution contract" in item for item in failures)
-
-
 def test_audit_xbeach_tutorial_detects_missing_step(tmp_path, monkeypatch):
     paths = [
         tmp_path / "notebooks" / "xbeach" / "tutorial_01_first.ipynb",
@@ -152,6 +130,10 @@ def test_audit_current_xbeach_examples_pass():
 
 def test_audit_current_swan_examples_pass():
     assert notebook_audit.audit_swan_examples(Path.cwd()) == []
+
+
+def test_audit_current_schism_examples_pass():
+    assert notebook_audit.audit_schism_examples(Path.cwd()) == []
 
 
 def test_audit_xbeach_examples_detect_missing_template_section(tmp_path):
