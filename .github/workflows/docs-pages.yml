@@ -33,12 +33,8 @@ jobs:
           python -m pip install -r requirements.txt
           python -m pip install -r requirements-docs.txt
 
-      - name: Acquire figure fixtures
-        run: |
-          python scripts/example_data.py --acquire-schism
-
-      - name: Build documentation with selected figures
-        run: make docs-build-figures
+      - name: Build documentation
+        run: make docs-build
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

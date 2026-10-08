@@ -1,0 +1,7 @@
+# Run SCHISM in the public Docker image with rompy's Docker backend: 6 processes,
+# 2 of them scribes that write the output.
+type: docker
+image: ghcr.io/rom-py/schism:5.13.0
+executable: schism 2
+mpiexec: mpirun
+cpu: 6
