@@ -1,0 +1,4 @@
+# Run SWAN in the public Docker image with rompy's Docker backend.
+type: docker
+image: ghcr.io/rom-py/swan:41.51
+executable: swan.exe

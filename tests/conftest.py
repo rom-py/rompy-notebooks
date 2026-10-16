@@ -11,8 +11,11 @@ DATA_REPO = "rom-py/rompy-test-data"
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 GITHUB_API_RELEASES = f"https://api.github.com/repos/{DATA_REPO}/releases/latest"
 
-# Add the tests directory to the Python path
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
+# Add the repository and tests directories to the Python path
+TESTS_DIR = os.path.abspath(os.path.dirname(__file__))
+REPO_DIR = os.path.abspath(os.path.join(TESTS_DIR, os.pardir))
+sys.path.insert(0, REPO_DIR)
+sys.path.insert(0, TESTS_DIR)
 
 
 def download_and_extract_data():

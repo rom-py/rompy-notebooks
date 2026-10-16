@@ -1,0 +1,107 @@
+# XBeach storm-impact model from tutorial 6, described in YAML.
+#
+# Generate the workspace from this folder with:
+#   rompy generate 07_yaml_and_cli.yml
+#
+# Relative paths are resolved from the folder the command is run in.
+
+run_id: storm_impact_yaml
+output_dir: _output/07_yaml_and_cli
+delete_existing: true
+
+period:
+  start: 2023-01-01T00:00
+  end: 2023-01-01T12:00
+  interval: 1h
+
+config:
+  model_type: xbeach
+
+  grid:
+    model_type: regular
+    ori: {x: 115.594239, y: -32.641104, crs: "EPSG:4326"}
+    alfa: 347.0
+    dx: 10.0
+    dy: 15.0
+    nx: 230
+    ny: 220
+    crs: "EPSG:28350"
+
+  bathy:
+    model_type: xbeach_bathy
+    source:
+      model_type: geotiff
+      filename: ../data/bathy.tif
+    posdwn: false
+    interpolator:
+      model_type: scipy_regular_grid
+      kwargs: {method: linear, fill_value: null}
+    extension:
+      model_type: linear
+      depth: 25.0
+      slope: 0.05
+    left: 5
+    right: 5
+
+  input:
+    wave:
+      model_type: station_spectra_swan
+      source:
+        model_type: wavespectra
+        uri: ../data/ww3-spectra-20230101-short.nc
+        reader: read_ww3
+      location: offshore
+      sel_method: nearest
+      filelist: true
+      thetamin: -90.0
+      thetamax: 90.0
+      dtheta_s: 10.0
+    wind:
+      model_type: wind_station
+      source:
+        model_type: file
+        uri: ../data/smc-params-20230101.nc
+        crs: 4326
+      coords: {s: seapoint}
+      wind_vars:
+        model_type: wind_vector
+        u: uwnd
+        v: vwnd
+    tide:
+      model_type: tide_cons_grid
+      source:
+        model_type: oceantide
+        reader: read_otis_binary
+        kwargs:
+          gfile: ../data/swaus_tide_cons/grid_m2s2n2k2k1o1p1q1mmmf
+          hfile: ../data/swaus_tide_cons/h_m2s2n2k2k1o1p1q1mmmf
+          ufile: ../data/swaus_tide_cons/u_m2s2n2k2k1o1p1q1mmmf
+        crs: 4326
+      coords: {x: lon, y: lat}
+
+  physics:
+    wavemodel:
+      model_type: surfbeat
+    bedfriction:
+      model_type: manning
+      bedfriccoef: 0.02
+    wind: true
+
+  flow_boundary:
+    front: abs_2d
+    back: abs_2d
+    left: neumann
+    right: neumann
+
+  sediment:
+    sedtrans: true
+    morphology:
+      morfac: 5.0
+      morstart: 3600.0
+
+  output:
+    ncfilename: xboutput.nc
+    meanvars: [H, zs, u, v]
+    tintm: 3600.0
+    globalvars: [zb]
+    tintg: 3600.0

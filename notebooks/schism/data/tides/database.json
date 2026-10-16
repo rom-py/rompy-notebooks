@@ -1,0 +1,61 @@
+{
+  "elevation": {
+    "TPXO9-perth": {
+      "format": "ATLAS-netcdf",
+      "grid_file": "tpxo9-perth/grid_tpxo9.nc",
+      "name": "TPXO9-perth",
+      "projection": "EPSG:4326",
+      "scale": 1,
+      "reference": "https://www.tpxo.net/global",
+      "version": "v5a",
+      "model_file": [
+        "tpxo9-perth/h_m2_tpxo9.nc",
+        "tpxo9-perth/h_s2_tpxo9.nc",
+        "tpxo9-perth/h_n2_tpxo9.nc",
+        "tpxo9-perth/h_k2_tpxo9.nc",
+        "tpxo9-perth/h_k1_tpxo9.nc",
+        "tpxo9-perth/h_o1_tpxo9.nc",
+        "tpxo9-perth/h_p1_tpxo9.nc",
+        "tpxo9-perth/h_q1_tpxo9.nc"
+      ],
+      "type": "z"
+    }
+  },
+  "current": {
+    "TPXO9-perth": {
+      "format": "ATLAS-netcdf",
+      "grid_file": "tpxo9-perth/grid_tpxo9.nc",
+      "name": "TPXO9-perth",
+      "projection": "EPSG:4326",
+      "scale": 1,
+      "reference": "https://www.tpxo.net/global",
+      "version": "v5a",
+      "model_file": {
+        "u": [
+          "tpxo9-perth/u_m2_tpxo9.nc",
+          "tpxo9-perth/u_s2_tpxo9.nc",
+          "tpxo9-perth/u_n2_tpxo9.nc",
+          "tpxo9-perth/u_k2_tpxo9.nc",
+          "tpxo9-perth/u_k1_tpxo9.nc",
+          "tpxo9-perth/u_o1_tpxo9.nc",
+          "tpxo9-perth/u_p1_tpxo9.nc",
+          "tpxo9-perth/u_q1_tpxo9.nc"
+        ],
+        "v": [
+          "tpxo9-perth/u_m2_tpxo9.nc",
+          "tpxo9-perth/u_s2_tpxo9.nc",
+          "tpxo9-perth/u_n2_tpxo9.nc",
+          "tpxo9-perth/u_k2_tpxo9.nc",
+          "tpxo9-perth/u_k1_tpxo9.nc",
+          "tpxo9-perth/u_o1_tpxo9.nc",
+          "tpxo9-perth/u_p1_tpxo9.nc",
+          "tpxo9-perth/u_q1_tpxo9.nc"
+        ]
+      },
+      "type": [
+        "U",
+        "V"
+      ]
+    }
+  }
+}

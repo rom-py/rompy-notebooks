@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "datasets": [
+    {
+      "id": "xbeach-examples",
+      "source": "committed in this repository (copied from the rompy-xbeach test data)",
+      "release": "repository version",
+      "scope": "Bathymetry, WAVEWATCH III spectra and parameters, ERA5 winds, tidal constituents and sea-surface height for a beach south of Perth, used by the XBeach tutorial and examples; see notebooks/xbeach/data/README.md",
+      "local_path": "notebooks/xbeach/data",
+      "acquisition": "none: included in a clone of the repository",
+      "optional": false
+    },
+    {
+      "id": "swan-examples",
+      "source": "committed in this repository (ETOPO 2022 subset from NOAA ERDDAP, ERA5 and WAVEWATCH III data from the rompy-xbeach test data)",
+      "release": "repository version",
+      "scope": "Bathymetry, ERA5 winds and WAVEWATCH III spectra off Perth used by the SWAN tutorial and examples; see notebooks/swan/data/README.md",
+      "local_path": "notebooks/swan/data",
+      "acquisition": "none: included in a clone of the repository",
+      "optional": false
+    },
+    {
+      "id": "schism-examples",
+      "source": "committed in this repository (mesh made from ETOPO 2022; TPXO9 tides and ERA5 from Oceanum Datamesh, GLORYS12 from Copernicus Marine; WAVEWATCH III spectra from the rompy-xbeach test data)",
+      "release": "repository version",
+      "scope": "Mesh, tidal constituents, ERA5 wind and pressure, GLORYS ocean reanalysis, bathymetry and WAVEWATCH III spectra off Perth used by the SCHISM tutorial and examples; see notebooks/schism/data/README.md",
+      "local_path": "notebooks/schism/data",
+      "acquisition": "none: included in a clone of the repository",
+      "optional": false
+    },
+    {
+      "id": "common-examples",
+      "source": "committed in this repository (copied from the rompy-xbeach test data)",
+      "release": "repository version",
+      "scope": "ERA5 10 m winds off south-west Australia used by the model-agnostic notebooks; see notebooks/common/data/README.md",
+      "local_path": "notebooks/common/data",
+      "acquisition": "none: included in a clone of the repository",
+      "optional": false
+    },
+    {
+      "id": "model-example-fixtures",
+      "source": "repository test-data directory",
+      "release": "working-tree fixture bundle",
+      "scope": "Small GEBCO, ERA5, wave, and wind inputs used by model notebooks",
+      "local_path": "tests/data",
+      "acquisition": "provided by the test-data environment",
+      "optional": true
+    }
+  ]
+}

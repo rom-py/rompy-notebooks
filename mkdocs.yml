@@ -1,0 +1,79 @@
+site_name: rompy-notebooks
+site_description: Examples and tutorials for the rompy ocean modelling ecosystem
+repo_url: https://github.com/rom-py/rompy-notebooks
+repo_name: rom-py/rompy-notebooks
+
+docs_dir: docs
+site_dir: site
+
+nav:
+  - Home: index.md
+  - Start here:
+      - What rompy does: why-rompy.md
+      - Rompy hands-on: notebooks/common/rompy_hands_on.ipynb
+      - Installation: installation_guide.md
+      - Using the notebooks: usage_guide.md
+  - Concepts:
+      - Configuration and validation: validation-concepts.md
+      - Data: data-concepts.md
+      - Run lifecycle: run-lifecycle.md
+      - Plugins: plugin-architecture.md
+  - Learning tutorials:
+      - SWAN: swan-tutorial.md
+      - XBeach: xbeach-tutorial.md
+      - SCHISM: schism-tutorial.md
+  - Notebook catalogue:
+      - Overview: catalogue.md
+      - By model: generated/notebooks-by-model.md
+      - By topic: generated/notebooks-by-topic.md
+      - All notebooks: generated/all-notebooks.md
+  - Contributing:
+      - Build and execution: workflow.md
+      - Notebook conventions: tutorial-conventions.md
+      - Model coverage: models/coverage.md
+      - Audit status: audit.md
+theme:
+  name: material
+  custom_dir: docs/overrides
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/lightbulb
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+
+hooks:
+  - scripts/discoverability_hooks.py
+
+plugins:
+  - search
+  - mkdocs-jupyter:
+      execute: false
+      include_source: true
+      include_requirejs: true
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - pymdownx.details
+  - pymdownx.superfences
+
+strict: true
